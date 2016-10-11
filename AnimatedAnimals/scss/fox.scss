@@ -1,0 +1,510 @@
+@import '../node_modules/sass-svg/index';
+
+$color-fox: #e37c67;
+$color-text: #84899C;
+$color-nose: #575A57;
+$duration: 17s;
+
+$size: 0.07;
+
+*, *:before, *:after {
+	position: relative;
+}
+
+body {
+	background: white;
+}
+
+.codrops-header h1 {
+	animation: squigglevision 0.3s infinite;
+	animation-timing-function: cubic-bezier(0, 0, 0.80, 0.90);
+}
+
+.content--fox {
+	background: #99bfcf url('../img/landscape.jpg') no-repeat 50% 100%;
+	background-size: cover;
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	left: 50%;
+	transform: translateX(-50%); 
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-position: bottom center;
+		background-repeat: no-repeat;
+		background-size: cover;
+
+		@include svg((viewBox: (0 0 1290 900))) {
+			@include svg('path', (
+				fill: #7e8841,
+				d: 'M1290,764.1V900H0V722c115.2,0,514.2,135.7,698,134.8C903.5,855.7,1223.5,764.1,1290,764.1z'
+			));
+
+			@include svg('path', (
+				fill: #4f6333,
+				d: 'M6,900c0,0,209.1-96.7,417.9-88.5c180.9,7.1,230.7,64.4,442.4,60.9c68.2-1.1,126.6-8.1,233.7-1.5c71.8,4.5,190,29,190,29H6z'
+			));
+		}
+	}
+}
+
+.fox {
+	position: absolute;
+	height: 375vmax * $size;
+	width: 260vmax * $size;
+	animation: fox $duration none, squigglevision 0.3s infinite;
+	animation-timing-function: cubic-bezier(0, 0, 0.80, 0.90);
+	bottom: 2.5vmax;
+	left: 60%;
+	transform-origin: bottom right;
+
+	*, *:before, *:after {
+		animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+	}
+
+	* {  
+		position: absolute;
+		background-size: contain;
+		background-repeat: no-repeat;
+		transform-style: preserve-3d;
+		
+		&:before, &:after {
+			content: '';
+			position: absolute;
+			display: block;
+			background-size: contain;
+			background-repeat: no-repeat;
+			height: 100%;
+			width: 100%;
+		}
+	}
+}
+
+.fox-head {
+	transform: translateZ(200px);
+	animation: head $duration forwards;
+	height: 168vmax * $size;
+	width: 168vmax * $size;
+	top: 0;
+	left: 0;
+}
+
+.fox-face {
+	perspective: 1000vmax * $size;
+
+	&, > * {
+		height: 100%;
+		width: 100%;
+		background-size: contain;
+	}
+}
+
+.fox-ears {
+	transform: translateZ((-168vmax * $size) / 2);
+	animation: ears $duration infinite none;
+}
+
+.fox-ear {
+	height: 100%;
+	width: 100%;
+}
+
+.fox-ear:first-child {
+	animation: ear-left $duration infinite none;
+
+	@include svg((viewBox: (0 0 168 168))) {
+		@include svg('path', (
+			fill: darken($color-fox,5%),
+			d: 'M48.7,84.4c0,0-35.5,4.6-40-10.8s-8-57.2-2.5-70.9c0,0,66.7,34,66.7,52S48.7,84.4,48.7,84.4z'
+		));
+	}
+}
+
+.fox-ear:last-child {
+	animation: ear-right $duration infinite none;
+
+	@include svg((viewBox: (0 0 168 168))) {
+		@include svg('path', (
+			fill: darken($color-fox,5%),
+			d: 'M118.8,84.4c0,0,35.5,4.6,40-10.8s8-57.2,2.5-70.9c0,0-66.8,34-66.8,52S118.8,84.4,118.8,84.4z'
+		));
+	}
+}
+
+.fox-skull {
+	@include svg((viewBox: (0 0 168 168))) {
+		@include svg('path', (
+			fill: $color-fox,
+			id: 'circle',
+			d: 'M83.7,157.4c11.3,0,77.9-2.3,77.9-39.3c0,0,3.7,1,3.7,4.3c0,0,2.1-3.3,2.1-10.3s-9.3-78.2-83.7-78.2   S0,105.1,0,112.1s2.1,10.3,2.1,10.3c0-3.3,3.7-4.3,3.7-4.3C5.8,155.1,72.4,157.4,83.7,157.4z'
+		));
+
+		@include svg('path', (
+			fill: white,
+			d: 'M83.7,139.9c38.2,0,40.1,6.9,40.1,6.9v5.7c-1.2,4.9-35.2,7.4-40.1,7.4s-39-2.6-40.1-7.4v-5.7   C43.6,146.9,45.5,139.9,83.7,139.9z'
+		))
+	}
+	background-size: contain;
+}
+
+.fox-front {
+	animation: front $duration infinite none;
+	transform-origin: bottom center;
+
+	&:after {
+		animation: front-after $duration infinite none;
+		transform-origin: bottom right;
+		@include svg((viewBox: (0 0 168 168))) {
+			@include svg('path', (
+				fill: white,
+				d: 'M83.7,154.4c14,0,71,0.1,70.3-38.5l3.8-1.5c0,0-24.1-35.5-74-35.5s-74,35.5-74,35.5l3.8,1.5   C12.7,154.5,69.7,154.4,83.7,154.4z'
+			));
+		}
+	}
+
+	&:before {
+		animation: front-before $duration infinite none;
+		transform-origin: right top;
+		height: 81vmax * $size;
+		width: 110vmax * $size;
+		bottom: 8vmax * $size;
+		left: -26vmax * $size;
+		transform: rotateY(90deg);
+
+		@include svg((viewBox: (-337 181.6 115.7 81))) {
+			@include svg('path', (
+				fill: white,
+				d: 'M-221.3,183.1c-33.5-3-115.7-2-115.7,7c0,40.5,69.3,49.1,79.2,59c13.1,13.1,36.5,13.5,36.5,13.5V183.1z'
+			));
+		}
+	}
+}
+
+.fox-nose {
+	animation: nose $duration infinite none;
+
+	&:before {
+		transform: translateZ(150vmax * $size) scale(0.8);
+
+		@include svg((viewBox: (0 0 168 168))) {
+			@include svg('path', (
+				fill: $color-nose,
+				d: 'M83.7,86.7c3.3,0,11.6-3.9,11.6-7.1c0-3.2-9.4-3.2-11.6-3.2c-2.2,0-11.6,0-11.6,3.2   C72.1,82.8,80.4,86.7,83.7,86.7z'
+			));
+			@include svg('path', (
+				stroke: $color-nose,
+				d: 'M83.7,102.3V86.7'
+			));
+			@include svg('path', (
+				stroke: $color-nose,
+				fill: none,
+				d: 'M94.5,104.9c0,0-5.2-2.7-10.8-2.7c-5.6,0-10.8,2.7-10.8,2.7'
+			));
+		}
+	}
+}
+
+.fox-eyes {
+	animation: eyes $duration infinite none;
+	transform-origin: center 70vmax * $size;
+
+	&:before {
+		transform: translateZ(100vmax * $size) scale(0.8);
+
+		@include svg((viewBox: (0 0 168 168))) {
+			@include svg('circle', (
+				cx: 58.9,
+				cy: 68,
+				r: 5.4
+			));
+
+			@include svg('circle', (
+				cx: 108.6,
+				cy: 68,
+				r: 5.4
+			));
+		}
+	}
+}
+
+.fox-body {
+	perspective: 1000vmax * $size;
+	animation: body $duration forwards;
+	height: 246vmax * $size;
+	width: 160vmax * $size;
+	top: 110vmax * $size;
+	left: 36vmax * $size;
+	transform-origin: top center;
+
+	&:before {
+		height: 100%;
+		width: 100%;
+
+		@include svg((viewBox: (0 0 160 246))) {
+			@include svg('path', (
+				fill: $color-fox,
+				d: 'M94.5,50.8c0,33,22.5,66.8,33.3,77.7s32.3,40.3,32.3,71.7s-14.3,46-32.8,46c-42.5,0-103.8-71.7-103.8-114.7    S17.1,47.8,2.9,33.6S29.1,0,51.5,0s60.2,13,60.2,21.9S94.5,33.8,94.5,50.8z'));
+
+			@include svg('path', (
+				fill: #E1E1E1,
+				d: 'M107.4,241.7C67.9,225.4,23.5,168,23.5,131.4c0-43-6.4-83.6-20.5-97.8S29.1,0,51.5,0s41.2,13,41.2,21.9    S77.8,53.8,77.8,70.8c0,33,10.2,51.5,21.1,62.3s25.6,55.7,25.6,70.3C124.4,222.8,107.4,241.7,107.4,241.7z'));
+
+			@include svg('path', (
+				fill: white,
+				d: 'M0,26.5c0,16.2,17.6,25.2,17.5,52.9c-0.1,20-4.7,29.9-4.7,43.6s6.6,48,37.6,56.4c0,0,0.7-5,3.7-5    s8,7.3,14.3,7.3c0,0-0.7-5.7,1.7-5.7s5.5,4.3,9.9,4.3c0,0-1.7-8.9,2.6-13.2c0,0,0.5,3,2.5,3c0,0,1.8-5,4.5-6.5s9.2-8.8,9.2-14.8    s-18.8-44.9-18.8-70.8s12.6-32.5,12.6-53.5S58.9,0,47.4,0S0,9,0,26.5z'));
+		}
+	}
+}
+
+.fox-front-leg {
+	top: 120vmax * $size;
+	left: 15vmax * $size;
+	height: 130vmax * $size;
+	width: 42vmax * $size;
+	transform-origin: center top;
+
+	&:before, &:after {
+		transform-origin: 40vmax * $size 63%;
+		height: 100%;
+		width: 100%;
+	}
+
+	@include svg((viewBox: (0 0 42 130))) {
+		@include svg('path', (
+			fill: $color-fox,
+			d: 'M22.6,97.5c15.2,0,16-32,16-32S37.8,42,41.3,31S19.4,0,7.6,0C-4.1,0,0.3,20,3.8,31s2.8,34.5,2.8,34.5    S7.3,97.5,22.6,97.5z'));
+	}
+
+	&:before {
+		@include svg((viewBox: (0 0 42 130))) {
+			@include svg('path', (
+				fill: $color-fox,
+				d: 'M22.6,129.7c9.5,0,11.2-7.3,11.2-9.3s2.2-36.2,0-40.5c-2.2-4.3-2.5-6.3-11.2-6.3s-9,2-11.2,6.3    c-2.2,4.3,0,38.5,0,40.5S13.1,129.7,22.6,129.7z'));
+		}
+	}
+
+	&:first-child {
+		animation: upper-left-leg $duration forwards;
+		z-index: -1;
+
+		&:before {
+			animation: lower-left-leg $duration forwards;
+		}
+	}
+
+	&:nth-child(2) {
+		animation: upper-right-leg $duration forwards;
+
+		&:before {
+			animation: lower-right-leg $duration forwards;
+		}
+	}
+
+	+ .fox-front-leg {
+		left: 90vmax * $size;
+		z-index: 1;
+	}
+}
+
+.fox-tail {
+	z-index: -1;
+	$initial-tail-width: 40vmax * $size;
+	width: $initial-tail-width;
+	height: $initial-tail-width;
+	transform-origin: center bottom;
+
+	&:before {
+		transform-origin: center bottom;
+
+		@include svg((viewBox: (0 0 66.4 66.4))) {
+			@include svg('path', (
+				fill: $color-fox,
+				d: 'M33.2,0C14.9,0,0,14.9,0,33.2C0,42.7,0.9,61,2.6,66.4h30.6h30.6c1.7-5.3,2.6-23.7,2.6-33.2   C66.4,14.9,51.5,0,33.2,0z'));
+		}
+	}
+
+	.fox > & {
+		transform: rotate(90deg);
+		top: 280vmax * $size;
+		left: 160vmax * $size;
+	}
+
+	> .fox-tail {
+		animation: tail-inner 3s ease-in-out both infinite;
+		top: -$initial-tail-width / 2;
+		transform:
+			scale(1.1)
+			rotate(-35deg);
+	}
+
+	> .fox-tail > .fox-tail > .fox-tail > .fox-tail {
+		// opacity: 0.5;
+		animation: tail-outer 3s ease-in-out both infinite;
+		transform:
+			scale(1.1)
+			rotate(15deg);
+	}
+}
+
+@keyframes tail-inner {
+	0% { transform: scale(1.1) rotate(-38deg); }
+	50% { transform: scale(1.1) rotate(-35deg); }
+	100% { transform: scale(1.1) rotate(-38deg); }
+}
+
+@keyframes tail-outer {
+	0% { transform: scale(1.1) rotate(-3deg); }
+	50% { transform: scale(1.1) rotate(15deg); }
+	100% { transform: scale(1.1) rotate(-3deg); }
+}
+
+$offset-stop-walking: 5s;
+
+$animations: (
+	'fox': (
+		0s: unquote('scale(0.55); opacity: 0'),
+		1s: unquote('scale(0.6); opacity: 1'),
+		2s: scale(0.7),
+		3s: scale(0.825),
+		4s: scale(0.95),
+		4.7s: unquote('scale(1); animation-timing-function: ease-in-out')
+	),
+	'body': (
+		(1s, 2s, 3s, 4s): translateY(5vmax * $size),
+		(1.2s, 2.2s, 3.2s, 4.2s): translateY(0),
+	),
+	'head': (
+		(1s, 2s, 3s, 4s): translateY(10vmax * $size),
+		(1.2s, 2.2s, 3.2s, 4.2s): translateY(0),
+	),
+	'upper-left-leg': (
+		0s: rotate(0),
+		1s: rotate(15deg),
+		2s: rotate(0),
+		3s: rotate(15deg),
+		4s: rotate(0),
+		(4.5s, $duration): rotate(-5deg)
+	),
+	'lower-left-leg': (
+		0s: rotate(0),
+		1s: rotate(-15deg),
+		2s: rotate(0),
+		3s: rotate(-15deg),
+		(4s, $duration): rotate(0),
+	),
+	'upper-right-leg': (
+		1s: rotate(0),
+		2s: rotate(20deg),
+		3s: rotate(0),
+		4s: rotate(20deg),
+		(5s, $duration): rotate(10deg),
+	),
+	'lower-right-leg': (
+		1s: rotate(0),
+		2s: rotate(-20deg),
+		3s: rotate(0),
+		4s: rotate(-20deg),
+		(5s, $duration): rotate(-10deg)
+	),
+	'eyes': (
+		(2.5s, 3s, 4s, 5s, 7s): rotateY(-4deg),
+		2.75s: rotateY(-4deg) scaleY(0.2),
+		4.5s: rotateY(-4deg) rotateX(-3deg) scaleY(0.2),
+		(7.5s, 9s): rotateY(-24deg) rotateZ(-12deg) rotateX(-2deg),
+		(9.5s, 10.2s, 10.8s, 12s): rotateY(10deg) rotateX(1deg),
+		10.5s: rotateY(10deg) rotateX(1deg) scaleY(0.2),
+		(13s, 14s): rotate(0),
+		13.5s: rotate(0) scaleY(0.2),
+	),
+	'nose': (
+		(2.5s, 4s, 5s, 7s): rotateY(-4deg),
+		4.5s: rotateY(-4deg) rotateX(-3deg),
+		// look left
+		(7.5s, 9s): rotateX(-3deg) rotateY(-28deg) rotateZ(-11deg),
+		// look right
+		(9.5s, 12s): rotateY(7deg),
+		13s: rotateY(0),
+	),
+	'ears': (
+		(0s, 7s): translateZ((-168vmax * $size) / 2),
+		(7.5s, 9s): translateZ((-168vmax * $size) / 2) rotateY(-40deg) rotateZ(-13deg),
+		(9.5s, 12s): translateZ((-168vmax * $size) / 2) rotateY(-10deg)
+	),
+	'ear-left': (
+		(4s, 5.5s, 7s): rotate(10deg),
+		6s: rotate(5deg),
+		(7.5s, 9s): rotateZ(14deg) scaleX(1.2),
+		(9.5s, 12s): rotate(10deg)
+	),
+	'ear-right': (
+		(4s, 5.5s, 7s): rotate(-10deg),
+		6s: rotate(-5deg),
+		(7.5s, 9s): translateX(-19vmax * $size) rotateZ(-7deg) scaleX(1.2),
+		(9.5s, 12s): rotate(-10deg)
+	),
+	'front': (
+		(2.5s, 4s, 5s, 7s): translateX(-3vmax * $size) skewX(5deg) scaleX(0.9),
+		4.5s: translateX(-3vmax * $size) skewX(5deg) scaleX(0.9) scaleY(0.9),
+		(7.5s, 9s): translateY(5vmax * $size),
+		(9.5s, 12s): skewX(-10deg),
+		13s: skewX(0),
+	),
+	'front-before': (
+		7s: rotateY(90deg),
+		(7.5s, 9s): scaleY(1.1) rotateY(35deg),
+		(9.5s, 12s, $duration): rotateY(90deg),
+	),
+	'front-after': (
+		7s: skewX(0),
+		(7.5s, 9s): skewX(10deg),
+		9.5s: skewX(0)
+	)
+);
+
+@each $animation-name, $animation in $animations {
+	@keyframes #{$animation-name} {
+		@each $offsets, $transform in $animation {
+			@each $offset in $offsets {      
+				#{percentage($offset / $duration)} {
+					@if (type-of($transform) == 'number') {
+						opacity: $transform;
+					} @else {
+						transform: #{$transform};
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes squigglevision {
+	0% {
+		-webkit-filter: url('#squiggly-0');
+		filter: url('#squiggly-0');
+	}
+	25% {
+		-webkit-filter: url('#squiggly-1');
+		filter: url('#squiggly-1');
+	}
+	50% {
+		-webkit-filter: url('#squiggly-2');
+		filter: url('#squiggly-2');
+	}
+	75% {
+		-webkit-filter: url('#squiggly-3');
+		filter: url('#squiggly-3');
+	}
+	100% {
+		-webkit-filter: url('#squiggly-4');
+		filter: url('#squiggly-4');
+	}
+}

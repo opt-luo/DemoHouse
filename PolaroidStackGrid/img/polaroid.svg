@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="220px" height="243px" viewBox="0 0 220 243" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+    <title>polaroid</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="polaroid" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-1" fill="#000000" sketch:type="MSShapeGroup" x="0" y="0" width="220" height="243" rx="5"></rect>
+            <rect id="Rectangle-2" fill="#FFFFFF" sketch:type="MSShapeGroup" x="16" y="20" width="189" height="149"></rect>
+            <g id="Group" transform="translate(44.000000, 77.000000)" stroke="#979797" fill="#000000" sketch:type="MSShapeGroup">
+                <circle id="Oval-1" cx="17.5" cy="17.5" r="17.5"></circle>
+                <circle id="Oval-1-Copy" cx="66.5" cy="17.5" r="17.5"></circle>
+                <circle id="Oval-1-Copy-2" cx="115.5" cy="17.5" r="17.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

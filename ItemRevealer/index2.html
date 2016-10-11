@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Item Revealer | Demo 2 | Codrops</title>
+		<meta name="description" content="Revealing and unrevealing items with animated SVG paths using anime.js" />
+		<meta name="keywords" content="cover, reveal, grid, svg, animated, path, mask, image" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body class="demo-2">
+		<svg class="hidden">
+			<defs>
+				<symbol id="icon-arrow" viewBox="0 0 32 32">
+					<title>arrow</title>
+					<path class="path1" d="M7.333 24c-0.133 0-0.4 0-0.533-0.133l-6.667-6.667c0 0-0.133-0.133-0.133-0.267s0-0.133 0-0.267c0 0 0 0 0 0 0-0.133 0-0.133 0-0.267s0.133-0.133 0.133-0.267l6.667-6.667c0.4-0.133 0.8-0.133 1.067 0s0.267 0.667 0 0.933l-5.6 5.6h29.067c0.4 0 0.667 0.267 0.667 0.667s-0.267 0.667-0.667 0.667h-29.067l5.467 5.467c0.267 0.267 0.267 0.667 0 0.933 0 0.267-0.267 0.267-0.4 0.267z"></path>
+				</symbol>
+				<symbol id="icon-drop" viewBox="0 0 32 32">
+					<title>drop</title>
+					<path class="path1" d="M17.333 32c-5.867 0-10.667-4.8-10.667-10.667 0-5.6 9.733-20.4 10.133-21.067 0.267-0.4 0.8-0.4 1.067 0 0.4 0.667 10.133 15.467 10.133 21.067 0 5.867-4.8 10.667-10.667 10.667zM17.333 1.867c-2.133 3.333-9.333 14.933-9.333 19.467 0 5.2 4.133 9.333 9.333 9.333s9.333-4.133 9.333-9.333c0-4.533-7.2-16.133-9.333-19.467z"></path>
+					<path class="path2" d="M13.333 26.533c-0.133 0-0.267 0-0.4-0.133-1.467-1.333-2.267-3.2-2.267-5.067 0-1.6 1.2-4.533 3.467-8.933 0.133-0.4 0.533-0.533 0.933-0.267 0.267 0.133 0.4 0.533 0.267 0.933-2.133 4-3.333 6.933-3.333 8.267 0 1.467 0.667 2.933 1.733 4 0.267 0.267 0.267 0.667 0 0.933 0 0.133-0.267 0.267-0.4 0.267z"></path>
+				</symbol>
+				<!-- icons for grid -->
+				<symbol id="icon-nav" viewbox="0 0 129 129">
+					<title>nav</title>
+					<!-- by Lucy G http://www.flaticon.com/free-icon/down-arrow_118738 -->
+					<path d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z"/>
+				</symbol>
+				<symbol id="icon-cross" viewbox="0 0 129 129">
+					<title>cross</title>
+					<!-- by Lucy G http://www.flaticon.com/free-icon/cancel_118741 -->
+					<path d="M7.6,121.4c0.8,0.8,1.8,1.2,2.9,1.2s2.1-0.4,2.9-1.2l51.1-51.1l51.1,51.1c0.8,0.8,1.8,1.2,2.9,1.2c1,0,2.1-0.4,2.9-1.2c1.6-1.6,1.6-4.2,0-5.8L70.3,64.5l51.1-51.1c1.6-1.6,1.6-4.2,0-5.8s-4.2-1.6-5.8,0L64.5,58.7L13.4,7.6C11.8,6,9.2,6,7.6,7.6s-1.6,4.2,0,5.8l51.1,51.1L7.6,115.6C6,117.2,6,119.8,7.6,121.4z"/>
+				</symbol>
+			</defs>
+		</svg>
+		<main>
+			<div class="grid-pages">
+				<div class="grid grid--vertical grid--current grid--style-2" data-fill="#ece6e6">
+					<div class="grid__column">
+						<div class="grid__item grid__item--auto" data-delay="214" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<header class="codrops-header">
+								<div class="codrops-links">
+									<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/RecordPlayer/" title="Previous Demo"><svg class="icon icon--arrow"><use xlink:href="#icon-arrow"></use></svg></a>
+									<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=27324" title="Back to the article"><svg class="icon icon--drop"><use xlink:href="#icon-drop"></use></svg></a>
+								</div>
+								<h1 class="codrops-header__title">Item Revealer</h1>
+								<nav class="codrops-demos">
+									<a href="index.html">Demo 1</a>
+									<a class="current-demo" href="index2.html">Demo 2</a>
+									<a href="index3.html">Demo 3</a>
+								</nav>
+								<p class="info">Use the arrows or the keyboard to navigate.</p>
+							</header>
+						</div>
+						<div class="grid__item" data-delay="50">
+							<div class="grid__img" style="background-image: url(img/28.jpg);"></div>
+							<h3 class="caption">Waves</h3>
+						</div>
+					</div>
+					<div class="grid__column">
+						<div class="grid__item" data-delay="80">
+							<div class="grid__img" style="background-image: url(img/26.jpg);"></div>
+							<h3 class="caption">A-Frame</h3>
+						</div>
+						<div class="grid__item" data-delay="100" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<div class="grid__img" style="background-image: url(img/27.jpg);"></div>
+							<h3 class="caption">Benny</h3>
+						</div>
+						<div class="grid__item">
+							<div class="grid__img" style="background-image: url(img/25.jpg);"></div>
+							<h3 class="caption">Face</h3>
+						</div>
+					</div>
+				</div>
+				<div class="grid grid--vertical grid--style-2" data-fill="#ece6e6">
+					<div class="grid__column">
+						<div class="grid__item" data-delay="50">
+							<div class="grid__img" style="background-image: url(img/24.jpg);"></div>
+							<h3 class="caption">Glassy</h3>
+						</div>
+						<div class="grid__item" data-delay="100" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<div class="grid__img" style="background-image: url(img/23.jpg);"></div>
+							<h3 class="caption">Sunset</h3>
+						</div>
+					</div>
+					<div class="grid__column">
+						<div class="grid__item grid__item--auto" data-delay="90">
+							<a class="pater" href="https://goo.gl/rsgZTW">
+								<h2 class="pater__title" aria-label="PageCloud Web Editor"><img src="img/sponsor/PageCloud_logo.svg" alt="PageCloud Logo"></h2>
+								<p class="pater__desc">Take control of your website with features you won't find anywhere else. Find out why PageCloud is the world's most advanced website creator! &rarr;</p>
+							</a>
+						</div>
+						<div class="grid__item" data-delay="150" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<div class="grid__img" style="background-image: url(img/21.jpg);"></div>
+							<h3 class="caption">Leggy</h3>
+						</div>
+					</div>
+					<div class="grid__column">
+						<div class="grid__item" data-delay="210">
+							<div class="grid__img" style="background-image: url(img/19.jpg);"></div>
+							<h3 class="caption">Kook</h3>
+						</div>
+					</div>
+				</div>
+				<div class="grid grid--vertical grid--style-2" data-fill="#ece6e6">
+					<div class="grid__column">
+						<div class="grid__item">
+							<div class="grid__img" style="background-image: url(img/22.jpg);"></div>
+							<h3 class="caption">Hodad</h3>
+						</div>
+						<div class="grid__item" data-delay="50">
+							<div class="grid__img" style="background-image: url(img/20.jpg);"></div>
+							<h3 class="caption">Gun</h3>
+						</div>
+					</div>
+					<div class="grid__column">
+						<div class="grid__item" data-delay="50" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<div class="grid__img" style="background-image: url(img/18.jpg);"></div>
+							<h3 class="caption">Funboard</h3>
+						</div>
+					</div>
+				</div>
+				<div class="grid grid--vertical grid--style-2" data-fill="#ece6e6">
+					<div class="grid__column">
+						<div class="grid__item" data-delay="60">
+							<h3 class="grid__title">Related demos</h3>
+						</div>
+						<div class="grid__item" data-delay="100">
+							<a href="http://tympanus.net/Development/AnimatedGridLayout/" class="grid__img grid__img--overlay" style="background-image: url(img/related/GridItemAnimation.jpg);"><h3 class="caption">Animated Grid Layout</h3></a>
+						</div>
+					</div>
+					<div class="grid__column">
+						<div class="grid__item" data-delay="140" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<a href="http://tympanus.net/Development/PhotographyWebsiteConcept/" class="grid__img grid__img--overlay" style="background-image: url(img/related/PhotographyWebsite.jpg);"><h3 class="caption">Photography Website</h3></a>
+						</div>
+						<div class="grid__item" data-delay="50">
+							<a href="http://tympanus.net/Development/ImageGridEffects/" class="grid__img grid__img--overlay" style="background-image: url(img/related/EffectGrid.jpg);"><h3 class="caption">Image Grid Effects</h3></a>
+						</div>
+					</div>
+					<div class="grid__column">
+						<div class="grid__item" data-delay="100" data-path-cover="M 0,0 10,0 10,0 0,0 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,10 0,10 Z" data-path-uncover="M 0,0 10,0 10,10 0,10 Z;M 0,0 10,0 10,8 0,6 Z;M 0,0 10,0 10,0 0,0 Z">
+							<a href="http://tympanus.net/Development/HoverEffectIdeas/" class="grid__img grid__img--overlay" style="background-image: url(img/related/Hover.jpg);"><h3 class="caption">Hover Effect Ideas</h3></a>
+						</div>
+						<div class="grid__item" data-delay="140">
+							<a href="http://tympanus.net/Tutorials/SamsungGrid/" class="grid__img grid__img--overlay" style="background-image: url(img/related/Samsung.jpg);"><h3 class="caption">Grid Loading Effect</h3></a>
+						</div>
+					</div>
+				</div>
+				<nav class="grid-nav">
+					<button class="grid__button grid__button--prev" aria-label="Previous page"><svg class="icon icon--nav-up"><use xlink:href="#icon-nav"></use></svg></button>
+					<button class="grid__button grid__button--next" aria-label="Next page"><svg class="icon icon--nav-down"><use xlink:href="#icon-nav"></use></svg></button>
+				</nav>
+			</div><!-- /grid-pages -->
+		</main>
+		<script src="js/anime.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>
+		<script src="js/main.js"></script>
+		<script>
+		(function() {
+			var render = function(gridItems, action) {
+				for(var i = 0, len = gridItems.length; i < len; ++i) {
+					var item = gridItems[i],
+						captionEl = item.el.querySelector('.caption');
+
+					if( captionEl ) {
+						if( action === 'uncover' ) {
+							captionEl.style.opacity = 0;
+							captionEl.style.transform = captionEl.style.WebkitTransform = 'translateY(50px)';
+						}
+						anime({
+							targets: captionEl,
+							opacity : action === 'uncover' ? 1 : 0,
+							translateY : action === 'uncover' ? 0 : 50,
+							duration : 500,
+							easing : 'easeInOutQuad'
+						});
+					}
+
+					if( action === 'uncover' ) {
+						item.el.style.transform = item.el.style.WebkitTransform = 'translateY(50px)';
+					}
+
+					anime({
+						targets: item.el,
+						translateY : action === 'uncover' ? 0 : 50,
+						duration : 600,
+						delay : item.delay,
+						easing : 'easeInOutQuad'
+					});
+				};
+			}
+			new GridSlideshow(document.querySelector('.grid-pages'), {
+				onCover : function(direction, gridEl, gridItems) {
+					render(gridItems, 'cover');
+				},
+				onUncover : function(direction, gridEl, gridItems) {
+					render(gridItems, 'uncover');
+				}
+			});
+		})();
+		</script>
+	</body>
+</html>

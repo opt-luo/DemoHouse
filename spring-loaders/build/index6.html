@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spring Loaders | Demo 5</title>
+    <meta name="description" content="Demo 5 of loading spinner made with inscribed polygons and animated with Rebound spring motion." />
+    <meta name="keywords" content="loader, spinner, polygon, animation, rebound, spring motion, web development, web design" />
+    <meta name="author" content="Claudio Calautti for Codrops" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="demo-6">
+    <div class="container">
+      <header class="codrops-header">
+        <div class="codrops-links">
+          <a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/AnimatedLetters/" title="Previous Demo"><span>Previous Demo</span></a>
+          <a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=26324" title="Back to the article"><span>Back to the Codrops article</span></a>
+        </div>
+        <h1>Spring Loaders</h1>
+        <nav class="codrops-demos">
+          <a href="index.html">Demo 1</a>
+          <a href="index2.html">Demo 2</a>
+          <a href="index3.html">Demo 3</a>
+          <a href="index4.html">Demo 4</a>
+          <a href="index5.html">Demo 5</a>
+          <a class="current-demo" href="index6.html">Others</a>
+        </nav>
+      </header>
+      <div id="grid" class="grid"><!-- spinners here --></div>
+    </div><!-- /container -->
+    <script>
+
+      const playAll = false;
+
+      const cols = 3;
+      const gridEl = document.getElementById('grid');
+      const gridW = Math.ceil(gridEl.offsetWidth / cols);
+      const gridH = gridW;
+
+      const SETTINGS = [
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 5,
+            friction: 3
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 80,
+            sides: 3,
+            depth: 2,
+            colors: {
+              background: '#ECCF41',
+              stroke: '#222',
+              base: null,
+              child: '#ECCF41'
+            },
+            alwaysForward: false, // When false the spring will reverse normally.
+            restAt: 0.5, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: false // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 10,
+            friction: 10
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 70,
+            sides: 4,
+            depth: 8,
+            colors: {
+              background: '#EC4141',
+              stroke: '#222',
+              base: '#222',
+              child: '#EC4141'
+            },
+            alwaysForward: true, // When false the spring will reverse normally.
+            restAt: null, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: true // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 4,
+            friction: 5
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 100,
+            sides: 6,
+            depth: 3,
+            colors: {
+              background: '#4195EC',
+              stroke: '#a1a1a1',
+              base: '#222',
+              child: '#212121'
+            },
+            alwaysForward: true, // When false the spring will reverse normally.
+            restAt: 0.8, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: true // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 5,
+            friction: 3
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 90,
+            sides: 6,
+            depth: 6,
+            colors: {
+              background: '#181818',
+              stroke: '#ECCF41',
+              base: null,
+              child: '#181818'
+            },
+            alwaysForward: true, // When false the spring will reverse normally.
+            restAt: 0.8, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: false // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 6,
+            friction: 5
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 70,
+            sides: 3,
+            depth: 1,
+            colors: {
+              background: '#494B54',
+              stroke: null,
+              base: '#222',
+              child: '#b1b1b1'
+            },
+            alwaysForward: false, // When false the spring will reverse normally.
+            restAt: null, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: true // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 50,
+            friction: 8
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 80,
+            sides: 4,
+            depth: 3,
+            colors: {
+              background: '#58CA6B',
+              stroke: '#000000',
+              base: null,
+              child: '#58CA6B'
+            },
+            alwaysForward: true, // When false the spring will reverse normally.
+            restAt: 0.5, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: false // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 15,
+            friction: 10
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 80,
+            sides: 6,
+            depth: 5,
+            colors: {
+              background: '#FFC107',
+              stroke: null,
+              base: null,
+              child: '#222'
+            },
+            alwaysForward: false, // When false the spring will reverse normally.
+            restAt: 0.5, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: false // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 13,
+            friction: 10
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 80,
+            sides: 4,
+            depth: 3,
+            colors: {
+              background: '#673AB7',
+              stroke: '#000',
+              base: null,
+              child: '#6F4DAB'
+            },
+            alwaysForward: false, // When false the spring will reverse normally.
+            restAt: null, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: false // Optionally render basePolygon
+          }
+        },
+        {
+          instances: {
+            spring: null,
+            spinner: null
+          },
+          rebound: {
+            tension: 14,
+            friction: 9
+          },
+          spinner: {
+            canvasW: gridW,
+            canvasH: gridH,
+            radius: 120,
+            sides: 10,
+            depth: 8,
+            colors: {
+              background: '#F56E9C',
+              stroke: '#222',
+              base: null,
+              child: '#333'
+            },
+            alwaysForward: true, // When false the spring will reverse normally.
+            restAt: null, // A number from 0.1 to 0.9 || null for full rotation
+            renderBase: false // Optionally render basePolygon
+          }
+        }
+      ];
+    </script>
+    <script src="js/main.grid.js"></script>
+  </body>
+</html>

@@ -1,0 +1,395 @@
+.js body {
+	overflow: hidden;
+}
+
+.js body.overflow {
+	overflow: auto;
+}
+
+.header {
+	position: absolute;
+	z-index: 1000;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-align-items: flex-start;
+	align-items: flex-start;
+	width: 100%;
+	padding: 2.5em;
+	pointer-events: none;
+}
+
+/* the page (header background) that is being moved up (initial view) */
+.page--mover {
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	pointer-events: none;
+	background: #2d323c;
+}
+
+/* the title of the initial view */
+.title-wrap {
+	position: absolute;
+	z-index: 101;
+	width: 100%;
+	margin: 10vh 0 0 0;
+	text-align: center;
+	pointer-events: none;
+}
+
+.title {
+	line-height: 1;
+	position: relative;
+	text-indent: 0.2em;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+}
+
+.title--main {
+	font-size: 5.75em;
+	margin: 0 auto;
+	color: #df2d70;
+}
+
+.title--sub {
+	font-size: 1.15em;
+	font-weight: 700;
+	display: block;
+	margin: 0;
+	color: #565f73;
+}
+
+@media screen and (min-width: 100em) {
+	.title--main {
+		font-size: 7vw;
+	}
+
+	.title--sub {
+		font-size: 1.35vw;
+	}
+}
+
+/* static page with grid */
+.page--static {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-align-items: center;
+	align-items: center;
+	max-width: 1220px;
+	margin: 0 auto;
+	padding: 2em 0 0;
+	text-align: center;
+}
+
+.page__title {
+	padding: 0 2em;
+}
+
+.page__title-main {
+	font-size: 2em;
+	margin: 0 auto;
+	padding: 3em 0 0;
+	color: #03a9f4;
+}
+
+.page__title-sub {
+	font-size: 1.05em;
+	margin: 0.5em 0 4em;
+}
+
+.device {
+	position: fixed;
+	z-index: 1000;
+	bottom: 0;
+	left: 50%;
+	width: 45vh;
+	height: 45vh;
+	margin: 0 0 0 -22.5vh;
+	background: url(../img/device.svg) no-repeat 50% 0%;
+	background-size: 100%;
+}
+
+.device__screen {
+	position: absolute;
+	top: 25.5%;
+	left: 8.5%;
+	width: 83%;
+	height: 100%;
+	background: url(../img/screen.jpg) no-repeat 50% 0%;
+	background-size: 100%;
+}
+
+/* Button */
+.button {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
+}
+
+.button--view {
+	position: fixed;
+	z-index: 1000;
+	bottom: 1.5em;
+	left: 50%;
+	width: 3em;
+	height: 1.75em;
+	margin: 0 0 0 -1.5em;
+	-webkit-animation: pointDown 0.6s 0.6s ease-in infinite alternate forwards;
+	animation: pointDown 0.6s 0.6s ease-in infinite alternate forwards;
+	fill: #fff;
+}
+
+@-webkit-keyframes pointDown {
+	from {
+		-webkit-transform: translate3d(0,-10px,0);
+		transform: translate3d(0,-10px,0);
+	}
+	to {
+		-webkit-transform: translate3d(0,0,0);
+		transform: translate3d(0,0,0);
+	}
+}
+
+@keyframes pointDown {
+	from {
+		-webkit-transform: translate3d(0,-10px,0);
+		transform: translate3d(0,-10px,0);
+	}
+	to {
+		-webkit-transform: translate3d(0,0,0);
+		transform: translate3d(0,0,0);
+	}
+}
+
+.button--view path {
+	-webkit-transition: fill 0.3s;
+	transition: fill 0.3s;
+	fill: inherit;
+}
+
+.button--view:hover,
+.button--view:focus {
+	outline: none;
+	fill: #03a9f4;
+}
+
+.button--load {
+	width: 7em;
+	color: #a3b0bd;
+}
+
+.button--load svg {
+	width: 2.5em;
+}
+
+.button__text {
+	font-size: 0.65em;
+	font-weight: bold;
+	display: block;
+	margin: 0.85em 0 0 0;
+	text-indent: 3px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: inherit;
+	-webkit-transition: color 0.3s;
+	transition: color 0.3s;
+}
+
+.polaroid__base,
+.polaroid__loader {
+	-webkit-transition: fill 0.3s;
+	transition: fill 0.3s;
+
+	fill: #a3b0bd;
+}
+
+.button--load:hover,
+.button--load:focus {
+	color: #03a9f4;
+	outline: none;
+}
+
+.button:hover .polaroid__base,
+.button:focus .polaroid__base,
+.button:hover .polaroid__loader,
+.button:focus .polaroid__loader {
+	fill: #03a9f4;
+}
+
+.polaroid__inner {
+	fill: #e9ecef;
+}
+
+.button--loading .polaroid__loader circle {
+	-webkit-animation: fadeInOut 0.3s ease-in infinite alternate forwards;
+	animation: fadeInOut 0.3s ease-in infinite alternate forwards;
+}
+
+.button--loading .polaroid__loader circle:nth-child(2) {
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.button--loading .polaroid__loader circle:nth-child(3) {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+@-webkit-keyframes fadeInOut {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInOut {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.button--hidden {
+	pointer-events: none;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.grid {
+	position: relative;
+	z-index: 100;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: center;
+	justify-content: center;
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 0 0 6em;
+	list-style: none;
+}
+
+.grid__item {
+	display: block;
+	-webkit-flex: none;
+	flex: none;
+	width: 33.33%;
+	padding: 10px;
+}
+
+.js .grid__item {
+	opacity: 0;
+}
+
+.grid__item--hidden {
+	opacity: 0;
+}
+
+.grid__link {
+	display: block;
+	padding: 13px 13px 0 13px;
+	background: #fff;
+}
+
+.grid__img {
+	display: block;
+	width: 100%;
+}
+
+.grid__item-title {
+	font-family: 'Caveat', cursive;
+	line-height: 1;
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	padding: 1em 0.5em;
+	text-align: left;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #698b8d;
+	background: #fff;
+}
+
+/* Loader (styles defined in square-loader.min.css) */
+.la-square-loader {
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	color: #565f73;
+	opacity: 0;
+	-webkit-transform: translate3d(-50%,-50%,0) scale3d(1.35,1.35,1);
+	transform: translate3d(-50%,-50%,0) scale3d(1.35,1.35,1);
+}
+
+.la-square-loader > div {
+	border-radius: 2px;
+}
+
+.js .la-square-loader {
+	opacity: 1;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.view--loaded .la-square-loader {
+	opacity: 0;
+}
+
+/* Visibility/pointer events of items depending on state (loaded) */
+
+.js .grid,
+.js .device,
+.js .button--view {
+	opacity: 0;
+}
+
+.view--loaded .grid,
+.view--loaded .device,
+.view--loaded .button--view {
+	opacity: 1;
+}
+
+.view--loaded .button--view {
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.js .page--static {
+	pointer-events: none;
+}
+
+.view--grid .page--static {
+	pointer-events: auto;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 56em) {
+	.header {
+		padding: 1em;
+	}
+	.title-wrap {
+		font-size: 53%;
+		margin: 85px 0 0 0;
+	}
+	.page__title-main {
+		font-size: 1.3em;
+	}
+	.page__title-sub {
+		margin-bottom: 1em;
+	}
+	.grid__item {
+		width: 50%;
+		max-width: none;
+	}
+}
