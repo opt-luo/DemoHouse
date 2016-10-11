@@ -1,0 +1,174 @@
+/*--------------------
+Mixins
+---------------------*/
+/*--------------------
+Body
+---------------------*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+body {
+  background: -webkit-linear-gradient(75deg, #d33f34 50%, #a61322 50.1%);
+  background: linear-gradient(15deg, #d33f34 50%, #a61322 50.1%);
+}
+
+/*--------------------
+Shop Card
+---------------------*/
+.shop-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 350px;
+  background: #f5f5f5;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 25px;
+  text-align: center;
+  z-index: 2;
+}
+.shop-card figure {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  outline: none !important;
+}
+.shop-card figure img {
+  margin: -95px 0 -60px;
+  width: 100%;
+}
+.shop-card .title {
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 30px;
+  color: #23211f;
+  margin-bottom: 5px;
+}
+.shop-card .desc {
+  font-size: 17px;
+  opacity: .8;
+  margin-bottom: 3px;
+}
+.shop-card .cta {
+  padding: 20px 20px 5px;
+}
+.shop-card .cta::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.shop-card .price {
+  float: left;
+  color: #FF3100;
+  font-size: 22px;
+  font-weight: 900;
+  padding-top: 2px;
+  -webkit-transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
+  margin-top: 4px;
+}
+.shop-card .btn {
+  position: relative;
+  z-index: 1;
+  float: right;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #FF3100;
+  padding: 12px 18px;
+  cursor: pointer;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  line-height: .95;
+  border: none;
+  background: none;
+  outline: none;
+  border: 1px solid #FF3100;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.shop-card .btn .bg {
+  width: 101%;
+  height: 101%;
+  display: block !important;
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  background: -webkit-linear-gradient(315deg, #a61322, #d33f34);
+  background: linear-gradient(135deg, #a61322, #d33f34);
+}
+.shop-card .btn:hover {
+  color: #fff !important;
+  border: 1px solid transparent !important;
+}
+.shop-card .btn:hover .bg {
+  opacity: 1;
+}
+
+/*--------------------
+Slick Dots
+---------------------*/
+.slick-dots {
+  bottom: -30px;
+}
+.slick-dots a {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.slick-dots span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.slick-dots circle {
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-dasharray: 39 39;
+  stroke-dashoffset: 39;
+  -webkit-transition: all .9s ease-in-out;
+  transition: all .9s ease-in-out;
+  -webkit-transition: stroke-dashoffset 0.5s;
+  transition: stroke-dashoffset 0.5s;
+}
+.slick-dots .slick-active circle {
+  stroke-dashoffset: 0;
+}
+
+/*--------------------
+Background
+--------------------*/
+.bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(75deg, #d33f34 50%, #a61322 50.1%);
+  background: linear-gradient(15deg, #d33f34 50%, #a61322 50.1%);
+  z-index: 1;
+  display: none;
+}

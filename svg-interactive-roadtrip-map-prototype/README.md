@@ -1,0 +1,3 @@
+A Pen created at CodePen.io. You can find this one at http://codepen.io/dudleystorey/pen/zKBVPm.
+
+ Uses the Web Animation API, JavaScript, CSS / SMIL animation and SVG to create an interactive roadtrip map. Photographs by [Reinis Traidas](https://www.flickr.com/photos/reinis/3208158827/), [Kathrin & Stefan Marks](https://www.flickr.com/photos/ks_marks/4513100525), and [Jocelyn Kinghorn](https://www.flickr.com/photos/joceykinghorn/11157483815)

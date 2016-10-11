@@ -1,0 +1,191 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  color: #b0b0b0;
+  background: #212121;
+  width: 100vw;
+  height: 100vh;
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
+  position: relative;
+}
+
+.avatar-main {
+  position: absolute;
+  background: #dedede;
+  border-radius: 50%;
+  padding: 0rem;
+  height: 100%;
+  width: 100%;
+  transition: all 1s ease;
+}
+.avatar-main img {
+  display: block;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  border: 0.25rem solid rgba(255, 135, 240, 0);
+  transition: all 2s ease-in;
+}
+.avatar-main img:hover {
+  border: 0.25rem solid #ff87f0;
+  transition: all .8s ease-out;
+}
+
+.avatar-sub {
+  position: absolute;
+  background: #dedede;
+  border-radius: 50%;
+  height: 30%;
+  width: 30%;
+  top: calc(80% - .15rem);
+  left: calc(75% - .15rem);
+  padding: 0rem;
+  transition: all 1s ease;
+}
+.avatar-sub img {
+  position: absolute;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  border: 0.25rem solid transparent;
+  transition: all 1s ease-in;
+}
+.avatar-sub img:hover {
+  border: 0.25rem solid #9691eb;
+  transition: all .8s ease-out;
+}
+
+.avatar-title {
+  color: rgba(180, 180, 180, 0.85);
+  cursor: pointer;
+  margin: 1.5rem 0 0 0;
+  font-size: .8125rem;
+  height: 1rem;
+  font-weight: 600;
+  transition: all 1s ease-in;
+  transition-delay: .8125s;
+}
+.avatar-title:hover {
+  color: #ff87f0;
+  transition: all 1s ease-out;
+}
+
+footer {
+  padding: .24rem 0 .75rem;
+  font-size: .75rem;
+  position: absolute;
+  bottom: 0;
+}
+footer a {
+  color: #ff87f0;
+}
+
+.dA, .twit, .git {
+  opacity: 0;
+}
+
+#check:checked ~ .avatar > .avatar-sub {
+  background: rgba(222, 222, 222, 0);
+  left: calc(77.5% - .15rem);
+  height: 25%;
+  width: 25%;
+  opacity: 1;
+  transition: all 2s ease;
+  transition-delay: .4s;
+}
+#check:checked ~ .avatar > .git {
+  top: calc(95% - .15rem);
+}
+#check:checked ~ .avatar > .git img:hover {
+  border: 0.25rem solid #f0c828;
+}
+#check:checked ~ .avatar > .twit {
+  top: calc(125% - .15rem);
+}
+#check:checked ~ .avatar > .twit img:hover {
+  border: 0.25rem solid #05cdc8;
+}
+#check:checked ~ .avatar > .dA {
+  top: calc(155% - .15rem);
+}
+#check:checked ~ .avatar > .dA img:hover {
+  border: 0.25rem solid #05cd46;
+}
+#check:checked ~ .avatar > .social {
+  top: calc(187.5% - .15rem);
+  left: calc(75% - .15rem);
+  height: 30%;
+  width: 30%;
+}
+#check:checked ~ .avatar > .social .close {
+  opacity: 0;
+  transition-delay: .4s;
+}
+#check:checked ~ .avatar-title {
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  transition: all .2s ease;
+  transition-delay: .1s;
+}
+#check:checked ~ .avatar > .social > .bubble {
+  display: none;
+}
+
+.social:hover > .bubble {
+  opacity: 1;
+}
+.social:hover > .open {
+  border: 0.25rem solid #9691eb;
+}
+
+.bubble {
+  opacity: 0;
+  background: #fff;
+  color: #b42828;
+  font-style: italic;
+  position: absolute;
+  left: 140%;
+  top: 14%;
+  width: max-content;
+  border-radius: .25rem;
+  padding: .5rem;
+  transition: all .3s;
+}
+.bubble:after {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  border-style: solid;
+  top: calc(50% - 10px);
+  left: -12px;
+  border-width: 10px 12px 10px 0;
+  border-color: transparent #fff transparent transparent;
+}
+
+/* No es tan una buena idea
+.avatar {
+	-webkit-filter: url("#Goo");
+	filter: url("#Goo");
+} */
+#check {
+  display: none;
+}

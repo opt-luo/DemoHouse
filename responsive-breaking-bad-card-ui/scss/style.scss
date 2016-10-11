@@ -1,0 +1,293 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+body {
+  background: #313131;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 250px !important;
+    height: 950px !important;
+    overflow: hidden;
+    .about-movie {
+      display: inline-block !important;
+      p {
+        width: 49% !important;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  }
+}
+
+.movie-card {
+  font: 14px/22px "Lato", Arial, sans-serif;
+  color: #A9A8A3;
+  padding: 40px 0;
+  .container {
+    margin: 0 auto;
+    width: 680px;
+    height: 640px;
+    background: #F0F0ED;
+    border-radius: 5px;
+    position: relative;
+    a {
+      img {
+        max-width: 550px;
+        max-height: 250px;
+      }
+    }
+    .back-cover {
+      height: 342px;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      &:before {
+        content: " ";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url("http://laughingsquid.com/wp-content/uploads/bbillo2.jpg");
+        z-index: -1;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transform: skewY(-3.2deg);
+        transform-origin: 0 0;
+      }
+    }
+    .cover {
+      position: absolute;
+      top: 160px;
+      left: 40px;
+      z-index: 2;
+      &:hover {
+        opacity: 0.9;
+        cursor: pointer;
+      }
+    }
+    .details {
+      padding: 238px 0 0 268px;
+      .title1 {
+        color: #eee;
+        font-size: 44px;
+        margin-bottom: 16px;
+        position: relative;
+        span {
+          position: absolute;
+          top: 3px;
+          margin-left: 12px;
+          background: #C4AF3D;
+          border-radius: 5px;
+          color: #544C21;
+          font-size: 14px;
+          padding: 0px 4px;
+        }
+      }
+    } // end details 
+    .title2 {
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .likes {
+      margin-left: 30px;
+      display: inline-block;
+      padding-bottom: 19px;
+      &:before {
+        content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/icon_like.png");
+        position: relative;
+        top: 2px;
+        padding-right: 7px;
+      }
+    }
+    .about-movie {
+      display: inline-flex;
+      bottom: 0px;
+      height: 200px;
+      font-size: 16px;
+      line-height: 26px;
+      color: #B1B0AC;
+      .colum-one {
+        padding-left: 50px;
+        padding-top: 90px;
+        width: 220px;
+        float: left;
+        text-align: left;
+        .colum-catogary {
+          text-align: left;
+          margin-left: -20px;
+          span {
+            padding: 1px 8px;
+            font-size: 14px;
+            background: white;
+            border-radius: 10px;
+            margin-left: 2px;
+            &:hover {
+              background: #999;
+              color: white;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .colum-second {
+        padding-left: 38px;
+        padding-top: 21px;
+        margin-left: -39px;
+        width: 480px;
+        float: left;
+        p {
+          width: 76%;
+          a {
+            text-decoration: none;
+            color: #6e6ed8;
+          }
+        }
+      }
+    }
+  } //container  end
+} //movie-card  end 
+
+/*start rate system style */
+
+fieldset {
+  border-color: #fff;
+  border-style: none;
+}
+
+.starRating {
+  margin-left: -22px;
+}
+
+.starRating > * {
+  float: left;
+}
+
+
+/* 
+some  animtion   do  when  load window 
+
+*/
+
+@-webkit-keyframes pulse {
+  50% {
+    color: #5e5e5e;
+    text-shadow: 0 0 15px #777777;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    color: #5e5e5e;
+    text-shadow: 0 0 15px #777777;
+  }
+}
+
+.starRating label {
+  height: 40px;
+  width: 15%;
+  position: relative;
+  cursor: pointer;
+}
+
+.starRatinglabel:nth-of-type(5):after {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s;
+}
+
+.starRating label:nth-of-type(4):after {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.starRating label:nth-of-type(3):after {
+  -webkit-animation-delay: 0.15s;
+  animation-delay: 0.15s;
+}
+
+.starRating label:nth-of-type(2):after {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.starRating label:nth-of-type(1):after {
+  -webkit-animation-delay: 0.05s;
+  animation-delay: 0.05s;
+}
+
+.starRating label:after {
+  -webkit-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+  position: absolute;
+  content: "☆";
+  color: #444;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 40px;
+  -webkit-animation: 1s pulse ease;
+  animation: 1s pulse ease;
+}
+
+.starRating label:hover:after {
+  color: #5e5e5e;
+  text-shadow: 0 0 15px #5e5e5e;
+}
+
+.starRating input {
+  display: none;
+}
+
+
+/*  " +" This will only work on IE7 or above. In IE6, the style will not be applied to any elements  so used "~ " this  meaning select  any element  after the input radio button 
+show 
+
+ http://jsfiddle.net/7c05m7tv/ 
+ https://css-tricks.com/almanac/selectors/a/adjacent-sibling/
+ http://jsfiddle.net/7c05m7tv/70/
+
+*/
+
+.starRating input:checked + label:after,
+.starRating input:checked ~ label:after {
+  content: "★";
+  color: #F9BF3B;
+  text-shadow: 0 0 20px #F9BF3B;
+}
+
+
+
+
+
+.myName{
+	position: absolute;
+	top: 1em;
+	left: 1em;
+	padding: 5px 15px;
+	color: #FFF;
+	font-family: arial;
+	width: 30%;
+}
+.myName a{
+	color: #FFF; 
+	text-decoration: none;
+	font-size: 1.3em;
+	font-weight: normal;
+	float: left;
+	margin-top: 3%;
+	margin-left: 3%;
+}
+.myName a:hover{text-decoration: underline;}
+.myName img{
+	width: 50px; 
+	border-radius: 50%;
+	float: left;
+}

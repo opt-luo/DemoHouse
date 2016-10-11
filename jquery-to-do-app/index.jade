@@ -1,0 +1,28 @@
+// My Version of a 'to do App'.
+// Practicing my newly learnt skills from treehouse Interactive Web Pages with JavaScript and jQuery Basics
+
+.todo
+	.todo__uncompleted
+		h3 TO DO
+		ul.todo__uncompleted-list
+			li
+				input(type="checkbox")
+				input(type="text", value="Go Running")
+				span.delete-btn
+			li
+				input(type="checkbox")
+				input(type="text", value="Grocery Shopping")
+				span.delete-btn
+			li#displayTask
+				input(type="text", value=" ")
+	.todo__completed
+		h3 COMPLETED
+		ul.todo__completed-list
+			li
+				input(type="checkbox", checked)
+				input(type="text", value="See The Doctor")
+				span.delete-btn
+			li
+				input(type="checkbox", checked)
+				input(type="text", value="Pay Electricity Bill")
+				span.delete-btn

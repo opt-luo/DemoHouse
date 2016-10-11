@@ -1,0 +1,156 @@
+// Import fonts
+@import 'https://fonts.googleapis.com/css?family=Oswald:300|Slabo+27px';
+
+// Sassy stuff
+$white: #ffffff;
+$black: #333333;
+$red: #e74c3c;
+$transblack: rgba(66,66,66,0.7);
+
+@mixin header-font($size) {
+	font: { 
+				family:'Oswald';
+				size: $size;
+				weight: 300;
+	}
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+// Base Stuff inc responsive text
+body, html, #app {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	font: {
+		family: 'Slabo 27px';
+		size: 14px;
+	}
+	color: $black;
+}
+// Tablet
+@media screen and (min-width:768px){
+	:root { font-size: 16px; }
+}
+// Desktop
+@media screen and (min-width:1024px){
+	:root { font-size: 18px; }
+}
+// Large Desktop
+@media screen and (min-width:1440px){
+	:root { font-size: 23px; }
+}
+
+// Main Styles
+.gallery {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	padding: 34px;
+}
+.gallery-tile {
+	min-width: 200px;
+	max-width: 28vw;
+	margin: 0.25em;
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+	img {
+		width: 100%;
+		height: 100%;
+		transition: transform 300ms ease-in-out, filter 300ms ease-in-out;
+	}
+	.picture-info {
+		& > * {
+			margin: 0.5rem 1.25rem;
+		}
+		h2 { 
+			@include header-font(2.5rem);
+		}
+		position: absolute;
+		z-index: 1;
+		color: $white;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: flex-start;
+		opacity: 0;
+		transition: opacity 300ms ease-in-out, 
+								filter 300ms ease-in-out;
+	}
+	&:hover {
+		img {
+			transform: scale(1.1);
+			filter: brightness(80%);
+		}
+		.picture-info {
+			opacity: 1;
+		}
+	}
+	
+}
+.imageview-wrapper {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.imageview {
+	display: flex;
+	justify-content: center;
+}
+.imageview > * { margin: 3em; }
+.imageview-image {
+	width: 25em;
+	height: 25em;
+	box-shadow: 0 20px 40px -5px $transblack;
+}
+.imageview-info {
+	max-width: 260px;
+	text-align: right;
+	position: relative;
+	button {
+		@include header-font(1.5rem);
+		color: $red;
+		border: none;
+		background: none;
+		outline: none;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: -2em;
+		right: -1em;
+		&:hover {
+			animation: swell 300ms ease-in-out;
+		}
+	}
+	h2 {
+		@include header-font(2.5rem);
+		margin-top: 0;
+	}
+	h3 {
+		@include header-font(1.5rem);
+	}
+	ul {
+		list-style: none;
+	}
+}
+
+.fadeIn { animation: fade 300ms ease-in-out forwards; }
+
+@keyframes fade {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@keyframes swell {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.3); }
+	100% { transform: scale(1); }
+}

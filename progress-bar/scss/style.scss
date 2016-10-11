@@ -1,0 +1,161 @@
+$black: #000;
+$white: #FFF;
+
+$width: 790px;
+$height: 180px;
+
+body {
+  background: #E8DFD9;
+}
+
+.squares {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.boxes {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: $width;
+  height: $height;
+  font-family: "Open Sans", sans-serif;
+  transform: translate(-50%, -50%);
+}
+
+.box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  background: $white;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  box-shadow: 40px 0 65px rgba(#D4C5BA, 0.4);
+  padding: 0 80px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform-origin: center;
+  transform: scale(1.2, 1.2);
+  
+  &:nth-child(1),
+  &:nth-child(2) {
+    position: absolute;
+  }
+  
+  &:nth-child(1) {
+    left: 3%;
+    width: 94%;
+  }
+  
+  &:nth-child(2) {
+    left: 2%;
+    width: 96%;
+  }
+}
+
+.progress {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #E8DFD8;
+  width: 100%;
+  height: 3px;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  
+  &__fill {
+    display: block;
+    background: #BD8044;
+    height: 100%;
+  }
+}
+
+.point {
+  position: relative;
+  color: #AC9585;
+  cursor: pointer;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    transition: 0.3s ease;
+    
+    .show-radius & {
+      background: rgba(#000, 0.1);
+    }
+  }
+
+  &--complete,
+  &--active {
+    color: #BA7C3F;
+  }
+}
+
+.bullet {
+  z-index: 1;
+  position: relative;
+  background: #AC9585;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  transition: 0.3s ease;
+  
+  .point--complete &,
+  .point--active & {
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(#000, 0.2),
+                0 0 0 6px #BD8044;
+  }
+  
+  .point--active & {
+    box-shadow: 0 2px 4px rgba(#000, 0.2),
+                0 0 0 10px #BD8044;
+  }
+}
+
+.label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin: 20px 0 0 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transform: translate(-50%, 0);
+}
+
+.radius-toggle {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: block;
+  background: $white;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 40px 0 65px rgba(#D4C5BA, 0.4);
+  padding: 10px;
+  color: #BA7C3F;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}

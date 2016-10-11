@@ -1,0 +1,48 @@
+body{
+	margin:0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #222;
+}
+
+div{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+input{
+	width: 100%;
+	min-width: 500px;
+	margin-top: 2em;
+}
+
+.bubble{
+	position: absolute;
+	left:50%;
+	transform: translateX(-53%) rotate(45deg);
+	top: -160%;
+	//transition: left 100ms;
+	background: rgba(white,0.8);
+	padding: 1em;
+	border-radius: 50% 50% 5px 50%;
+	box-shadow: 0 20px 20px -5px rgba(black,0.3);
+	animation: pulse 2500ms infinite;
+	svg{
+		transform: rotate(-45deg);
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: translateX(-53%) rotate(45deg) translateY(0);
+	}
+	50%{
+		transform: translateX(-61%) rotate(45deg) translateY(-10px);
+	}
+	100%{
+		transform: translateX(-53%) rotate(45deg) translateY(0);
+	}
+}

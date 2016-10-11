@@ -1,0 +1,21 @@
+var myIcons = new SVGMorpheus('#Smiles',{
+	iconId: 'smile3',
+	duration: 250,
+	rotation: 'none'
+});
+
+function percentageToHsl(percentage, hue0, hue1) {
+    var hue = (percentage * (hue1 - hue0)) + hue0;
+    return 'hsla(' + hue + ', 100%, 50%,0.5)';
+}
+
+var color = percentageToHsl(0.5, 0, 120);
+document.querySelector('.bubble').style.background = color;
+var input = document.querySelector('input');
+
+input.addEventListener('input',function(){
+	var color = percentageToHsl((this.value / 100), 0, 120);
+	document.querySelector('.bubble').style.background = color;
+	document.querySelector('.bubble').style.left = (this.value) + '%';
+	myIcons.to('smile' + Math.round(this.value / 20));
+})

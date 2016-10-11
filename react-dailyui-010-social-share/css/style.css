@@ -1,0 +1,120 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700";
+#app {
+  height: 100vh;
+  width: 100vw;
+  background: #121212;
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#app .App {
+  width: 400px;
+}
+
+.Image {
+  width: 400px;
+  height: 220px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.Image .content {
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  color: white;
+}
+.Image .content h1 {
+  font-size: 20px;
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+.Image .content h2 {
+  font-style: italic;
+  font-size: 13px;
+}
+
+.Buttons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.Buttons .Button {
+  padding: 10px;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-decoration: none;
+  color: white;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  width: 200px;
+}
+.Buttons .Button .fa {
+  font-size: 22px;
+}
+.Buttons .Button .text {
+  margin-left: 10px;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 12px;
+  font-weight: 600;
+}
+.Buttons .Button::after {
+  content: attr(data-shares);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 20px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.125);
+}
+.Buttons .Button[data-type=facebook] {
+  background: #3b5998;
+  border-bottom-left-radius: 5px;
+}
+.Buttons .Button[data-type=facebook]:hover {
+  background: #4c70ba;
+}
+.Buttons .Button[data-type=twitter] {
+  background: #00aced;
+  border-bottom-right-radius: 5px;
+}
+.Buttons .Button[data-type=twitter]:hover {
+  background: #21c2ff;
+}

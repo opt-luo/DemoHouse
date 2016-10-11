@@ -1,0 +1,255 @@
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+$bgClr: #EE5555;
+
+$dotClr: (
+	loader-1: #fff,
+	loader-2: #fff,
+	loader-3: #fff,
+	loader-4: #fff,
+	loader-5: #fff,
+	loader-6: #fff
+);
+$dotDiam: (
+	loader-1: 20px, 
+	loader-2: 10px,
+	loader-3: 35px,
+	loader-4: 15px,
+	loader-5: 15px,
+	loader-6: 20px
+);
+// Change number of dots also in html
+$dotNum: (
+	loader-1: 16,
+	loader-2: 24,
+	loader-3: 14,
+	loader-4: 12,
+	loader-5: 30,
+	loader-6: 18
+);
+$dotDistr: (
+	loader-1: 85px,
+	loader-2: 65px,
+	loader-3: 55px,
+	loader-4: 50px,
+	loader-5: 55px,
+	loader-6: 85px
+);
+
+$animSpd: (
+	loader-1: 1.5s,
+	loader-2: 1s,
+	loader-3: 1.5s,
+	loader-4: 1.5s,
+	loader-5: 1.5s,
+	loader-6: 1.5s
+);
+
+$boxesInRow: 3;
+
+@mixin mediaMaxH($height) {
+  @media screen and (max-height: $height) {
+    @content;
+  }
+}
+
+body {
+	height: 100vh;
+	background-color: $bgClr;
+	overflow: hidden;
+}
+
+.cont {
+	display: flex;
+	height: 100vh;
+	flex-wrap: wrap;
+}
+
+.box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	flex: 0 0 calc(100% / #{$boxesInRow});
+}
+
+.dot {
+	position: absolute;
+	transform-origin: left center;
+	&:after {
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: map-get($dotDiam, loader-1);
+		height: map-get($dotDiam, loader-1);
+		background-color: map-get($dotClr, loader-1);
+		border-radius: 50%;
+	}
+}
+
+.box:nth-child(1) {
+	@for $i from 1 through map-get($dotNum, loader-1) {
+		.dot:nth-child(#{$i}) {
+			@if ($i % 2 == 0) {
+				width: map-get($dotDistr, loader-1) - 20px;
+			}
+			transform: rotate((360deg / map-get($dotNum, loader-1)) * $i);
+			&:after {
+				width: map-get($dotDiam, loader-1);
+				height: map-get($dotDiam, loader-1);
+				@if ($i % 2 == 0) {
+					height: map-get($dotDiam, loader-1) + 20px;
+				}
+				animation: load map-get($animSpd, loader-1) infinite linear;
+				animation-delay: (map-get($animSpd, loader-1) / map-get($dotNum, loader-1)) * ($i - 1);
+				@keyframes load {
+					0% {
+						transform: scale(1);
+						opacity: 1
+					}
+					90% {
+						transform: scale(.25);
+						opacity: .25
+					}
+					100% {
+						transform: scale(1);
+						opacity: 1
+					}
+				}
+			}
+		}
+	}
+}
+
+.box:nth-child(2) {
+	@for $i from 1 through map-get($dotNum, loader-2) {
+		.dot:nth-child(#{$i}) {		
+			width: map-get($dotDistr, loader-2);
+			@if ($i % 2 == 0) {
+				width: map-get($dotDistr, loader-2) - 40px;
+			}
+			transform: rotate((360deg / map-get($dotNum, loader-2)) * $i);
+			&:after {
+				width: map-get($dotDiam, loader-2);
+				@if ($i % 2 != 0) {
+					width: map-get($dotDiam, loader-2) + 25px;
+				}
+				height: map-get($dotDiam, loader-2);
+				@if ($i % 2 == 0) {
+					height: map-get($dotDiam, loader-2) + 10px;
+				}
+				animation: load map-get($animSpd, loader-2) infinite linear;
+				animation-delay: (map-get($animSpd, loader-2) / map-get($dotNum, loader-2)) * ($i - 1);
+			}
+		}
+	}
+}
+
+.box:nth-child(3) {
+	@for $i from 1 through map-get($dotNum, loader-3) {
+		.dot:nth-child(#{$i}) {
+			width: map-get($dotDistr, loader-3);
+			@if ($i % 2 == 0) {
+				width: map-get($dotDistr, loader-3) - 20px;
+			}
+			transform: rotate((360deg / map-get($dotNum, loader-3)) * $i);
+			&:after {
+				background-color: map-get($dotClr, loader-3);
+				width: map-get($dotDiam, loader-3);
+				height: map-get($dotDiam, loader-3);
+				animation: load map-get($animSpd, loader-3) infinite linear;
+				animation-delay: (map-get($animSpd, loader-3) / map-get($dotNum, loader-3)) * ($i - 1);
+			}
+		}
+	}
+}
+
+.box:nth-child(4) {
+	@for $i from 1 through map-get($dotNum, loader-4) {
+		.dot:nth-child(#{$i}) {
+			width: map-get($dotDistr, loader-4);
+			@if ($i % 2 == 0) {
+				width: map-get($dotDistr, loader-4) - 20px;
+			}
+			transform: rotate((360deg / map-get($dotNum, loader-4)) * $i);
+			&:after {
+				width: map-get($dotDiam, loader-4);
+				height: map-get($dotDiam, loader-4);
+				animation: load map-get($animSpd, loader-4) infinite linear;
+				animation-delay: (map-get($animSpd, loader-4) / map-get($dotNum, loader-4)) * ($i - 1);
+			}
+		}
+	}
+}
+
+.box:nth-child(5) {
+	p {
+		position: absolute;
+		bottom: 0;
+		text-align: center;
+		margin-bottom: 10px;
+		color: #fff;
+		font: {
+			family: 'Roboto', sans-serif;
+			size: 16px;
+		}
+		letter-spacing: 1px;
+		@include mediaMaxH(620px) {
+			line-height: 14px;
+			margin-bottom: 0;
+			font: {
+				size: 14px;
+			}
+		}
+	}
+
+	@for $i from 1 through map-get($dotNum, loader-5) {
+		.dot:nth-child(#{$i}) {
+			width: map-get($dotDistr, loader-5);
+			@if ($i % 2 == 0) {
+				width: map-get($dotDistr, loader-5) + 40px;
+			}
+			@if ($i % 4 == 0) {
+				width: map-get($dotDistr, loader-5) + 20px;
+			}
+			transform: rotate((360deg / map-get($dotNum, loader-5)) * $i);
+			&:after {
+				width: map-get($dotDiam, loader-5);
+				height: map-get($dotDiam, loader-5);
+				@if ($i % 2 == 0) {
+					width: map-get($dotDiam, loader-5) - 5px;
+					height: map-get($dotDiam, loader-5) - 5px;
+				}
+				animation: load map-get($animSpd, loader-5) infinite linear;
+				animation-delay: (map-get($animSpd, loader-5) / map-get($dotNum, loader-5)) * ($i - 1);
+			}
+		}
+	}
+}
+
+.box:nth-child(6) {
+	@for $i from 1 through map-get($dotNum, loader-6) {
+		.dot:nth-child(#{$i}) {
+			width: map-get($dotDistr, loader-6);
+			@if ($i % 3 == 0) {
+				width: map-get($dotDistr, loader-6) - 30px;
+			}
+			transform: rotate((360deg / map-get($dotNum, loader-6)) * $i);
+			&:after {
+				width: map-get($dotDiam, loader-6);
+				height: map-get($dotDiam, loader-6);
+				animation: load map-get($animSpd, loader-6) infinite linear;
+				animation-delay: (map-get($animSpd, loader-6) / map-get($dotNum, loader-6)) * ($i - 1);
+			}
+		}
+	}
+}

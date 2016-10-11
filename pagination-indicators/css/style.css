@@ -1,0 +1,96 @@
+.pindicator {
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2rem auto 0;
+  width: 30rem;
+}
+
+.pindicator .bullet {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  text-align: center;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+.pindicator .bullet::before,
+.pindicator .bullet::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: .5rem;
+  top: 1.25rem;
+  -webkit-transform: translate3d(0, 0, -1px);
+          transform: translate3d(0, 0, -1px);
+}
+
+.pindicator .bullet::before {
+  background-color: lightgray;
+  width: 100%;
+}
+
+.pindicator .bullet::after {
+  background-color: black;
+  -webkit-transition: opacity .25s ease-out;
+  transition: opacity .25s ease-out;
+  opacity: 0;
+  width: 100%;
+}
+
+.pindicator .bullet:first-child::before,
+.pindicator .bullet:first-child::after {
+  left: 50%;
+  width: 50%;
+}
+
+.pindicator .bullet:last-child::before,
+.pindicator .bullet:last-child::after {
+  width: 50%;
+}
+
+.pindicator .icon {
+  background-color: lightgray;
+  border-radius: 100%;
+  color: transparent;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: inline-block;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+  -webkit-transition: background-color .25s ease-out;
+  transition: background-color .25s ease-out;
+  width: 2em;
+}
+
+.pindicator .text {
+  color: lightgray;
+  font-size: .75rem;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  -webkit-transition: background-color .25s ease-out;
+  transition: background-color .25s ease-out;
+}
+
+.pindicator .past .icon,
+.pindicator .current .icon {
+  background-color: black;
+  color: white;
+}
+
+.pindicator .past::after,
+.pindicator .current::after {
+  opacity: 1;
+}
+
+.pindicator .past .text,
+.pindicator .current .text,
+.pindicator .next .text {
+  color: black;
+}

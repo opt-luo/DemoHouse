@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>action button with checkbox trick (NO JS)</title>
+    
+    
+    
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css'>
+
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+    
+  </head>
+
+  <body>
+
+    <!-- BUTTON SHOW/HIDE INSTRUCTION -->
+<input type="checkbox" id="u-instruction__button" name="u-instruction__button">
+<label for="u-instruction__button" class="c-button c-instruction__button">
+  <span class="c-button__off">OFF</span><span class="c-button__on">ON</span>
+  <div class="c-instruction__button__frame">  
+    <div class="c-button__instruction__toggle"></div>
+  </div>
+</label>
+<div class="c-instruction__text">Switch the toggle for see different action buttons made with checkbox trick.</div>
+
+
+<div class="c-mobile-view">
+  <!-- CONTROLLERS -->
+  <input type="checkbox" id="u-mobile__button" name="u-mobile__button">
+  <input type="checkbox" id="u-topbar__button" name="u-topbar__button">
+  <input type="checkbox" id="u-cards-switcher__button" name="u-cards-switcher__button">
+  <input type="checkbox" id="u-cards-hide__button" name="u-cards-hide__button">
+  <!-- / controllers-->
+
+  <!-- MOBILE VIEW CONTAINER -->
+  <div class="c-mobile-view__inner">
+
+    <!-- TOPBAR -->
+    <div class="c-mobile__topbar">
+      <label for="u-topbar__button" class="c-button c-topbar__button--menu fa fa-bars"></label>
+      <label for="u-topbar__button" class="c-button c-topbar__button--close fa fa-times"></label>
+      <ul>
+        <li><a href="" class="u-link__effect">Events list</a></li>
+        <li><a href="" class="u-link__effect">Favorites</a></li>
+        <li><a href="" class="u-link__effect">Credits</a></li>
+      </ul>
+    </div>
+
+    <!-- CARDS -->
+    <div class="c-cards__inner">
+      <div class="c-card c-card--back">
+        <div class="c-card__details">
+          <div class="c-card__details__top">
+            <h1>201-217 Central Park West</h1>
+            <p>New York, NY 10024, Stati Uniti</p>
+            <p>40.782093, -73.971731</p>
+          </div>
+          <div class="c-card__details__bottom">12<span>km</span></div>
+        </div>
+      </div>
+      <div class="c-card c-card--front">
+        <div class="c-card__details">
+          <div class="c-card__details__top">
+            <h1>284 5th Avenue</h1>
+            <p>New York, NY 10001, Stati Uniti</p>
+            <p>40.737330, -73.987470</p>
+          </div>
+          <div class="c-card__details__bottom">2.4<span>km</span></div>
+        </div>
+      </div>
+
+      <!-- ANIMATED PIN -->
+      <div class="c-pin"></div>
+    </div>
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="c-overlay">
+    <div class="c-overay__inner">
+      <!-- BUTTON 1 -->
+      <label for="u-mobile__button" class="c-button">
+          <span class="c-overlay-inner__button fa fa-star button__1"></span>
+        </label>
+      <!-- BUTTON 2 -->
+      <label for="u-mobile__button" class="c-button">
+          <span class="c-overlay-inner__button fa fa-search button__2"></span>
+        </label>
+    </div>
+  </div>
+
+  <!-- SWITCHER CARDS BUTTON -->
+  <label for="u-cards-switcher__button" class="c-button c-switcher__button">
+      <span class="c-switcher__button--cards fa fa-refresh"></span>
+  </label>
+
+  <!-- HIDE CARDS BUTTON -->
+  <label for="u-cards-hide__button" class="c-button c-show__button">
+      <span class="c-show__button--cards fa fa-eye"></span>
+  </label>
+  <label for="u-cards-hide__button" class="c-button c-hide__button">
+      <span class="c-hide__button--cards fa fa-eye-slash"></span>
+  </label>
+
+  <!-- BUTTON + -->
+  <label for="u-mobile__button" class="c-button c-mobile__button">
+      <span class="c-mobile__button__plus fa fa-plus"></span>
+  </label>
+  
+  <!-- INSTRUCTION -->
+  <div class="c-bubble__info c-bubble--menu"><div class="c-bubble__inner"><span>01</span><span>open menu</span></div></div>
+  <div class="c-bubble__info c-bubble--plus"><div class="c-bubble__inner c-bubble__inner"><span>02</span><span>open plus menu</span></div></div>
+  <div class="c-bubble__info c-bubble--switch"><div class="c-bubble__inner"><span>03</span><span>switch cards</span></div></div>
+  <div class="c-bubble__info c-bubble--hide"><div class="c-bubble__inner"><span>04</span><span>hide cards</span></div></div>
+
+</div>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+    
+    
+    
+  </body>
+</html>
