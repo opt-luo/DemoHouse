@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Video Opening Animation</title>
+		<meta name="description" content="A simple video opening animation based on the one seen on http://momentsapp.com/" />
+		<meta name="keywords" content="html5 video, animation, moments app, fullscreen, effect, web design, tutorial" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="container">
+			<header class="codrops-header">
+				<div class="codrops-links">
+					<a class="codrops-icon codrops-icon--prev" href="" title="Previous Demo"><span>Previous Demo</span></a>
+					<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=24567" title="Back to the article"><span>Back to the Codrops article</span></a>
+				</div>
+				<h1>Video Opening Animation</h1>
+			</header><!-- /codrops-header -->
+			<div class="deco-stack">
+				<img class="deco-stack__img deco-stack__img--rotation-1" src="media/boxpic1.jpg" alt="Picture 1" />
+				<img class="deco-stack__img deco-stack__img--rotation-2" src="media/boxpic2.jpg" alt="Picture 2" />
+				<img class="deco-stack__img deco-stack__img--rotation-3" src="media/boxpic3.jpg" alt="Picture 3" />
+			</div>
+			<div class="video-wrap">
+				<div class="video-inner">
+					<video class="video-player" src="media/woods.mp4" poster="media/woods.jpg" preload="auto">
+						<source src="media/woods.webm" type='video/webm; codecs="vp8.0, vorbis"'>
+						<source src="media/woods.ogg" type='video/ogg; codecs="theora, vorbis"'>
+						<source src="media/woods.mp4" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'>
+						<p>Sorry, but your browser does not support this video format.</p>
+					</video>
+					<button class="action action--close"><i class="fa fa-close"></i><span class="action__label action__label--hidden">Close preview</span></button>
+				</div> <!-- /video-inner -->
+			</div><!-- /video-wrap-->
+			<div class="content">
+				<div class="loader">
+					<i class="fa fa-spinner fa-pulse"></i>
+				</div>
+				<button class="action action--hidden action--play">
+					<i class="fa fa-play"></i><span class="action__label">Watch the video</span>
+				</button>
+			</div>
+		</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

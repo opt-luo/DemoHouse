@@ -1,0 +1,25 @@
+/* Main stuff */
+.text {
+  fill: url("#gr-radial"); }
+
+/* Other stuff */
+html,
+body {
+  height: 100%; }
+
+body {
+  background: #222 -webkit-linear-gradient(90deg, #222 50%, #272727 50%);
+  background: #222 linear-gradient(90deg, #222 50%, #272727 50%);
+  background-size: 3em 100%;
+  color: #fff; }
+
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact; }
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=style7.css.map */

@@ -1,0 +1,472 @@
+@font-face {
+	font-family: 'pgicons';
+	src:url('../fonts/pgicons/pgicons.eot');
+	src:url('../fonts/pgicons/pgicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/pgicons/pgicons.woff') format('woff'),
+		url('../fonts/pgicons/pgicons.ttf') format('truetype'),
+		url('../fonts/pgicons/pgicons.svg#pgicons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.cbp-pgcontainer {
+	position: relative;
+	width: 100%;
+	padding: 0 30px 100px 30px;
+}
+
+.cbp-pgcontainer ul,
+.cbp-pgcontainer li {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+
+.cbp-pggrid {
+	position: relative;
+	text-align: center;
+}
+/* If flexbox is supported we'll use it to lay out the grid */
+.flexbox .cbp-pggrid {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	-moz-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	-webkit-justify-content: center;
+}
+
+.cbp-pggrid > li {
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	width: 33%;
+	min-width: 340px;
+	max-width: 555px;
+	padding: 20px 2% 50px 2%;
+	text-align: left;
+}
+
+.flexbox .cbp-pggrid > li {
+	display: block;
+}
+
+.cbp-pgcontent {
+	border: 3px solid #47a3da;
+	position: relative;
+}
+
+.cbp-pgrotate {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	display: block;
+	color: transparent;
+	font-size: 0;
+	z-index: 100;
+	border-bottom: 3px solid #47a3da;
+	border-left: 3px solid #47a3da;
+	right: 0px;
+	top: 0px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.cbp-pgrotate:before {
+	font-size: 18px;
+	line-height: 32px;
+	color: #47a3da;
+}
+
+.no-touch .cbp-pgrotate:hover,
+.cbp-pgrotate.cbp-pgrotate-active {
+	background: #47a3da;
+}
+
+.no-touch .cbp-pgrotate:hover:before,
+.cbp-pgrotate.cbp-pgrotate-active:before {
+	color: #fff;
+}
+
+/* The item with the images will have perspective */
+.cbp-pgitem {
+	width: 100%;
+	position: relative;
+	padding: 2em;
+	-webkit-perspective: 1400px;
+	-moz-perspective: 1000px;
+	perspective: 1000px;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+/* The flip container */
+.cbp-pgitem-flip {
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-transition: -webkit-transform .4s ease-out;
+	-moz-transition: -moz-transform .4s ease-out;
+	transition: transform .4s ease-out;
+}
+
+/* If you want to rotate on hover instead of click, you could use something like this: 
+.cbp-pgrotate:hover + .cbp-pgitem .cbp-pgitem-flip
+*/
+.cbp-pgitem.cbp-pgitem-showback .cbp-pgitem-flip {
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+
+.cbp-pgitem-flip img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	max-height: 100%;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.cbp-pgitem img:first-child {
+	position: relative;
+}
+
+/* The second image will be rotated so that we'd be looking at the back of it */
+.cbp-pgitem img:nth-child(2) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translateX(-50%) translateY(-50%) rotateY(-180deg);
+	-moz-transform: translateX(-50%) translateY(-50%) rotateY(-180deg);
+	transform: translateX(-50%) translateY(-50%) rotateY(-180deg);
+}
+
+/* Fallback for browsers that don't support 3d transforms */
+.no-csstransforms3d .cbp-pgitem img:nth-child(2) {
+	position: relative;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.no-csstransforms3d .cbp-pgitem.cbp-pgitem-showback img:first-child {
+	display: none;
+}
+
+.no-csstransforms3d .cbp-pgitem.cbp-pgitem-showback img:nth-child(2) {
+	display: block;
+}
+
+/* The options bar */
+.cbp-pgoptions {
+	height: 60px;
+	width: 100%;
+ 	border-top: 3px solid #47a3da;;
+}
+
+.cbp-pgoptions > li {
+	width: 20%;
+	height: 100%;
+	float: left;
+	position: relative;
+	display: block;
+	cursor: pointer;
+	color: transparent;
+	font-size: 0;
+	border-left: 3px solid #47a3da;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.cbp-pgoptions > li:first-child {
+	border-left: none;
+} 
+
+.no-touch .cbp-pgoptions li {
+	color: #47a3da;
+}
+
+.no-touch .cbp-pgoptions li:hover,
+.cbp-pgoptions li.cbp-pgoption-active {
+	background: #47a3da;
+}
+
+.cbp-pgoptions li:before,
+.cbp-pgoptions li > span {
+	font-size: 22px;
+	line-height: 60px;
+	text-indent: 0;
+	text-align: center;
+	color: #47a3da;
+}
+
+.no-touch .cbp-pgoptions li:hover:before,
+.no-touch .cbp-pgoptions li:hover > span,
+.cbp-pgoptions li.cbp-pgoption-active > span  {
+	color: #fff;
+}
+
+.cbp-pgoptions li.cbp-pgoptsize > span {
+	font-size: 22px;
+}
+
+.cbp-pgoptions li > span {
+	display: block;
+}
+
+.cbp-pgoptions li:before {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+/* Icons */
+.cbp-pgoptcompare, 
+.cbp-pgoptcart, 
+.cbp-pgoptfav,
+.cbp-pgrotate {
+	font-family: 'pgicons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+.cbp-pgoptcompare:before {
+	content: "\e001";
+}
+
+.cbp-pgoptfav:before {
+	content: "\e003";
+}
+
+.cbp-pgoptfav.cbp-pgoptfav-selected:before {
+	content: "\e002";
+	color: #ee73b8;
+}
+
+.cbp-pgoptfav.cbp-pgoptfav-selected:hover:before {
+	color: #f9c0e0;
+}
+
+.cbp-pgoptcart:before {
+	content: "\e000";
+}
+
+.cbp-pgrotate:before {
+	content: "\e004";
+}
+
+/* Tooltips */
+.cbp-pgopttooltip {
+	position: absolute;
+	bottom: 180%;
+	margin-bottom: 0px;
+	background: #fff;
+	padding: 25px;
+	width: 100px;
+	left: 50%;
+	margin-left: -50px;
+	border: 3px solid #47a3da;
+	opacity: 0;
+	z-index: 1000;
+	visibility: hidden;
+	pointer-events: none;
+	-webkit-transition: visibility 0s 0.3s, opacity 0.3s, bottom 0.3s;
+	-moz-transition: visibility 0s 0.3s, opacity 0.3s, bottom 0.3s;
+	transition: visibility 0s 0.3s, opacity 0.3s, bottom 0.3s;
+}
+
+.cbp-pgoptions li:hover .cbp-pgopttooltip,
+.cbp-pgoptions li.cbp-pgoption-active .cbp-pgopttooltip {
+	visibility: visible;
+	opacity: 1;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
+	transition-delay: 0s;
+	bottom: 100%;
+	pointer-events: auto;
+}
+
+.cbp-pgopttooltip:after,
+.cbp-pgopttooltip:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.cbp-pgopttooltip:after {
+	border-color: transparent;
+	border-top-color: #fff;
+	border-width: 10px;
+	left: 50%;
+	margin-left: -10px;
+}
+
+.cbp-pgopttooltip:before {
+	border-color: transparent;
+	border-top-color: #47a3da;
+	border-width: 14px;
+	left: 50%;
+	margin-left: -14px;
+}
+
+/* Size tooltip */
+.cbp-pgoptsize .cbp-pgopttooltip {
+	margin-left: -50px;
+}
+
+.cbp-pgoptsize .cbp-pgopttooltip span {
+	display: block;
+	text-indent: 0;
+	background: url(../images/tshirt.svg) no-repeat center center;
+	background-size: 100%;
+	margin: 0 auto 4px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 700;
+	color: #65b3e2;
+}
+
+.cbp-pgoptsize .cbp-pgopttooltip span:hover {
+	color: #0968a1;
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+.cbp-pgoptsize .cbp-pgopttooltip span[data-size="XL"] {
+	width: 44px;
+	height: 44px;
+	line-height: 44px;
+}
+
+.cbp-pgoptsize .cbp-pgopttooltip span[data-size="L"] {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+}
+
+.cbp-pgoptsize .cbp-pgopttooltip span[data-size="M"] {
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+}
+
+.cbp-pgoptsize .cbp-pgopttooltip span[data-size="S"] {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+}
+
+/* Color tooltip */
+.cbp-pgoptcolor .cbp-pgopttooltip {
+	padding: 5px;
+}
+
+.cbp-pgoptions li.cbp-pgoptcolor > span,
+.cbp-pgoptcolor .cbp-pgopttooltip span {
+	display: block;
+	margin: 12px auto 0;
+	text-indent: -900em;
+}
+
+.cbp-pgoptions li.cbp-pgoptcolor > span {
+	width: 36px;
+	height: 36px;
+	border: 3px solid #fff;
+}
+
+.cbp-pgoptcolor .cbp-pgopttooltip span {
+	float: left;
+	margin: 4px;
+	width: 34px;
+	height: 34px;
+}
+
+.no-touch .cbp-pgoptcolor .cbp-pgopttooltip span:hover {
+	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+.cbp-pgoptcolor span[data-color="c1"] {
+	background: #72bbe9;
+}
+
+.cbp-pgoptcolor span[data-color="c2"] {
+	background: #e577aa;
+}
+
+.cbp-pgoptcolor span[data-color="c3"] {
+	background: #e5b178;
+}
+
+.cbp-pgoptcolor span[data-color="c4"] {
+	background: #7abe93;
+}
+
+.cbp-pginfo {
+	padding-top: 10px;
+}
+
+.cbp-pginfo:before,
+.cbp-pginfo:after {
+	content: " ";
+	display: table;
+}
+
+.cbp-pginfo:after {
+	clear: both;
+}
+
+.cbp-pginfo h3,
+.cbp-pginfo span {
+	float: left;
+	width: 50%;
+	font-size: 1.8em;
+	padding: 10px 5px;
+	margin: 0;
+}
+
+.cbp-pginfo h3 {
+	font-weight: 300;
+}
+
+.cbp-pginfo span {
+	font-weight: 700;
+	text-align: right;
+}
+/* Media Queries */
+
+@media screen and (max-width: 68.125em) {
+	.cbp-pggrid > li {
+		width: 48%;
+	}
+}
+
+@media screen and (max-width: 46.125em) {
+	.cbp-pggrid > li {
+		width: 100%;
+	}
+}

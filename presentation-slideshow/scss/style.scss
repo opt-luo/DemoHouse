@@ -1,0 +1,531 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $content;
+	background-color: $background;
+	@include font-smoothing;
+}
+
+a {
+	color: $color-1;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Slideshow 
+
+-------------------------------- */
+
+.cd-slideshow-wrapper {
+	overflow: hidden;
+
+	@include MQ(L) {
+		height: 100vh;
+	}
+}
+
+.cd-slideshow {
+	position: relative;
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */
+		content: 'mobile';
+		display: none;
+	}
+
+	.sub-slides {
+		width: 100%;
+		@include clearfix;
+		/* Force Hardware acceleration */
+		@include transform(translateZ(0));
+		@include transition(transform .3s);
+	}
+
+	> li, .sub-slides > li {
+		position: relative;
+		z-index: 1;
+		height: 100vh;
+		width: 100vw;
+		@include clearfix;
+	}
+
+	.sub-slides > li {
+		float: left;
+	}
+
+	.slider-dots {
+		/* 
+			dots visible on mobile when a slide has sub-slides
+			you won't see this element in the html - created using jQuery
+		*/
+		position: absolute;
+		z-index: 3;
+		bottom: 20px;
+		left: 0;
+		width: 100vw;
+		text-align: center;
+
+		li {
+			display: inline-block;
+			height: 10px;
+			width: 10px;
+			margin-right: 5px;
+			border-radius: 50%;
+			border: 1px solid $content;
+			@include transition(background-color .3s);
+
+			&.active {
+				background-color: $content;
+			}
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
+	}
+
+	&.remove-transitions {
+		/* 
+			remove transition on transforms 
+			used to switch form a slide to another from the main navigation
+		*/
+		@include transition(transform 0s);
+
+		.sub-slides {
+			@include transition(transform 0s);
+		}
+	}
+
+	@include MQ(L) {
+		/* Force Hardware acceleration */
+		@include transform(translateZ(0));
+		@include transition(transform $animation-duration);
+
+		&::before {
+			/* never visible - this is used in jQuery to check the current MQ */
+			content: 'desktop';
+		}
+
+		.sub-slides {
+			@include transition-duration($animation-duration);
+		}
+
+		> li, .sub-slides > li {
+			height: auto;
+			width: auto;
+		}
+
+		.slider-dots { 
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Slide Content
+
+-------------------------------- */
+
+.cd-slider-content {
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	float: left;
+	display: table;
+
+	.content-wrapper {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		background-color: $color-1;
+	}
+
+	.cd-slideshow > li:nth-of-type(1) & .content-wrapper {
+		background: $color-1;
+	}
+
+	.cd-slideshow > li:nth-of-type(2) & .content-wrapper {
+		background: $color-2;
+	}
+
+	.cd-slideshow > li:nth-of-type(3) & .content-wrapper {
+		background: $color-3;
+	}
+
+	.cd-slideshow > li:nth-of-type(4) & .content-wrapper {
+		background: $color-4;
+	}
+
+	.cd-slideshow > li:nth-of-type(5) & .content-wrapper {
+		background: $color-5;
+	}
+
+	.cd-slideshow > li:nth-of-type(6) & .content-wrapper {
+		background: $color-6;
+	}
+
+	h2 {
+		font-size: 3rem;
+		color: $content;
+	}
+
+	p {
+		margin: 1em 0 2em;
+		opacity: .6;
+	}
+
+	@include MQ(L) {
+		height: 84vh;
+		width: 90vw;
+		margin: 2vh 5vw;
+		border-radius: 10px;
+		cursor: pointer;
+
+		.visible .sub-visible &,
+		.visible > & {
+			/* visible slide */
+			cursor: auto;
+		}
+
+		.cd-slideshow > li:first-of-type & {
+			margin-top: 8vh;
+		}
+
+		.sub-slides > li:first-of-type & {
+			margin-left: 5vw;
+		}
+
+		.sub-slides > li & {
+			margin-left: 1.25vw;
+			margin-right: 1.25vw;
+		}
+
+		.content-wrapper {
+			height: 100%;
+			/* hide the slide content if the slide is not selected/visible */
+			opacity: 0;
+			box-shadow: 0 6px 40px rgba(#000, .4), inset 0 1px 0 rgba(#fff, .15);
+			border-radius: inherit;
+			@include transition(opacity $animation-duration);
+		}
+
+		&::after {
+			/* this is used to change the slide background color when the slide is out of focus */
+			content: '';
+			position: absolute;
+			z-index: 3;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			border-radius: inherit;
+			background-color: tint($background, 5%);
+			box-shadow: 0 4px 30px rgba(#000, .3), inset 0 1px 0 rgba(#fff, .1);
+			opacity: 1;
+			visibility: visible;
+			@include transition(opacity $animation-duration, visibility $animation-duration);
+		}
+
+		.visible & .content-wrapper {
+			opacity: 1;
+		}
+
+		.visible &::after {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		h2 {
+			font-size: 4rem;
+			font-weight: 300;
+		}
+
+		p {
+			font-weight: bold;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Slideshow Navigation
+
+-------------------------------- */
+
+.cd-slideshow-nav {
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	left: 0;
+
+	.cd-nav-items {
+		position: fixed;
+		z-index: 1;
+		height: 100vh;
+		width: 100%;
+		overflow: hidden;
+		top: 0;
+		left: 0;
+		background-color: darken($background, 10%);
+		@include transform(translateX(-100%));
+		@include transition(transform .3s);
+
+		> ol {
+			height: 100%;
+			overflow: auto;
+			padding: 80px 20px 80px 30px;
+		}
+	}
+
+	ol ol {
+		padding-left: 1em;
+	}
+
+	a {
+		color: $content;
+		display: inline-block;
+		margin-bottom: .8em;
+
+		&:before {
+			/* list bullets */
+			position: relative;
+			content: '';
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			background: tint($background, 30%);
+			border-radius: 50%;
+			margin-right: .4em;
+			@include transform(translateY(-2px));
+		}
+	}
+
+	&.nav-open .cd-nav-items {
+		@include transform(translateX(0));
+
+		> ol {
+			-webkit-overflow-scrolling: touch;
+		}
+	} 
+
+	@include MQ(L) {
+		.cd-nav-items > ol {
+			padding: 14vh 6vw;
+		}
+
+		ol ol {
+			padding-left: 3em;
+		}
+
+		a {
+			font-weight: bold;
+			color: tint($background, 20%);
+			font-size: 4rem;
+			@include transition(all .2s);
+
+			&:before {
+				/* list bullets */
+				width: 24px;
+				height: 24px;
+				@include transform(translateY(-2px));
+				@include transition(all .2s);
+			}
+
+			.no-touch &:hover {
+				color: $content;
+			}
+		}
+
+		.cd-nav-items > ol > li:nth-of-type(1) a:hover::before,
+		.cd-nav-items > ol > li:nth-of-type(1) li a:hover::before  {
+			background: $color-1;
+		}
+
+		.cd-nav-items > ol > li:nth-of-type(2) a:hover::before,
+		.cd-nav-items > ol > li:nth-of-type(2) li a:hover::before  {
+			background: $color-2;
+		}
+
+		.cd-nav-items > ol > li:nth-of-type(3) a:hover::before,
+		.cd-nav-items > ol > li:nth-of-type(3) li a:hover::before  {
+			background: $color-3;
+		}
+		
+		.cd-nav-items > ol > li:nth-of-type(4) a:hover::before,
+		.cd-nav-items > ol > li:nth-of-type(4) li a:hover::before  {
+			background: $color-4;
+		}
+
+		.cd-nav-items > ol > li:nth-of-type(5) a:hover::before,
+		.cd-nav-items > ol > li:nth-of-type(5) li a:hover::before  {
+			background: $color-5;
+		}
+
+		.cd-nav-items > ol > li:nth-of-type(6) a:hover::before,
+		.cd-nav-items > ol > li:nth-of-type(6) li a:hover::before  {
+			background: $color-6;
+		}
+	}
+}
+
+.cd-nav-trigger {
+	position: absolute;
+	z-index: 2;
+	top: 20px;
+	left: 20px;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+	border-radius: 50%;
+	border: none;
+	outline: none;
+	background-color: rgba(#000, .8);
+	box-shadow: 0 2px 10px rgba(#000, .3);
+	/* replace text with image */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	color: transparent;
+
+	span, span::after, span::before {
+		/* used to create the menu icon */
+		position: absolute;
+		height: 2px;
+		width: 18px;
+		background-color: $content;
+	}
+
+	span {
+		/* menu icon middle line */
+		@include center;
+		@include transition(background-color .3s);
+	}
+
+	span::after, span::before {
+		content: '';
+		left: 0;
+		@include transition(transform .3s);
+	}
+
+	span::before {
+		/* menu icon middle top line */
+		@include transform(translateY(-6px));
+	}
+
+	span::after {
+		/* menu icon middle bottom line */
+		@include transform(translateY(6px));
+	}
+
+	.nav-open & span {
+		background-color: transparent;
+
+		&::before {
+			@include transform(rotate(45deg));
+		}
+
+		&::after {
+			@include transform(rotate(-45deg));
+		}
+	} 
+
+	@include MQ(L) {
+		height: 48px;
+		width: 48px;
+		left: calc(2.5vw - 24px);
+		top: calc(4vh - 24px);
+	}
+}
+
+/* -------------------------------- 
+
+no-js
+
+-------------------------------- */
+
+.no-js .cd-slideshow-wrapper {
+	overflow: visible;
+	height: auto;
+}
+
+.no-js .cd-slideshow > li,
+.no-js .cd-slideshow .sub-slides > li {
+	height: auto;
+	width: 100vw;
+	margin: 0;
+}
+
+.no-js .cd-slider-content {
+	margin: 0;
+	height: 100vh;
+	width: 100%;
+	border-radius: 0;
+}
+
+.no-js .cd-slideshow > li:first-of-type .cd-slider-content,
+.no-js .sub-slides > li:first-of-type .cd-slider-content,
+.no-js .sub-slides > li .cd-slider-content {
+	margin: 0;
+}
+
+.no-js .cd-slider-content .content-wrapper {
+	opacity: 1;
+	box-shadow: none;
+}
+
+.no-js .cd-slider-content::after {
+	opacity: 0;
+	visibility: hidden;
+}
+
+.no-js .cd-nav-trigger {
+	display: none;
+}
+
+.no-js .cd-slideshow-nav {
+	position: static;
+}
+
+.no-js #icon-keyboard {
+	display: none;
+}
+
+.no-js .cd-slideshow-nav .cd-nav-items {
+	position: static;
+	@include transform(translateX(0));
+}
+
+.no-js .cd-slideshow-nav .cd-nav-items {
+	height: auto;
+}
+
+.no-js .sub-nav {
+	display: none;
+}

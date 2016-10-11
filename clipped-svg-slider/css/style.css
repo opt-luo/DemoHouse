@@ -1,0 +1,294 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  color: #243238;
+  background-color: #ffffff;
+}
+
+a {
+  color: #607e8d;
+  text-decoration: none;
+}
+
+svg, image {
+  max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+.cd-svg-clipped-slider {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 4em auto;
+}
+.cd-svg-clipped-slider .gallery-wrapper,
+.cd-svg-clipped-slider .gallery,
+.cd-svg-clipped-slider .caption {
+  position: relative;
+}
+.cd-svg-clipped-slider .gallery li {
+  /* slider images */
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 25%;
+  /* (100% - width)/2 */
+  width: 50%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transform: translateX(75%) scale(0.4);
+      -ms-transform: translateX(75%) scale(0.4);
+          transform: translateX(75%) scale(0.4);
+  cursor: pointer;
+  -webkit-transition: opacity .3s, -webkit-transform .3s ease-in-out;
+  transition: opacity .3s, -webkit-transform .3s ease-in-out;
+  transition: opacity .3s, transform .3s ease-in-out;
+  transition: opacity .3s, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+}
+.cd-svg-clipped-slider .gallery li.selected {
+  /* slide in the center */
+  position: relative;
+  z-index: 3;
+  height: 0;
+  padding-bottom: 50%;
+  /* width(50%) * image aspect ratio (800/800) */
+  opacity: 1;
+  -webkit-transform: translateX(0) scale(1);
+      -ms-transform: translateX(0) scale(1);
+          transform: translateX(0) scale(1);
+  cursor: auto;
+}
+.cd-svg-clipped-slider .gallery li.left, .cd-svg-clipped-slider .gallery li.left-hide {
+  /* slides on the left */
+  /* .left -> slide visible on the left; .left-hide -> slides hidden on the left */
+  -webkit-transform: translateX(-75%) scale(0.4);
+      -ms-transform: translateX(-75%) scale(0.4);
+          transform: translateX(-75%) scale(0.4);
+}
+.cd-svg-clipped-slider .gallery li.left, .cd-svg-clipped-slider .gallery li.right {
+  /* .right -> slide visible on the right */
+  z-index: 2;
+  opacity: 1;
+}
+.cd-svg-clipped-slider .svg-wrapper {
+  /* using padding Hack to fix bug on IE - svg height not properly calculated */
+  height: 0;
+  padding-bottom: 100%;
+  /* image aspect ratio (800/800) * 100 */
+}
+.cd-svg-clipped-slider svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cd-svg-clipped-slider use.cover-layer {
+  /* dark layer visible on lateral slides */
+  fill: #243238;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+  opacity: .2;
+}
+.cd-svg-clipped-slider use.cover-layer:hover {
+  opacity: 0;
+}
+.cd-svg-clipped-slider .gallery li.selected use.cover-layer {
+  opacity: 0;
+}
+.cd-svg-clipped-slider .caption {
+  margin: 1em 0;
+  overflow: hidden;
+}
+.cd-svg-clipped-slider .caption li {
+  /* slide titles */
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  -webkit-transform: translateX(100px);
+      -ms-transform: translateX(100px);
+          transform: translateX(100px);
+  opacity: 0;
+  padding: 1em 0;
+  -webkit-transition: opacity .3s, -webkit-transform .3s ease-in-out;
+  transition: opacity .3s, -webkit-transform .3s ease-in-out;
+  transition: opacity .3s, transform .3s ease-in-out;
+  transition: opacity .3s, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+}
+.cd-svg-clipped-slider .caption li.selected {
+  /* slide visible in the center */
+  z-index: 2;
+  position: relative;
+  -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+          transform: translateX(0);
+  opacity: 1;
+}
+.cd-svg-clipped-slider .caption li.left {
+  /* slide hidden on the left */
+  -webkit-transform: translateX(-100px);
+      -ms-transform: translateX(-100px);
+          transform: translateX(-100px);
+}
+@media only screen and (min-width: 768px) {
+  .cd-svg-clipped-slider .caption li {
+    font-size: 2.4rem;
+  }
+}
+@media only screen and (min-width: 1170px) {
+  .cd-svg-clipped-slider {
+    width: 90%;
+  }
+  .cd-svg-clipped-slider .gallery li {
+    left: 30%;
+    /* (100% - width)/2 */
+    width: 40%;
+    -webkit-transform: translateX(80%) scale(0.4);
+        -ms-transform: translateX(80%) scale(0.4);
+            transform: translateX(80%) scale(0.4);
+  }
+  .cd-svg-clipped-slider .gallery li.selected {
+    padding-bottom: 40%;
+    /* width(40%) * image aspect ratio (800/800) */
+  }
+  .cd-svg-clipped-slider .gallery li.left, .cd-svg-clipped-slider .gallery li.left-hide {
+    -webkit-transform: translateX(-80%) scale(0.4);
+        -ms-transform: translateX(-80%) scale(0.4);
+            transform: translateX(-80%) scale(0.4);
+  }
+}
+
+.cd-svg-clipped-slider .navigation a {
+  /* slider arrows */
+  position: absolute;
+  /* center arrow in the lateral preview */
+  /* left = */
+  /* 25% (.left left value) */
+  /* - 37.5% (.left translateX value converted to container percentage ( 50%(.left width) x 75% (.left translate value) /100) ) */
+  /* + 25% ( .left width (50%)/2 ) */
+  left: 12.5%;
+  -webkit-transform: translateX(-50%) translateY(-50%) scale(0.7);
+      -ms-transform: translateX(-50%) translateY(-50%) scale(0.7);
+          transform: translateX(-50%) translateY(-50%) scale(0.7);
+  top: 50%;
+  z-index: 4;
+  pointer-events: none;
+  /* replace text with image */
+  height: 48px;
+  width: 48px;
+  color: transparent;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 100%;
+  -webkit-transition: opacity .3s, -webkit-transform .3s;
+  transition: opacity .3s, -webkit-transform .3s;
+  transition: transform .3s, opacity .3s;
+  transition: transform .3s, opacity .3s, -webkit-transform .3s;
+  background: url(../img/cd-icon-arrows.svg) no-repeat 0 0;
+}
+.cd-svg-clipped-slider .navigation a.next {
+  left: auto;
+  right: 12.5%;
+  -webkit-transform: translateX(50%) translateY(-50%) scale(0.7);
+      -ms-transform: translateX(50%) translateY(-50%) scale(0.7);
+          transform: translateX(50%) translateY(-50%) scale(0.7);
+  background-position: -48px 0;
+}
+.no-csspointerevents .cd-svg-clipped-slider .navigation a {
+  display: none;
+}
+@media only screen and (min-width: 1170px) {
+  .cd-svg-clipped-slider .navigation a {
+    left: 18%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+  }
+  .cd-svg-clipped-slider .navigation a.next {
+    left: auto;
+    right: 18%;
+    -webkit-transform: translateX(50%) translateY(-50%);
+        -ms-transform: translateX(50%) translateY(-50%);
+            transform: translateX(50%) translateY(-50%);
+  }
+}
+
+.cd-svg-clipped-slider.prev-hidden .navigation a.prev,
+.cd-svg-clipped-slider.next-hidden .navigation a.next {
+  /* hide prev/next arrow if first/last slide */
+  opacity: 0;
+}
+
+.cd-svg-clipped-slider .navigation a.prev.active {
+  /* scale up prev arrow on active */
+  -webkit-animation: cd-click-prev .3s;
+          animation: cd-click-prev .3s;
+}
+
+.cd-svg-clipped-slider .navigation a.next.active {
+  /* scale up next arrow on active */
+  -webkit-animation: cd-click-next .3s;
+          animation: cd-click-next .3s;
+}
+
+@-webkit-keyframes cd-click-prev {
+  0% {
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(0.8);
+            transform: translateX(-50%) translateY(-50%) scale(0.8);
+  }
+  100% {
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+            transform: translateX(-50%) translateY(-50%) scale(1);
+  }
+}
+
+@keyframes cd-click-prev {
+  0% {
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(0.8);
+            transform: translateX(-50%) translateY(-50%) scale(0.8);
+  }
+  100% {
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+            transform: translateX(-50%) translateY(-50%) scale(1);
+  }
+}
+@-webkit-keyframes cd-click-next {
+  0% {
+    -webkit-transform: translateX(50%) translateY(-50%) scale(0.8);
+            transform: translateX(50%) translateY(-50%) scale(0.8);
+  }
+  100% {
+    -webkit-transform: translateX(50%) translateY(-50%) scale(1);
+            transform: translateX(50%) translateY(-50%) scale(1);
+  }
+}
+@keyframes cd-click-next {
+  0% {
+    -webkit-transform: translateX(50%) translateY(-50%) scale(0.8);
+            transform: translateX(50%) translateY(-50%) scale(0.8);
+  }
+  100% {
+    -webkit-transform: translateX(50%) translateY(-50%) scale(1);
+            transform: translateX(50%) translateY(-50%) scale(1);
+  }
+}

@@ -1,0 +1,348 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $main-text;
+	background-color: $background;
+}
+
+a {
+	color: $link;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container {
+  width: 90%;
+  max-width: $L; // breakpoints inside partials > _layout.scss
+  margin: 0 auto;
+
+  &::after { /* clearfix */
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+
+.cd-gallery-container { 
+	margin: 2em auto;
+
+	@include MQ(L) {
+		margin: 4em auto;
+	}
+}
+
+.cd-filter {
+	position: relative;
+	height: $cd-filter-height; // set variables inside _variables.scss
+	width: $cd-filter-width;
+	margin: 0 auto;
+	cursor: pointer;
+	z-index: 10;
+
+	&::after { /* small arrow icon */
+		content:'';
+		position: absolute;
+		right: 14px;
+		@include center(y); // see _mixins partial
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background: url('../img/icon-small-arrow.svg') no-repeat center center;
+		@include transition(all .3s);
+		pointer-events: none;
+	}
+
+	ul {
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: #FFF;
+		@include border-radius;
+		box-shadow: 0 1px 2px rgba(#000, .1);
+	}
+
+	li {
+		display: none; 
+
+		&:first-child {
+			display: block; /* this way the placehodler is alway visible */
+		}
+
+		&:last-child a {
+			border-radius: 0 0 .25em .25em;
+		}
+	}
+
+	a {
+		display: block;
+		height: $cd-filter-height; // set variables inside _variables.scss
+		width: $cd-filter-width;
+		line-height: $cd-filter-height;
+		padding-left: 14px;
+		@include font-size(14px);
+		font-weight: 700;
+		text-transform: uppercase;
+
+		&.selected {
+			background: $selected;
+			color: #FFF;
+
+			.no-touch &:hover {
+				background: lighten($selected, 5%);
+			}
+		}
+	}
+
+	&.is-open {
+
+		&::after {
+			@include transform(translateY(-50%) rotate(-180deg));  /* small arrow rotation */
+		}
+
+		ul li {
+			display: block;
+		}
+
+		.placeholder a {
+			opacity: .4; /* reduces the opacity of the placeholder on mobile when the menu is open */
+		}
+	}
+
+	@include MQ(M) {
+		height: auto;
+		width: auto;
+
+		&::after {
+			display: none;
+		}
+
+		ul {
+			background: transparent;
+			position: static;
+			box-shadow: none;
+			text-align: center;
+		}
+
+		li {
+			display: inline-block;
+			margin: 0 .4em;
+
+			&:first-child {
+				display: inline-block;
+			}
+
+			&.placeholder {
+				display: none !important; 
+
+				a {
+					display: none;
+				}
+			}
+		}
+
+		a {
+			display: inline-block;
+			padding: 1em 2em;
+			height: auto;
+			width: auto;
+			line-height: 1;
+			border-radius: 50em !important;
+
+			.no-touch &:hover {
+				box-shadow: inset 0 0 0 2px rgba($link, .2);
+			}
+
+			&.selected:hover {
+				box-shadow: none; /* removes the hover effect from the selected item */
+			}
+		}
+
+		&.is-open {
+
+			ul li {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+xgallery 
+
+-------------------------------- */
+
+.cd-gallery {
+	margin-top: 2em;
+	position: relative;
+	z-index: 5;
+
+	> li { 
+		position: relative;
+		margin-bottom: 1em;
+	}
+
+	.cd-item-wrapper { /* this is the item that rotates */
+		position: relative;
+
+		.touch & {
+			/* fix a bug on IOS8 - rotating elements dissapear*/
+			@include perspective($cd-perspective);
+		}
+
+		&.is-switched {
+
+			.is-visible {
+				@include transform(rotateY(180deg));
+				@include animation(cd-rotate $cd-animation-duration);
+			}
+
+			.is-hidden {
+				@include transform(rotateY(0));
+				@include animation(cd-rotate-inverse $cd-animation-duration);
+				opacity: 0;
+			}
+
+			.is-selected {
+				opacity: 1;
+			}
+		}
+	}
+
+	.cd-item-wrapper > li {
+		@include backface-visibility(hidden);
+		@include border-radius;
+		box-shadow: 0 1px 3px rgba(#000, .1);
+
+		img {
+			display: block;
+			width: 100%;
+			@include border-radius;
+		}
+	}
+
+	li.is-visible { /* the front item, visible by default */
+		position: relative;
+		z-index: 5;
+	}
+
+	li.is-hidden { /* the hidden items, right behind the front one */
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+		@include transform(rotateY(180deg)); 
+	}
+
+	li.is-selected { /* the next item that will be visible */
+		z-index: 3 !important;
+	}
+
+	@include MQ(S) {
+		> li {
+			@include column(.48); // see how this mixin works inside _layout.scss
+			margin-right: 4%;
+			margin-bottom: 1.2em;
+
+			&:nth-of-type(2n) {
+				margin-right: 0;
+			}
+		}
+	}
+
+	@include MQ(M) {
+		> li {
+			@include column(.22);
+
+			&:nth-of-type(2n) {
+				margin-right: 4%;
+			}
+
+			&:nth-of-type(4n) {
+				margin-right: 0;
+			}
+		}
+	}
+
+	@include MQ(L) {
+		margin-top: 4em;
+	}
+}
+
+/* -------------------------------- 
+
+xkeyframes 
+
+-------------------------------- */
+
+
+@include keyframes(cd-rotate) {
+	0% {
+		@include transform(perspective($cd-perspective) rotateY(0));
+	}
+
+	70% {
+		@include transform(perspective($cd-perspective) rotateY(200deg)); /* this creates the bounce effect */
+	}
+
+	100% {
+		@include transform(perspective($cd-perspective) rotateY(180deg));
+	}
+}
+
+@include keyframes(cd-rotate-inverse) {
+	0% {
+		@include transform(perspective($cd-perspective) rotateY(-180deg));
+	}
+
+	70% {
+		@include transform(perspective($cd-perspective) rotateY(20deg)); /* this creates the bounce effect */
+	}
+
+	100% {
+		@include transform(perspective($cd-perspective) rotateY(0));
+	}
+}

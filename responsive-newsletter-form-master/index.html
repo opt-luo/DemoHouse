@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+  	
+	<title>Responsive Newsletter Form</title>
+</head>
+<body>
+	<header>
+		<h1>Newsletter Form</h1>
+	</header>
+
+	<ul class="cd-filter">
+		<li>
+			<input type="radio" id="cd-success" name="cd-message" checked>
+			<label for="cd-success">Success</label>
+		</li>
+
+		<li>
+			<input type="radio" id="cd-error" name="cd-message">
+			<label for="cd-error">Error</label>
+		</li>
+
+		<li>
+			<input type="radio" id="cd-notification" name="cd-message">
+			<label for="cd-notification">Notification</label>
+		</li>
+	</ul>
+
+	<div class="cd-form-wrapper cd-container">
+		<form class="cd-form">
+			<label class="cd-label" for="cd-email">Newsletter</label>
+			<input type="email" id="cd-email" class="cd-email" name="cd-email" placeholder="Enter your email address">
+			<input type="submit" class="cd-submit" value="Submit">
+			<div class="cd-loading"></div>
+		</form>
+
+		<div data-type="message" class="cd-response cd-response-error">Ops! Error message here</div>
+		<div data-type="message" class="cd-response-success"><p>Great! Success message here</p></div>
+		<div data-type="message" class="cd-response cd-response-notification">Hey! Notification message here</div>
+	</div>
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+</body>
+</html>

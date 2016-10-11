@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
+	
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Gem style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+  	
+	<title>Smart Content Filter | Cody</title>
+</head>
+<body>
+	<div class="cd-gallery-container">
+		<nav class="cd-filter">
+			<ul>
+				<li class="placeholder"> 
+					<a data-type="red" href="#0">Red</a> <!-- selected option on mobile -->
+				</li> 
+
+				<li>
+					<a class="selected" data-type="red" href="#0">Red</a>
+				</li>
+
+				<li>
+					<a data-type="blue" href="#0">Blue</a>
+				</li>
+
+				<li>
+					<a data-type="green" href="#0">Green</a>
+				</li>
+			</ul>
+		</nav>
+
+		<ul class="cd-gallery cd-container">
+			<li>
+				<ul class="cd-item-wrapper">
+					<li data-type="red" class="is-visible">
+						<img src="img/thumb-red.jpg" alt="thumbnail">
+					</li>
+
+					<li data-type="blue" class="is-hidden">
+						<img src="img/thumb-blue.jpg" alt="thumbnail">
+					</li>
+
+					<li data-type="green" class="is-hidden">
+						<img src="img/thumb-green.jpg" alt="thumbnail">
+					</li>
+				</ul>
+			</li>
+
+			<li>
+				<ul class="cd-item-wrapper">
+					<li data-type="red" class="is-visible">
+						<img src="img/thumb-red.jpg" alt="thumbnail">
+					</li>
+
+					<li data-type="blue" class="is-hidden">
+						<img src="img/thumb-blue.jpg" alt="thumbnail">
+					</li>
+					
+					<li data-type="green" class="is-hidden">
+						<img src="img/thumb-green.jpg" alt="thumbnail">
+					</li>
+				</ul>
+			</li>
+
+			<li>
+				<ul class="cd-item-wrapper">
+					<li data-type="red" class="is-visible">
+						<img src="img/thumb-red.jpg" alt="thumbnail">
+					</li>
+
+					<li data-type="blue" class="is-hidden">
+						<img src="img/thumb-blue.jpg" alt="thumbnail">
+					</li>
+					
+					<li data-type="green" class="is-hidden">
+						<img src="img/thumb-green.jpg" alt="thumbnail">
+					</li>
+				</ul>
+			</li>
+
+			<li>
+				<ul class="cd-item-wrapper">
+					<li data-type="red" class="is-visible">
+						<img src="img/thumb-red.jpg" alt="thumbnail">
+					</li>
+
+					<li data-type="blue" class="is-hidden">
+						<img src="img/thumb-blue.jpg" alt="thumbnail">
+					</li>
+					
+					<li data-type="green" class="is-hidden">
+						<img src="img/thumb-green.jpg" alt="thumbnail">
+					</li>
+				</ul>
+			</li>
+		</ul> <!-- cd-gallery -->
+	</div> <!-- cd-gallery-container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/main.js"></script> <!-- Gem jQuery -->
+</body>
+</html>

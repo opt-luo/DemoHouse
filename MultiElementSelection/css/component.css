@@ -1,0 +1,105 @@
+*,
+*:after,
+*::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.me-select {
+	position: relative;
+	margin: 0 auto;
+	max-width: 800px;
+}
+
+.me-select ul {
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+
+.me-select li {
+	margin: 0 auto;
+	position: relative;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.me-select li.selected {
+	box-shadow: inset 0 0 0 40px rgba(255,246,0,0.1);
+}
+
+.me-select label {
+	display: inline-block;
+	width: 100%;
+	position: relative;
+	font-size: 1.2em;
+	padding: 15px 10px 15px 80px;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.me-select label span {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.me-select label span:first-child {
+	width: 30%;
+	color: rgba(97,107,107,0.7);
+}
+
+.me-select label span:nth-child(2),
+.me-select label a {
+	width: 60%;
+	color: #31d2d4;
+}
+
+.me-select label span:last-child {
+	width: 10%;
+	text-align: right;
+	font-size: 60%;
+}
+
+.me-select input[type="checkbox"],
+.me-select label::before,
+.me-select input[type="checkbox"]:checked + label::after {
+	width: 26px;
+	height: 26px;
+	top: 50%;
+	left: 20px;
+	margin-top: -13px;
+	position: absolute;
+	cursor: pointer;
+}
+
+.me-select input[type="checkbox"] {
+	opacity: 0;
+	-webkit-appearance: none;
+	display: inline-block;
+	vertical-align: middle;
+	z-index: 100;
+}
+
+.me-select label::before {
+	content: '';
+	border: 2px solid rgba(0,0,0,0.3);
+}
+
+.me-select input[type="checkbox"]:checked + label::after {
+	content: '\2713';
+	text-align: center;
+	line-height: 28px;
+	color: #31d2d4;
+}
+
+/* Media Queries */
+@media screen and (max-width: 50em) {
+	section {
+		font-size: 80%;
+	}
+}

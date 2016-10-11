@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="msapplication-tap-highlight" content="no" />
+<title>基本积分说明</title>
+<link href="http://webresource.c-ctrip.com/styles/h5/common/main.css" rel="stylesheet" type="text/css" />
+<link href="css/load-failed.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="body-bg">
+<div class="small-loadFailed">
+  <div class="loadFailed-box">
+    <div class="loadFailed-animate">
+      <div class="bubble"></div>
+      <div class="eyebrow"></div>
+      <div class="tail"></div>
+      <div class="tear"></div>
+      <div class="l-hand"></div>
+      <div class="r-hand"></div>
+      <div class="text"></div>
+    </div>
+    <p class="ellips_line2">网络不给力，请再试试吧。</p>
+    <div class="btns">
+      <span class="btn-retry">重试</span>
+    </div>
+  </div>
+</div>
+<!-- JS仅用于原型展示，麻烦开发及时删除 -->
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script>
+  $(function(){
+    $(".loadFailed-box .btns span").click(function(){
+      $(this).toggleClass('btn-clicked');
+    });
+  })
+</script>
+</body>
+</html>

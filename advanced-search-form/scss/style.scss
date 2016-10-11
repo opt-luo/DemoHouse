@@ -1,0 +1,821 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+input {
+	font-family: $primary-font;
+	font-size: 1.6rem;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+select, input[type="search"] {
+	@include appearance(none);
+	border: none;
+}
+
+input[type="search"] {
+	border-radius: 0;
+	margin-top: 0;
+}
+
+select {
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.cd-select::after {
+	/* switcher arrow for select element */
+	content: '';
+	position: absolute;
+	z-index: 1;
+	right: 4px;
+	top: 50%;
+	@include transform(translateY(-50%));
+	width: 16px;
+	height: 16px;
+	background: url(../img/cd-icons.svg) no-repeat 0 0;
+	pointer-events: none;
+}
+
+/* -------------------------------- 
+
+Patterns - reusable parts of our design
+
+-------------------------------- */
+
+.cd-text-replace {
+	/* replace text with image */
+	color: transparent;
+	text-indent: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+/* -------------------------------- 
+
+Header
+
+-------------------------------- */
+
+.cd-main-header {
+	position: relative;
+	z-index: 4;
+	height: 50px;
+	background-color: $color-1;
+	@include font-smoothing;
+	@include transition(transform .3s);
+
+	&.nav-is-visible {
+		@include transform(translateX(-260px));
+	}
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */ 
+		display: none;
+		content: 'mobile';
+	}
+
+	@include MQ(L) {
+		height: 80px;
+
+		&.nav-is-visible {
+			@include transform(translateX(0));
+		}
+
+		&::before {
+			content: 'desktop';
+		}
+	}
+}
+
+.cd-main-nav-wrapper {
+	padding: 0 5%;
+	@include clearfix;
+}
+
+.cd-logo {
+	display: inline-block;
+	height: 100%;
+	margin-left: 15px;
+	
+	/* remove jump on iOS devices - when we fire the navigation */
+	@include transform(translateZ(0));
+	@include backface-visibility(hidden);
+
+	img {
+		display: block;
+		margin-top: 14px;
+	}
+
+	@include MQ(L) {
+		position: absolute;
+		z-index: 3;
+		margin-left: 5%;
+
+		img {
+			margin-top: 29px;
+		}
+	}
+}
+
+.cd-nav-trigger {
+	/* nav trigger - visible on small devices only */
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 50px;
+
+	span {
+		/* nav icon created in CSS */
+		position: absolute;
+		height: 2px;
+		width: 20px;
+		@include center;
+		background-color: $color-3;
+		@include transition(background-color .3s);
+
+		&::before, &::after {
+			/* upper and lower lines of the menu icon */
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: $color-3;
+			
+			/* Force Hardware Acceleration */
+			@include transform(translateZ(0));
+			@include backface-visibility(hidden);
+			
+			@include transition(transform .3s);
+		}
+
+		&::before {
+			@include transform(translateY(-6px));
+		}
+
+		&::after {
+			@include transform(translateY(6px));
+		}
+	}
+
+	.nav-is-visible & span {
+		background-color: rgba($color-3, 0);
+	
+		&::before {
+			@include transform(translateY(0) rotate(-45deg));
+		}
+
+		&::after {
+			@include transform(translateY(0) rotate(45deg));
+		}
+	}
+
+	@include MQ(L) {
+		display: none;
+	}
+}
+
+.cd-main-nav {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	width: 260px;
+	height: 100vh;
+	overflow: auto;
+	background: shade($color-1, 40%);
+	visibility: hidden;
+	@include transition(visibility 0s .3s);
+
+	a, input[type="search"] {
+		display: block;
+		font-size: 1.6rem;
+		padding: 0 2em 0 1em;
+		line-height: 50px;
+		color: $color-3;
+		border-bottom: 1px solid $color-1;
+		@include transition(transform .3s, opacity .3s);
+	}
+
+	input[type="search"] {
+		background-color: shade($color-1, 20%);
+		@include transition(background-color .3s);
+
+		&:focus {
+			background-color: $color-1;
+		}
+	}
+
+	&.nav-is-visible {
+		@include transition(visibility 0s);
+		visibility: visible;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	@include MQ(L) {
+		/* reset style */
+		position: static;
+		visibility: visible;
+		width: auto;
+		height: 80px;
+		background: transparent;
+		overflow: visible;
+		float: right;
+
+		li {
+			display: inline-block;
+			float: left;
+			height: 100%;
+			padding: 1.375em .4em;
+		}
+
+		a {
+			padding: .625em .8em;
+			line-height: 1;
+			border-bottom: none;
+
+			&:hover {
+				opacity: .6;
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Search Form
+
+-------------------------------- */
+
+.cd-main-search {
+
+	.cd-select {
+		/* hide select element on small devices */
+		display: none;
+	}
+
+	.close {
+		/* 'X' icon to close search form - hidden on small devices */
+		display: none;
+	}
+
+	input[type="search"] {
+		width: 100%;
+		color: $color-3;
+
+		&:focus {
+			outline: none;
+		}
+
+		@include placeholder {
+			color: tint($color-1, 20%);
+		}
+	}
+	
+	@include MQ(L) {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background: shade($color-1, 60%); 
+		opacity: 0;
+		visibility: hidden;
+		@include transition(opacity .3s, visibility .3s);
+
+		form {
+			position: relative;
+			height: 100%;
+			/* 170px (margin left) is the sum of the logo width (124px) and additional 46px margin (to separate the form form the logo) */
+			/* 116px (margin right) takes into account the space occupied by the a.cd-search-trigger and a.close */
+			margin: 0 calc(5% + 116px) 0 calc(5% + 170px);
+		}
+
+		input[type="search"] {
+			font-size: 2.4rem;
+			height: 100%;
+			background-color: transparent;
+			/* don't overlap <select> element */
+			padding-right: 170px;
+		}
+
+		.cd-select {
+			display: inline-block;
+			position: absolute;
+			right: 0;
+			@include center(y);
+			color: tint($color-1, 20%);
+			font-size: 1.4rem;
+			overflow: hidden;
+		}
+
+		span {
+			display: inline-block;
+		}
+
+		option {
+			/* style <option> elements on Firefox */
+			color: $color-1;
+			background-color: $color-3;
+		}
+
+		select {
+			/* the <select> element is not visible (if the list of options is not open) -  it is covered by the .selected-value element */
+			position: absolute;
+			right: 0;
+			@include center(y);
+			opacity: 0;
+			color: transparent;
+
+			&:focus {
+				outline: none;
+			}
+
+			&:focus + span.selected-value {
+				background-color: tint($color-1, 5%);
+			}
+		}
+
+		.selected-value {
+			/* this <span> element covers the <select> element - its content is changed (using JavaScript) and set equal to the selected <option> value */
+			/* its width automatically changes according to the text of the selected <option> (not possible with a <select> element) */
+			color: $color-3;
+			/* clicking on this element will open the <select> drop-down list */
+			pointer-events: none;
+			
+			@include transition(background-color .3s);
+			
+		}
+
+		select, .selected-value {
+			padding: 0.5em 1.7em 0.5em .3em;
+			font-size: 1.4rem;
+			border-radius: 3px;
+		}
+
+		.no-pointerevents & .selected-value {
+			/* if the browser doesn't support the pointer-events property, hide the .selected-value element */
+			display: none;
+		}
+
+		.no-pointerevents & select {
+			/* if the browser doesn't support the pointer-events property, show the <select> element */
+			position: relative;
+			color: $color-3;
+			@include transform(translateY(0));
+
+			&:focus {
+				background-color: tint($color-1, 5%);
+			}
+		}
+
+		.close {
+			/* 'X' icon - used to close the search form */
+			display: inline-block;
+			position: absolute;
+			right: 5%;
+			top: 50%;
+			height: 40px;
+			width: 40px;
+			@include transform(translateY(-50%) scale(0));
+			@include transition(transform .3s);
+
+			&::before, &::after {
+				/* used to create the 'X' icon in css */
+				content: '';
+				position: absolute;
+				height: 20px;
+				width: 2px;
+				background-color: $color-3;
+				left: 50%;
+    			top: 50%;
+			}
+
+			&::before {
+				@include transform(translateX(-50%) translateY(-50%) rotate(-45deg));
+			}
+
+			&::after {
+				@include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+			}
+		}
+
+
+		&.is-visible {
+			/* search form open */
+			opacity: 1;
+			visibility: visible;
+
+			.close {
+				@include transform(translateY(-50%) scale(1));
+			}
+		}
+
+		.animate-search &.is-visible  {
+			/* trigger search form animation if <header> has the .animate-search class */
+			@include animation(cd-slide-in .3s);
+		}
+	}
+}
+
+@include keyframes(cd-slide-in) {
+	0% {
+		@include transform(translateY(-100%));
+	}
+
+	100% {
+		@include transform(translateY(0));
+	}
+}
+
+.cd-search-suggestions {
+	/* drowpdown with search suggestions - hidden on small devices */
+	display: none;
+
+	@include MQ(L) {
+		display: block;
+		position: absolute;
+		top: 80px;
+		left: 0;
+		/* same width of <form> element */
+		width: calc( 90% - 286px);
+		padding: 2em;
+		/* same margin of <form> element */
+		margin: 0 calc(5% + 116px) 0 calc(5% + 170px);
+		background-color: $color-3;
+		box-shadow: 0 4px 40px rgba(#000, .39);
+		@include clearfix;
+
+		.quick-links, .news {
+			display: inline-block;
+		}
+
+		.quick-links {
+			float: right;
+			width: 140px;
+			text-align: right;
+		}
+
+		.news {
+			float: left;
+			width: calc(100% - 140px);
+		}
+
+		h3 {
+			margin-bottom: 1.5em;
+			text-transform: uppercase;
+			color: tint($color-1, 35%);
+			font-size: 1.2rem; 
+			font-weight: bold;
+			letter-spacing: .1em;
+		}
+
+		h4 {
+			font-weight: bold;
+			font-size: 1.4rem;
+
+			a {
+				/* prevent the text from wrapping */
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
+				padding: .2em 0;
+			}
+		}
+
+		a {
+			display: inline-block;
+			color: $color-1;
+
+			.no-touch &:hover {
+				opacity: .8;
+			}
+		}
+
+		time {
+			font-size: 1.2rem;
+			color: tint($color-1, 30%);
+		}
+
+		.news li {
+			position: relative;
+			padding: 0.625em 0.75em 0.75em 4em; 
+			margin-bottom: 0.25em;
+
+			&:last-of-type {
+				margin-bottom: 0;
+			}	
+		}
+
+		.image-wrapper {
+			position: absolute;
+			left: 0;
+			@include center(y);
+			width: 50px;
+			height: 50px;
+
+			img {
+				display: block;
+			}
+		}
+
+		.quick-links a {
+			padding: .5em 0;
+			font-size: 1.4rem;
+			line-height: 1.2;
+		}
+
+		.animate-search .is-visible & {
+			/* trigger the dropdown animation if <header> has the .animate-search class */
+			@include transform-origin(center top);
+			/* Force Hardware Acceleration */
+			@include transform(translateZ(0));
+			@include backface-visibility(hidden);
+			
+			@include animation(cd-3d-rotation .5s .3s);
+			@include animation-fill-mode(backwards);
+		}
+	}
+}
+
+@include keyframes(cd-3d-rotation) {
+	0% {
+		@include transform(perspective(1000px) rotateX(-90deg));
+	}
+
+	100% {
+		@include transform(perspective(1000px) translateY(0));
+	}
+}
+
+.cd-search-trigger {
+	/* trigger serach form visibility - hidden on small devices */
+	display: none;
+
+	@include MQ(L) {
+		display: block;
+		position: relative;
+		z-index: 3;
+		height: 40px;
+		width: 40px;
+		margin: 1.25em .5em;
+		float: right;
+		@include transition(transform .3s);
+
+		&::after, &:before {
+			/* used to create the icon lens and the background circle */
+			content: '';
+			position: absolute;
+		}
+
+		&::after {
+			/* icon lens */
+			@include center;
+			height: 16px;
+			width: 16px;
+			background: url(../img/cd-icons.svg) no-repeat -16px 0;
+		}
+
+		&::before {
+			/* background circle */
+			left: 50%;
+    		top: 50%;
+    		@include transform(translateX(-50%) translateY(-50%) scale(0));
+			height: 100%;
+			width: 100%;
+			background-color: $color-2;
+			border-radius: 50%;
+			@include transition(transform .3s);
+		}
+
+		.no-touch &:hover::before {
+			background-color: tint($color-2, 5%);
+		}
+
+		&.search-form-visible {
+			@include transform(translateX(-46px));
+
+			&::before {
+				@include transform(translateX(-50%) translateY(-50%) scale(1));
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Content cover layer
+
+-------------------------------- */
+
+.cd-cover-layer {
+	/* cover main content when search form is open - hidden on smal devices */
+	display: none;
+
+	@include MQ(L) {
+		display: block;
+		position: fixed;
+		z-index: 3;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background: rgba(#000, .5);
+		opacity: 0;
+		visibility: hidden;
+		@include transition(opacity .3s, visibility .3s);
+
+		&.search-form-visible {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Page main content
+
+-------------------------------- */
+
+.cd-main-content {
+	display: table;
+	width: 100%;
+	height: calc(100vh - 50px);
+	position: relative;
+	z-index: 2;
+	background-color: $color-4;
+	@include font-smoothing;
+	@include transition(transform .3s);
+
+	.content-center {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+
+		h1 {
+			color: $color-3;
+			font-size: 2.4rem;
+			margin-bottom: .6em;
+		}
+	}
+
+	.cd-download-btn {
+		background: $color-2;
+		color: $color-3;
+		display: inline-block;
+		padding: 1.4em 1.6em;
+		border-radius: 50em;
+		font-size: 1.4rem;
+		font-weight: bold;
+		box-shadow: 0 2px 18px rgba(#000, .1);
+	}
+
+	&.nav-is-visible {
+		@include transform(translateX(-260px));
+	}
+
+	@include MQ(L) {
+		height: calc(100vh - 80px);
+
+		.content-center h1 {
+			font-size: 3.6rem;
+		}
+
+		&.nav-is-visible {
+			@include transform(translateX(0));
+		}
+	}
+}
+
+/* -------------------------------- 
+
+JavaScript Disabled
+
+-------------------------------- */
+
+.no-js .cd-main-header {
+	height: auto;
+	@include clearfix;
+}
+
+.no-js .cd-nav-trigger {
+	display: none;
+}
+
+.no-js .cd-main-nav-wrapper {
+	display: inline-block;
+	float: right;
+}
+
+.no-js .cd-main-nav {
+	position: static;
+	width: auto;
+	height: auto;
+	visibility: visible;
+	background-color: transparent;
+	@include clearfix;
+	float: right;
+
+	li {
+		display: inline-block;
+		float: left;
+	}
+
+	a {
+		border-bottom: 0;
+	}
+}
+
+.no-js .cd-search-trigger {
+	display: inline-block;
+	text-indent: 0;
+	color: $color-3;
+	float: right;
+	line-height: 50px;
+
+	@include MQ(L) {
+		text-indent: 100%;
+		color: transparent;
+		line-height: normal;
+	}
+}
+
+.no-js .cd-main-search {
+	position: static;
+	opacity: 1;
+	visibility: visible;
+	padding: 2em 5%;
+	background: $color-1;
+
+	form {
+		margin: 0;
+	}
+
+	input[type="search"] {
+		background: $color-1;
+	}
+
+	select {
+		position: relative;
+		color: $color-3;
+		opacity: 1;
+		@include transform(translateY(0));
+
+		&:focus {
+			background-color: tint($color-1, 5%);
+		}
+	}
+
+	.selected-value {
+		display: none;
+	}
+}

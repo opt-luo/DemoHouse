@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Element Elasticity - Demo 1</title>
+		<meta name="description" content="Some inspiration for interactive draggable element elasticity" />
+		<meta name="keywords" content="elastic, dialog, modal, dismiss, draggable, morphing, iconify, bounciness, web design, inspiration" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="fonts/feather/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+		<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body class="demo-1">
+		<div class="container">
+			<header class="codrops-header">
+				<div class="codrops-links">
+					<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/CardExpansion/" title="Previous Demo"><span>Previous Demo</span></a>
+					<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=24338" title="Back to the article"><span>Back to the Codrops article</span></a>
+				</div>
+				<h1>Element Elasticity <span>Elastic effects for dragging interactions</span></h1>
+				<nav class="codrops-demos">
+					<a class="current-demo" href="index.html">Demo 1</a>
+					<a href="index2.html">Demo 2</a>
+				</nav>
+			</header>
+			<p class="info info--bold">Open and <strong>drag out of bounds to dismiss</strong> the dialog. <br/> 
+			<strong>Drop before to animate</strong> it back with a bouncy animation.</p>
+			<div class="content">
+				<button id="trigger-dialog" class="button button--dialog">Open dialog</button>
+			</div>
+			<div class="dialog" id="dialog-1">
+				<div class="mover-wrap dialog__content">
+					<div class="handle"></div>
+					<div class="mover">
+						<div class="dialog__content-inner">
+							<div class="dialog__header">
+								<h2>Funtastic Icon Set</h2>
+								<button class="action action--close">
+									<i class="icon icon--cross"></i>
+									<span class="text-hidden">Close dialog</span>
+								</button>
+							</div>
+							<div class="dialog__body">
+								<div class="actions">
+									<div class="mover__element">
+										<a href="#" class="action action--fav">
+											<i class="icon icon--heart icon--action"></i>
+											<span class="action__title">Favorite</span>
+											<span class="action__subline">Add resource to favorites</span>
+										</a>
+									</div>
+									<div class="mover__element">
+										<a href="#" class="action action--download">
+											<i class="icon icon--download icon--action"></i>
+											<span class="action__title">Download</span>
+											<span class="action__subline">Download all resource files</span>
+										</a>
+									</div>
+									<div class="mover__element">
+										<a href="#" class="action action--share">
+											<i class="icon icon--share icon--action"></i>
+											<span class="action__title">Share</span>
+											<span class="action__subline">Share the link of this resource</span>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="dialog__footer">
+								<a href="#">View all related resources</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Related demos -->
+			<section class="content content--related">
+				<p>If you enjoyed this demo you might also like:</p>
+				<a class="media-item" href="http://tympanus.net/Development/ElasticSVGElements/">
+					<img class="media-item__img" src="images/related/ElasticSVGElements.jpg">
+					<h3 class="media-item__title">Elastic SVG Elements</h3>
+				</a>
+				<a class="media-item" href="http://tympanus.net/Development/DragDropInteractions/">
+					<img class="media-item__img" src="images/related/DragDropInteractions.png">
+					<h3 class="media-item__title">Drag &amp; Drop Interactions</h3>
+				</a>
+			</section>
+		</div>
+		<!-- /container -->
+		<script src="js/draggabilly.pkgd.min.js"></script>
+		<script src="js/dynamics.min.js"></script>
+		<script src="js/main.js"></script>
+		<script>
+			(function() {
+				var dialog = new DialogEl(document.getElementById('dialog-1'), {
+					mainElement : {
+						minscale : 0.6,
+						minopacity : 0.5,
+						//rX : 30,
+						rY : 40
+					},
+					innerElements : {tx : 100, ty : 100},
+					// the element is considered out of bounds if its center (x,y) is either 
+					// x < outofbounds.x or x > win.width-outofbounds.x or
+					// y < outofbounds.y or y > win.height - outofbounds.y
+					outofbounds: {x : 0, y: 0}
+				});
+
+				document.getElementById('trigger-dialog').addEventListener('click', function(ev) {
+					dialog.open();
+				});
+			})();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,100 @@
+$shadow-size: 10vmax;
+$shadow-offset: $shadow-size * 1.5;
+$shadow-colors: purple, violet, teal, orangered, yellow, crimson, yellowgreen, orange, darkturquoise, pink, steelblue, turquoise, coral, skyblue, darkviolet, gold, darkslateblue;
+$colors-max: length($shadow-colors);
+$shadows-steps: 3;
+$colors-in-step: round($colors-max/$shadows-steps);
+$title-text-color: white;
+$title-bg-color: black;
+$matrix-h: 10;
+$matrix-v: 5;
+/* Function for getting colors from list
+if we need quantity of colors more than colors in array  */
+@function get_color($position) {
+  $color: nth($shadow-colors, 1);
+  @if ($position < $colors-max) {
+    $color: nth($shadow-colors, $position);
+  }
+  @else {
+    $fixed-position: $position % $colors-max + 1;
+    $color: nth($shadow-colors, $fixed-position);
+  }
+  @return $color;
+}
+/* Function for painting matrix with box-shadow */
+@function shadow-matrix ($color-offset: 0) {
+  $out: null;
+  $cell-counter: 1;
+  @for $cell_column from 1 through $matrix-v {
+    $step-v: ($cell_column - 1) * $shadow-offset;
+    @for $cell_row from 1 through $matrix-h {
+      $color: get_color($cell-counter + $color-offset);
+      $step-h: ($cell_row - 1) * $shadow-offset;
+      $out: append($out, $step-h $step-v $shadow-size $shadow-size $color, comma);
+      $cell-counter: $cell-counter + 1;
+    }
+  }
+  @return $out;
+}
+/* Other stuff */
+body {
+  background: $title-bg-color;
+  color: #fff;
+}
+/* Main stuff */
+.box-with-text {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  font: 26vmax/1 Open Sans, Impact;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: shadow-matrix();
+    -webkit-animation: shadows-cells 2.5s linear infinite;
+    animation: shadows-cells 2.5s linear infinite;
+  }
+  /* Hack to hide thin transparent lines while resize objects */
+  &:after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    display: block;
+    border: 4px solid $title-bg-color;
+  }
+}
+.text {
+  position: relative;
+  display: block;
+  background: $title-bg-color;
+  color: $title-text-color;
+  mix-blend-mode: darken;
+}
+@-webkit-keyframes shadows-cells {
+  25% {
+    box-shadow: shadow-matrix($colors-in-step*2);
+  }
+  45% {
+    box-shadow: shadow-matrix($colors-in-step);
+  }
+  75% {
+    box-shadow: shadow-matrix($colors-in-step*3);
+  }
+}
+@keyframes shadows-cells {
+  25% {
+    box-shadow: shadow-matrix($colors-in-step*2);
+  }
+  45% {
+    box-shadow: shadow-matrix($colors-in-step);
+  }
+  75% {
+    box-shadow: shadow-matrix($colors-in-step*3);
+  }
+}

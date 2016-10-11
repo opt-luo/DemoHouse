@@ -1,0 +1,387 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Navigation
+
+-------------------------------- */
+
+.cd-side-navigation {
+	position: fixed;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: $nav-width-small;
+	overflow: hidden;
+
+	&::before {
+		/* background color of the side navigation */
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		@include calc(width, "100% - #{$loading-bar-width}");
+		background-color: $color-5;
+	}
+
+	ul {
+		height: 100%;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	li {
+		@include calc(width, "100% - #{$loading-bar-width}");
+	}
+
+	a {
+		display: block;
+		position: relative;
+		padding: 4em 0 1.5em;
+		font-size: 1.2rem;
+		text-align: center;
+		color: lighten($color-5, 25%);
+		@include transition(background-color 0.2s, color 0.2s);
+
+		svg {
+			/* this is the icon */
+			position: absolute;
+			@include center(x);
+			top: 1.3em;
+
+			* {
+				@include transition(stroke 0.2s);
+			}
+		}
+
+		&::after {
+			/* 4px line to the right of the item - visible on hover */
+			content: '';
+			position: absolute;
+			top: 0;
+			right: -4px;
+			height: 100%;
+			width: 4px;
+			background-color: $color-1;
+			opacity: 0;
+			@include transition(opacity 0.2s);
+			pointer-events: none;
+		}
+
+		.no-touch &:hover {
+			background-color: darken($color-5, 5%);
+
+			&::after {
+				opacity: 1;
+			}
+		}
+
+		&.selected, .no-touch &.selected:hover {
+			background-color: $color-6;
+			color: $color-5;
+
+			> svg * {
+				stroke: $color-1;
+			}
+		} 
+	}
+
+	li:nth-of-type(2) .selected > svg *, 
+	li:nth-of-type(2) .selected:hover > svg * {
+		stroke: $color-2;
+	}
+
+	li:nth-of-type(3) .selected > svg *, 
+	li:nth-of-type(3) .selected:hover > svg * {
+		stroke: $color-3;
+	}
+
+	li:nth-of-type(4) .selected > svg *, 
+	li:nth-of-type(4) .selected:hover > svg * {
+		stroke: $color-4;
+	}
+
+	li:nth-of-type(2) a::after {
+		background-color: $color-2;
+	}
+
+	li:nth-of-type(3) a::after {
+		background-color: $color-3;
+	}
+
+	li:nth-of-type(4) a::after {
+		background-color: $color-4;
+	}
+
+	@include MQ(S) {
+		width: $nav-width-normal;
+
+		a {
+			padding: 4em 0 1.5em;
+			font-size: 1.3rem;
+
+			svg {
+				top: 1.6em;
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+ Main Content
+
+-------------------------------- */
+
+.cd-main {
+	height: 100vh;
+	overflow: hidden;
+}
+
+.cd-section {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow-y: auto;
+	padding-left: $nav-width-small - $loading-bar-width;
+
+	/* Force Hardware Acceleration */
+	@include backface-visibility(hidden);
+	@include transform(translateZ(0));
+	
+	@include transform(translateX(-100%));
+	@include transition(transform 0s $animation-duration);
+
+	&.overflow-hidden {
+		/* this class is used to hide the scrolling bar while a new section is entering the viewport */
+		overflow: hidden;
+	} 
+
+	header {
+		position: relative;
+		height: 100vh;
+		width: 100%;
+		background: $color-1;
+		overflow: hidden; 
+	}
+
+	&.services header {
+		background-color: $color-2;
+	}
+
+	&.projects header {
+		background-color: $color-3;
+	}
+
+	&.contact header {
+		background-color: $color-4;
+	}
+
+	.cd-scroll {
+		/* this is the arrow at the bottom of the header */
+		display: block;
+		position: absolute;
+		bottom: 60px;
+		@include calc(left, "50vw - (#{$nav-width-small} - #{$loading-bar-width})/2");
+		width: 44px;
+		height: 44px;
+
+		/* image replacement */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+
+		visibility: hidden;
+		@include transition(transform 0s $animation-duration, visibility 0s $animation-duration);
+		
+		@include transform(translateX(-50%) scale(0));
+		background: url('../img/cd-icon-arrow.svg') no-repeat center center;
+	}
+
+	&.visible {
+		/* this is the visible/selected section */
+		position: relative;
+		z-index: 2;
+		-webkit-overflow-scrolling: touch;
+
+		@include transform(translateX(0));
+		@include transition(transform $animation-duration 0s);
+
+		.cd-scroll {
+			visibility: visible;
+
+			@include transform(translateX(-50%) scale(1));
+			@include transition(transform 0.3s $animation-duration, visibility 0s 0s);
+			
+			@include animation(cd-scroll-down 1.2s $animation-duration + 0.4s);
+			@include animation-iteration-count(2);
+		}
+	}
+
+	@include MQ(S) {
+		padding-left: $nav-width-normal - $loading-bar-width;
+		
+		.cd-scroll {
+			@include calc(left, "50vw - (#{$nav-width-normal} - #{$loading-bar-width})/2");
+		}
+	}
+}
+
+@include keyframes(cd-scroll-down) {
+	0% {
+		@include transform(translateX(-50%) scale(1));
+	}
+
+	50% {
+		@include transform(translateY(10px) translateX(-50%) scale(1));
+	}
+
+	100% {
+		@include transform(translateX(-50%) scale(1));
+	}
+}
+
+.cd-title {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	/* this prevents title from jumping when the section scroll bar is visible */
+	width: calc(100vw - 90px);
+	padding: 1em;
+	color: $color-6;
+	text-align: center;
+	
+	/* Force Hardware Acceleration */
+	@include backface-visibility(hidden);
+	@include transform(translateZ(0));
+	
+	opacity: 0;
+	@include transform(translateY(-50%) translateX(-80px));
+	@include transition(transform 0s $animation-duration, opacity 0s $animation-duration);
+
+	h2 {
+		font-size: 2.8rem;
+		font-weight: 700;
+		margin-bottom: 20px;
+	}
+
+	span {
+		opacity: 0.6;
+	}
+
+	.visible & { 
+		opacity: 1;
+		@include transform(translateY(-50%));
+		@include transition(transform 0.4s $animation-duration - 0.2s, opacity 0.4s $animation-duration - 0.2s);
+	}
+
+	@include MQ(M) {
+
+		h2 {
+			font-size: 5rem;
+		}
+	}
+}
+
+.cd-content {
+	padding: 2em 0;
+	background-color: darken($color-6, 8%);
+
+	p {
+		width: 90%;
+		max-width: 800px;
+		margin: 0 auto 2em;
+		font-size: 1.4rem;
+		line-height: 1.6;
+		color: darken($color-6, 40%);
+	}
+
+	@include MQ(M) {
+		padding: 4em 0;
+
+		p {
+			font-size: 1.6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+ Loading Bar
+
+-------------------------------- */
+
+#cd-loading-bar {
+	position: fixed;
+	z-index: 2;
+	left: $nav-width-small - $loading-bar-width;
+	width: $loading-bar-width;
+	visibility: hidden;
+	
+	/* Force Hardware Acceleration */
+	@include backface-visibility(hidden);
+	@include transform(translateZ(0));
+
+	&.index {
+		background-color: $color-1;
+	}
+
+	&.services {
+		background-color: $color-2;
+	}
+
+	&.projects {
+		background-color: $color-3;
+	}
+
+	&.contact {
+		background-color: $color-4;
+	}
+	
+	&.loading {
+		visibility: visible;
+	}
+
+	@include MQ(S) {
+		left: $nav-width-normal - $loading-bar-width;
+	}
+}

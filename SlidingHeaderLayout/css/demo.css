@@ -1,0 +1,118 @@
+@import url(http://fonts.googleapis.com/css?family=Playfair+Display:900|Josefin+Sans:400);
+@font-face {
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'codropsicons';
+	src:url('../fonts/codropsicons/codropsicons.eot');
+	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+}
+
+*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.clearfix:before, .clearfix:after {display: table;  content: ''; }
+.clearfix:after { clear: both; }
+
+body {
+	background: #2a2e39;
+	color: #dbdbdb;
+	font-weight: 400;
+	font-size: 1em;
+	font-family: "Josefin Sans", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+a {
+	color: #36b6dd;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus {
+	outline: none;
+	color: #fff !important;
+}
+
+.codrops-links {
+	position: relative;
+	-webkit-flex: none;
+	flex: none;
+	white-space: nowrap;
+}
+
+.codrops-links::after {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -1px;
+	width: 2px;
+	height: 100%;
+	background: #dbdbdb;
+	content: '';
+	-webkit-transform: rotate3d(0,0,1,22.5deg);
+	transform: rotate3d(0,0,1,22.5deg);
+}
+
+.codrops-icon {
+	display: inline-block;
+	margin: 0.5em;
+	padding: 0em 0;
+	width: 1.5em;
+	text-decoration: none;
+}
+
+.codrops-icon span {
+	display: none;
+}
+
+.codrops-icon:before {
+	margin: 0 5px;
+	text-transform: none;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-family: 'codropsicons';
+	line-height: 1;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+.codrops-icon--drop:before {
+	content: "\e001";
+}
+
+.codrops-icon--prev:before {
+	content: "\e004";
+}
+
+.demos {
+	margin-top: 0.5em;
+}
+
+.demos__item {
+	display: inline-block;
+	margin: 0 1em 0 0;
+	padding: 0.2em 0;
+	text-transform: uppercase;
+	white-space: nowrap;
+	letter-spacing: 2px;
+	font-size: 0.75em;
+}
+
+.demos__item--current {
+	border-bottom: 1px solid #000;
+	border-color: initial;
+}
+
+.related {
+	padding: 9em 1em;
+	text-align: center;
+	font-size: 1.5em;
+	line-height: 1.8;
+}
+
+@media screen and (max-width: 590px) {
+	.demos__item {
+		margin-bottom: 1.5em;
+	}
+}

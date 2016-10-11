@@ -1,0 +1,25 @@
+// colors
+
+$background: #2e313d; // body background color
+$color-1: #f35535; // orange
+$color-2: #f0f1e7; // cream
+$color-3: #65676f; // blue text
+
+//header height
+
+$header-height-S: 50px;
+$header-height-M: 70px;
+
+//intro height
+
+$intro-height-S: 300px;
+$intro-height-M: 400px;
+$intro-height-L: 500px;
+
+// fonts 
+
+$primary-font: 'Ubuntu', sans-serif;
+
+//z-index - order the elements from the lowest z-index(left) to the highest(right)
+
+$elements: intro-image, main-content, navigation;

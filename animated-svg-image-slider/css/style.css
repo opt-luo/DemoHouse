@@ -1,0 +1,226 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #ffffff;
+  background-color: #00171F;
+}
+
+a {
+  color: #00A7E1;
+  text-decoration: none;
+}
+
+img, svg, image {
+  max-width: 100%;
+}
+
+header {
+  position: relative;
+  padding: 2em 0;
+}
+header h1 {
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 2rem;
+}
+@media only screen and (min-width: 768px) {
+  header {
+    padding: 4em 0 2em;
+  }
+  header h1 {
+    font-size: 3.2rem;
+    font-weight: 300;
+  }
+}
+
+.cd-filter {
+  /* SVG animation style switcher - not needed in production */
+  margin-top: 1em;
+  text-align: center;
+}
+.cd-filter li {
+  display: inline-block;
+  margin: 4px;
+}
+.cd-filter a {
+  display: block;
+  border-bottom: 2px solid rgba(76, 92, 98, 0);
+  padding: .8em 1em;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #4c5c62;
+}
+.no-touch .cd-filter a:hover {
+  border-bottom: 2px solid rgba(76, 92, 98, 0.6);
+}
+.cd-filter a.selected {
+  color: #00A7E1;
+  border-bottom: 2px solid rgba(0, 167, 225, 0.4);
+}
+.no-touch .cd-filter a.selected:hover {
+  border-bottom: 2px solid rgba(0, 167, 225, 0.4);
+}
+@media only screen and (min-width: 768px) {
+  .cd-filter {
+    margin-top: 2em;
+  }
+}
+
+/* -------------------------------- 
+
+Slider
+
+-------------------------------- */
+.cd-slider-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 1024px;
+  margin: 2em auto;
+  /* hide horizontal scrollbar on IE11 */
+  overflow-x: hidden;
+}
+
+.cd-slider > li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  /* hide vertical scrollbar on IE11 */
+  overflow: hidden;
+}
+.cd-slider > li.visible {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+}
+.cd-slider > li.is-animating {
+  z-index: 3;
+  opacity: 1;
+}
+
+.cd-slider .cd-svg-wrapper {
+  /* using padding Hack to fix bug on IE - svg height not properly calculated */
+  height: 0;
+  padding-bottom: 57.15%;
+}
+
+.cd-slider-wrapper svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* -------------------------------- 
+
+Slider navigation
+
+-------------------------------- */
+.cd-slider-navigation li {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 10px;
+  height: 48px;
+  width: 48px;
+}
+.cd-slider-navigation li a {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+  background: url(../img/cd-icon-arrows.svg) no-repeat 0 0;
+  -webkit-transition: -webkit-transform 0.2s;
+  -moz-transition: -moz-transform 0.2s;
+  transition: transform 0.2s;
+}
+.no-touch .cd-slider-navigation li a:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.cd-slider-navigation li:last-of-type {
+  left: 10px;
+  right: auto;
+}
+.cd-slider-navigation li:last-of-type a {
+  background-position: -48px 0;
+}
+
+/* -------------------------------- 
+
+Slider dots/controls 
+
+-------------------------------- */
+.cd-slider-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  right: auto;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 3;
+  text-align: center;
+  width: 90%;
+}
+.cd-slider-controls::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.cd-slider-controls li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.cd-slider-controls li:last-of-type {
+  margin-right: 0;
+}
+.cd-slider-controls li.selected a {
+  background-color: #ffffff;
+}
+.cd-slider-controls a {
+  display: block;
+  /* image replacement */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+.no-touch .cd-slider-controls a:hover {
+  background-color: #ffffff;
+}

@@ -1,0 +1,369 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+input, textarea {
+	font-family: $primary-font;
+	@include font-size(16px);
+	border: none;
+	margin: 0;
+	border-radius: 0;
+}
+
+input[type=email]::-ms-clear {
+	/* remove the big X on ie */
+    display: none;
+}
+
+input[type=submit] {
+	@include appearance(none);
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $M; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+	@include clearfix;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+header {
+	position: relative;
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+
+	h1 {
+		color: $color-2;
+		@include font-size(26px);
+		font-weight: 300;
+	}
+
+	@include MQ(M) { // to change the breakpoints see _layout.scss
+		height: 250px;
+		line-height: 250px;
+
+		h1 {
+			@include font-size(30px);
+		}
+	}
+}
+
+/* filter */
+
+.cd-filter {
+	text-align: center;
+
+	li {
+		display: inline-block;
+		margin: 0 .6em;
+	}
+
+	input[type=radio] {
+		display: none;
+	}
+
+	label {
+		display: block;
+		cursor: pointer;
+		padding: .6em;
+		@include border-radius;
+		color: rgba($color-2, .4);
+	}
+
+	input:checked + label {
+		box-shadow: 0 0 0 1px rgba($color-2, .4);
+		color: $color-2;
+	}
+}
+
+/* form */
+
+.cd-form-wrapper {
+	position: relative;
+	margin: 4em auto;
+
+	@include MQ(M) {
+		margin: 8em auto;
+	}
+}
+
+.cd-form {
+	position: relative;
+	width: 100%;
+	height: 100px;
+	background: $color-1;
+
+	@include MQ(M) {
+		height: 180px;
+	}
+
+	.cd-loading {
+		/* loading bar */
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 3%;
+		width: 100%;
+		background-color: lighten($color-2, 25%);
+
+		@include transform-origin(0 50%);
+		@include transform(scaleX(0));
+		visibility: hidden;
+		-webkit-transition: -webkit-transform 3s;
+		-moz-transition: -moz-transform 3s;
+		transition: transform 3s;
+		z-index: 3;
+
+		.no-csstransitions & {
+			/* we use modernizr to detect old browser and hide the loading effect */
+			display: none;
+		}
+	}
+
+	&.is-submitted .cd-loading{
+		visibility: visible;
+		@include transform(scaleX(1));
+	}
+}
+
+.cd-label, .cd-email, .cd-submit {
+	position: absolute;
+}
+
+.cd-label {
+	color: darken($color-1, 50%);
+	left: 18px;
+	top: 20%;
+	text-transform: uppercase;
+	@include font-size(11px);
+	font-weight: 700;
+	opacity: 1;
+	@include transform(translate3d(0,0,0));
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
+	transition: transform 0.3s, opacity 0.3s;
+	z-index: 2;
+
+	.is-active & {
+		opacity: 0;
+		@include transform(translate3d(0,-200%,0));
+	}
+
+	@include MQ(M) {
+		left: 40px;
+	}
+}
+
+.cd-email, .cd-submit {
+	width: 100%;
+	bottom: 0;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.cd-email {
+	top: 0;
+	left: 0;
+	height: 100%;
+	background: transparent;
+	padding-left: 18px;
+	font-weight: 300;
+	color: $color-2;
+	@include transition(height .3s, background-color .3s);
+	z-index: 1;
+
+	@include placeholder {
+		color: darken($color-1, 35%);
+	}
+
+	.is-active & {
+		height: 50%;
+	}
+
+	&:focus {
+		background-color: lighten($color-1, 5%);
+	}
+
+	@include MQ(M) {
+		padding-left: 40px;
+		@include font-size(24px);
+	}
+}
+
+.cd-submit {
+	top: 50%;
+	cursor: pointer;
+	background-color: $color-2;
+	color: $color-3;
+	text-transform: uppercase;
+	font-weight: 700;
+	/* hidden by default */
+	display: none;
+	@include font-smoothing;
+	@include transition(background-color .2s);
+	z-index: 2;
+
+	.is-active & {
+		display: block;
+		@include animation(cd-bounce-in ease-out .4s);
+	}
+
+	.no-touch &:hover, &:focus {
+		background-color: lighten($color-2, 5%);
+	}
+}
+
+@include keyframes(cd-bounce-in) {
+	0% {
+		top: 100%;
+	}
+
+	60% {
+		top: 45%;
+	}
+
+	100% {
+		top: 50%;
+	}
+}
+
+.cd-response {
+	position: absolute;
+	bottom: 110%;
+	left: 0;
+	padding: 1.4em;
+	color: $color-3;
+	@include font-size(14px);
+	@include font-smoothing;
+	z-index: 3;
+
+	/* hidden by default */
+	visibility: hidden;
+	opacity: 0;
+	@include transform(translateY(-20px));
+
+	-webkit-transition: -webkit-transform 0.3s 0s, opacity 0.3s 0s, visibility 0s .3s;
+	-moz-transition: -moz-transform 0.3s 0s, opacity 0.3s 0s, visibility 0s .3s;
+	transition: transform 0.3s 0s, opacity 0.3s 0s, visibility 0s .3s;
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 20px;
+
+		/* create triangle in css */
+		display: inline-block;
+		width: 0;
+		height: 0;
+		border: 10px solid transparent;
+	}
+
+	&.cd-response-error {
+		background-color: $color-4;
+
+		&::after {
+			border-top-color: $color-4;
+		}
+	}
+
+	&.cd-response-notification {
+		background-color: lighten($color-2, 25%);
+
+		&::after {
+			border-top-color: lighten($color-2, 25%);
+		}
+	}
+
+	&.is-visible {
+		visibility: visible;
+		opacity: 1;
+		@include transform(translateY(0));
+
+		-webkit-transition: -webkit-transform 0.3s 0s, opacity 0.3s 0s, visibility 0s 0s;
+		-moz-transition: -moz-transform 0.3s 0s, opacity 0.3s 0s, visibility 0s 0s;
+		transition: transform 0.3s 0s, opacity 0.3s 0s, visibility 0s 0s;
+	}
+}
+
+.cd-response-success {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 50%;
+	width: 100%;
+	background-color: $color-5;
+	@include transform-origin(50% 100%);
+	@include transform(scaleY(0));
+	visibility: hidden;
+	-webkit-transition: -webkit-transform .3s 0s, visibility 0s .3s;
+	-moz-transition: -moz-transform .3s 0s, visibility 0s .3s;
+	transition: transform .3s 0s, visibility 0s .3s;
+	z-index: 3;
+
+	p {
+		position: absolute;
+		text-align: center;
+		width: 100%;
+		@include center;
+		color: $color-3;
+		opacity: 0;
+		@include transition(opacity .3s 0s);
+	}
+
+	&.slide-in {
+		visibility: visible;
+		@include transform(scaleY(1));
+
+		-webkit-transition: -webkit-transform .3s 0s, visibility 0s 0s;
+		-moz-transition: -moz-transform .3s 0s, visibility 0s 0s;
+		transition: transform .3s 0s, visibility 0s 0s;
+
+		p {
+			opacity: 1;
+			@include transition(opacity .3s .3s);	
+		}
+	}
+}

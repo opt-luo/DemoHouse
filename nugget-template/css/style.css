@@ -1,0 +1,56 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+
+a {
+  color: #62c169;
+  text-decoration: none;
+}
+
+img, embed, object, video, svg {
+  max-width: 100%;
+}
+
+input, textarea {
+  font-family: sans-serif;
+  font-size: 1.6rem;
+}
+
+/* -------------------------------- 
+
+Patterns - reusable parts of our design
+
+-------------------------------- */
+.cd-container {
+  /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+  width: 90%;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+.cd-container::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */

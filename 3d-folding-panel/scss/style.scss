@@ -1,0 +1,540 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-5;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+h1, h2 {
+	font-family: $secondary-font;
+}
+
+/* -------------------------------- 
+
+Patterns - reusable parts of our design
+
+-------------------------------- */
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+/* -------------------------------- 
+
+Header
+
+-------------------------------- */
+
+header {
+	height: 170px;
+	line-height: 170px;
+	text-align: center;
+	background: $color-6;
+
+	h1 {
+		font-size: 2.2rem;
+		color: $color-1;
+	}
+
+	@include MQ(M) {
+		height: 200px;
+		line-height: 200px;
+
+		h1 {
+			font-size: 3rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Main content
+
+-------------------------------- */
+
+.cd-main {
+	overflow-x: hidden;
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */ 
+		display: none;
+		content: 'mobile';
+	} 
+
+	> * {
+		@include transition(transform $fold-animation $fold-content-animation);
+	}
+	
+	&.fold-is-open > * {
+		/* on mobile - translate .cd-main content to the right when the .cd-folding-panel is open */
+		@include transform(translateX(100%));
+		@include transition(transform $fold-animation 0s);
+	}
+
+	@include MQ(M) {
+
+		&.fold-is-open > * {
+			@include transform(translateX(600px));
+		}
+	}
+
+	@include MQ(L) {
+
+		&::before {
+			/* never visible - this is used in jQuery to check the current MQ */ 
+			content: 'desktop';
+		}
+
+		&.fold-is-open > * {
+			/* reset style - on bigger devices we translate the gallery items */
+			@include transform(translateX(0));
+		}
+	}
+}
+
+.cd-gallery {
+	@include clearfix;
+
+	&::before {
+		/* this is the dark layer covering the .cd-gallery when the .cd-folding-panel is open */
+		display: block;
+		content: '';
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba($color-5, .6);
+		opacity: 0;
+		visibility: hidden;
+		@include transition(opacity  $fold-animation $fold-content-animation, visibility 0s $fold-animation+$fold-content-animation);
+	}
+
+	.fold-is-open &::before {
+		visibility: visible;
+		opacity: 1;
+		@include transition(opacity  $fold-animation 0s, visibility 0s 0s);
+	}
+}
+
+.cd-item {
+	width: 100%;
+	height: 300px;
+	text-align: center;
+
+	/* Force Hardware Acceleration */
+	@include transform(translateZ(0));
+	@include backface-visibility(hidden);
+
+	@include transition(transform $fold-animation $fold-content-animation);
+
+	> a {
+		display: table;
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+		color: $color-6;
+		@include font-smoothing;
+
+		&.dark-text {
+			color: $color-1;
+
+			b {
+				border-color: $color-1;
+			}
+		}
+	}
+
+	div {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	&:nth-of-type(1) {
+		background-color: $color-1;
+	}
+
+	&:nth-of-type(2) {
+		background-color: $color-2;
+	}
+
+	&:nth-of-type(3) {
+		background-color: $color-3;
+	}
+
+	&:nth-of-type(4) {
+		background-color: $color-4;
+	}
+
+	h2 {
+		font-size: 2.2rem;
+	}
+
+	p {
+		line-height: 1.2;
+		font-size: 1.4rem;
+		opacity: 0.6;
+		padding: 1em 0;
+	}
+
+	b {
+		display: inline-block;
+		font: {
+			size: 1.2rem;
+			weight: bold;
+		}
+		text-transform: uppercase; 
+		letter-spacing: 1px;
+		padding: 1em 1.3em;
+		border-radius: 50em;
+		border: 1px solid $color-6;
+	}
+	
+	@include MQ(L) {
+		@include column(.5);
+		height: 520px;
+		@include transition(transform $fold-animation $fold-content-animation);
+
+		h2 {
+			font-size: 3rem;
+		}
+
+		p {
+			font-size: 1.6rem;
+		}
+
+		h2, p {
+			@include transform(translateY(30px));
+			@include transition(transform 0.3s 0.1s);
+		}
+
+		b {
+			opacity: 0;
+			@include transform(translateY(20px));
+			@include transition(opacity 0.3s 0s, transform 0.3s 0s);
+		}
+
+		.no-touch & a:hover {
+
+			h2, p {
+				@include transform(translateY(0));
+				@include transition(transform 0.3s 0s);
+			}
+
+			b {
+				opacity: 1;
+				@include transform(translateY(0));
+				@include transition(opacity 0.3s 0.1s, transform 0.3s 0.1s);
+			}
+		}
+
+		.fold-is-open & {
+			@include transition(transform $fold-animation 0s);
+			@include transform(translateX(-400px));
+
+			&:nth-of-type(2n) {
+				@include transform(translateX(400px));
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+folding panel
+
+-------------------------------- */
+
+.cd-folding-panel {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
+	visibility: hidden;
+	overflow: hidden;
+	
+	@include transition(visibility 0s $fold-animation+$fold-content-animation);
+
+	.fold-left,
+	.fold-right {
+		/* the :after elements of .fold-left and .fold-right are the 2 fold sides */
+		width: 100%;
+		height: 100vh;
+		overflow: hidden;
+		position: relative;
+
+		/* enable a 3D-space for children elements */
+		@include perspective(2000px);
+
+		&::after {
+			/* 2 fold sides */
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+
+			/* Force Hardware Acceleration */
+			@include transform(translateZ(0));
+			@include backface-visibility(hidden);
+
+			@include transition(transform $fold-animation $fold-content-animation, background-color $fold-animation $fold-content-animation);
+		}
+	}
+
+	.fold-right {
+		@include perspective-origin(0% 50%);
+
+		&::after {
+			@include transform-origin(right center);
+			@include transform(translateX(-100%) rotateY(-90deg));
+			background-color: darken($color-3, 10%);
+		}
+	}
+
+	.fold-left {
+		/* on mobile only the right fold side is visible */
+		display: none;
+
+		&::after {
+			background-color: lighten($color-3, 12%);
+		}
+	}
+
+	.cd-close {
+		/* 'X' close icon */
+		position: absolute;
+		z-index: 1;
+		display: inline-block;
+		top: 10px;
+		right: 10px;
+		height: 44px;
+		width: 44px;
+
+		/* image replacement */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+
+		opacity: 0;
+		@include transition(opacity .2s 0s);
+
+		&::after, 
+		&::before {
+			/* lines of 'X' icon */
+			content: '';
+			position: absolute;
+			height: 3px;
+			width: 32px;
+			left: 50%;
+	    	top: 50%;
+			background-color: $color-2;	
+			@include backface-visibility(hidden);
+			@include transition(opacity .2s);
+		}
+
+		&::after {
+			@include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+		}
+
+		&::before {
+			@include transform(translateX(-50%) translateY(-50%) rotate(-45deg));
+		}
+	}
+
+	&.is-open {
+		visibility: visible;
+		@include transition(visibility 0s 0s);
+
+		.fold-right::after,
+		.fold-left::after {
+			@include transform(translateX(0));
+			@include transition(transform $fold-animation 0s, background-color $fold-animation 0s);
+		}
+
+		.fold-right::after {
+			background-color: lighten($color-3, 12%);
+		}
+
+		.cd-close {
+			opacity: 1;
+			@include transition(opacity .2s $fold-animation);
+		}
+	}
+
+	@include MQ(M) {
+		width: 600px;
+	}
+
+	@include MQ(L) {
+		@include center(x);
+		width: 800px;
+
+		.fold-left,
+		.fold-right {
+			@include column(.5);
+			height: 100%;
+		}
+
+		.fold-right {
+			/* change perspective-origin so that the 2 fold sides have the same vanishing point */
+			@include perspective-origin(0% 50%);
+
+			&::after {
+				@include transform-origin(right center);
+				@include transform(translateX(-100%) rotateY(-90deg));
+			}
+		}
+
+		.fold-left {
+			display: block;
+			/* change perspective-origin so that the 2 fold sides have the same vanishing point */
+			@include perspective-origin(100% 50%);
+
+			&::after {
+				@include transform-origin(left center);
+				@include transform(translateX(100%) rotateY(90deg));
+			}
+		}
+	}
+}
+
+.cd-fold-content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	padding: 4em 2em;
+
+	visibility: hidden;
+	@include transition(visibility 0s $fold-content-animation);
+
+	> * {
+		opacity: 0;
+		@include transform(translateY(20px));
+	}
+	
+	h2 {
+		font-size: 2.4rem;
+
+		@include transition(transform $fold-content-animation/2 $fold-content-animation/2, opacity $fold-content-animation/2 $fold-content-animation/2);
+	}
+
+	p, em {
+		line-height: 1.6;
+	}
+
+	em {
+		display: inline-block;
+		margin: 1em 0;
+		font-family: $secondary-font;
+		font-size: 1.8rem;
+		color: lighten($color-1, 30%);
+
+		@include transition(transform $fold-content-animation/2 $fold-content-animation/4, opacity $fold-content-animation/2 $fold-content-animation/4);
+	}
+
+	p {
+		margin-bottom: 1em;
+		font-size: 1.4rem;
+		@include transition(transform $fold-content-animation/2 0s, opacity $fold-content-animation/2 0s);
+	}
+
+	.is-open & {
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		visibility: visible;
+		@include transition(visibility 0s $fold-animation);
+
+		> * {
+			opacity: 1;
+			@include transform(translateY(0));
+		}
+
+		h2 {
+			@include transition(transform $fold-content-animation/2 $fold-animation, opacity $fold-content-animation/2 $fold-animation);
+		}
+
+		em {
+			@include transition(transform $fold-content-animation/2 $fold-animation+$fold-content-animation/4, opacity $fold-content-animation/2 $fold-animation+$fold-content-animation/4);
+		}
+
+		p {
+			@include transition(transform $fold-content-animation/2 $fold-animation+$fold-content-animation/2, opacity $fold-content-animation/2 $fold-animation+$fold-content-animation/2);
+		}
+	}
+
+	@include MQ(M) {
+		h2 {
+			font-size: 3.2rem;
+		}
+	}
+
+	@include MQ(L) {
+		padding: 4em;
+
+		> * {
+			@include transform(translateY(40px));
+		}
+
+		em {
+			font-size: 2.2rem;
+		}
+
+		p {
+			font-size: 1.6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Javascript disabled
+
+-------------------------------- */
+
+.no-js .cd-fold-content.single-page {
+	position: static;
+	visibility: visible;
+	height: auto;
+	background-color: $color-3;
+
+	> * {
+		opacity: 1;
+		@include transform(translateY(0));
+	}
+}

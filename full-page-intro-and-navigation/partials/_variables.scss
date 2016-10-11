@@ -1,0 +1,21 @@
+// colors
+
+$color-1: #3a393f; // dark purple 
+$color-2: #eeecf5; // light purple
+$color-3: #d26c64; // red
+$color-4: #ffffff; // white
+$background: darken($color-1, 5%); // body background color - visible when main element scales down
+
+// fonts 
+
+$primary-font: 'Ubuntu', sans-serif;
+
+// z-index
+
+$main-zindex: 1;
+$nav-zindex: 3;
+$shadow-zindex: 2;
+
+// nav
+
+$menu-items-number: 5;

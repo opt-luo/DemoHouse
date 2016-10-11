@@ -1,0 +1,21 @@
+// colors
+
+$color-1: #091d23; // blue dark
+$color-2: lighten($color-1, 20%); 
+$color-3: #ffb441; // yellow
+$color-4: #ffffff; // white
+
+// fonts 
+
+$primary-font: 'PT Sans', sans-serif;
+
+// z-index 
+
+$content-zindex: 1;
+$layer-nav-zindex: 2;
+$nav-zindex: 3;
+$layer-content-zindex: 4;
+$trigger-zindex: 5;
+
+
+

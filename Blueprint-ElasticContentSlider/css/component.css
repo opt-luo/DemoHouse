@@ -1,0 +1,256 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon.svg#icomoon') format('svg'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Needed for a fluid height: */
+html, body, .container, .main { height: 100%;}
+
+/* main wrapper */
+.cbp-contentslider {
+	width: 100%;
+	height: 70%;
+	margin: 1em auto;
+	position: relative;
+	border: 4px solid #47a3da
+}
+
+.cbp-contentslider > ul {
+	list-style: none;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+.cbp-contentslider > ul li {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	padding: 1em;
+	background: #fff;
+}
+
+/* Whithout JS, we use :target */
+.cbp-contentslider > ul li:target {
+	z-index: 100;
+}
+
+.cbp-contentslider nav {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3.313em;
+	z-index: 1000;
+	border-top: 4px solid #47a3da;
+	overflow: hidden;
+}
+
+.cbp-contentslider nav a {
+	float: left;
+	display: block;
+	width: 20%;
+	height: 100%;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+	overflow: hidden;
+	color: #47a3da;
+	background: #fff;
+	outline: none;
+	text-align: center;
+	line-height: 3;
+	position: relative;
+	padding-left: 3.125em;
+	text-transform: uppercase;
+	border-right: 4px solid #47a3da;
+	-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.cbp-contentslider nav a span {
+	display: block;
+}
+
+.cbp-contentslider nav a:last-child {
+	border: none;
+	box-shadow: 1px 0 #47a3da; /* fills gap caused by rounding */
+}
+
+.cbp-contentslider nav a:hover {
+	background-color: #47a3da;
+	color: #fff;
+}
+
+.cbp-contentslider nav a.rc-active {
+	background-color: #47a3da;
+	color: #fff;
+}
+
+/* Iconfont for navigation and headings */
+.cbp-contentslider [class^="icon-"]:before, 
+.cbp-contentslider [class*=" icon-"]:before {
+	font-family: 'icomoon';
+	font-style: normal;
+	text-align: center;
+	speak: none;
+	font-weight: normal;
+	line-height: 2.5;
+	font-size: 2em;
+	position: absolute;
+	left: 10%;
+	top: 50%;
+	margin: -1.250em 0 0 0;
+	height: 2.500em;
+	width: 2.500em;
+	color: rgba(0,0,0,0.1);
+	-webkit-font-smoothing: antialiased;
+}
+
+.cbp-contentslider .icon-wolf:before {
+	content: "\56";
+}
+
+.cbp-contentslider .icon-rabbit:before {
+	content: "\52";
+}
+
+.cbp-contentslider .icon-turtle:before {
+	content: "\54";
+}
+
+.cbp-contentslider .icon-platypus:before {
+	content: "\42";
+}
+
+.cbp-contentslider .icon-aligator:before {
+	content: "\41";
+}
+
+.cbp-contentslider [class^="icon-"].rc-active:before, 
+.cbp-contentslider [class*=" icon-"].rc-active:before,
+.cbp-contentslider nav a:hover:before {
+	color: rgba(255,255,255,0.9);
+}
+
+.cbp-contentslider h3 {
+	font-size: 4em;
+	height: 2em;
+	line-height: 1.7;
+	font-weight: 300;
+	margin: 0 0 0.3em;
+	position: relative;
+	color: #47a3da;
+	text-transform: uppercase;
+	text-align: right;
+	letter-spacing: 0.3em;
+	padding: 0 0.2em 0 0;
+	border-bottom: 4px solid #47a3da;
+}
+
+.cbp-contentslider h3[class^="icon-"]:before, 
+.cbp-contentslider h3[class*=" icon-"]:before {
+	top: 0;
+	left: 0;
+	width: 2em;
+	line-height: 1;
+	height: 1.2em;
+	margin: 0;
+	color: #47a3da;
+}
+
+.cbp-contentslider li > div {
+	position: absolute;
+	top: 9em;
+	bottom: 3.313em;
+	width: 100%;
+	left: 0;
+	padding: 0 1em;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.cbp-contentslider .cbp-content {
+	-webkit-column-rule: 1px dashed #47a3da;
+	-moz-column-rule: 1px dashed #47a3da;
+	column-rule: 1px dashed #47a3da;
+	-webkit-column-count: 2;
+	-moz-column-count: 2;
+	-o-column-count: 2;
+	column-count: 2;
+	-webkit-column-gap: 1em;
+	-moz-column-gap: 1em;
+	-o-column-gap: 1em;
+	column-gap: 1em;
+	vertical-align: top;	
+	padding: 1em 0;
+}
+
+.cbp-contentslider p {
+	color: #47a3da;
+	padding: 0 0.5em 0.4em;
+	margin: 0;
+	font-size: 1.2em;
+	font-weight: 300;
+	text-align: justify;
+	line-height: 1.6;
+}
+
+/* Media queries */
+
+@media screen and (max-width: 70em) { 
+	.cbp-contentslider p {
+		font-size: 100%;
+	}
+}
+
+@media screen and (max-width: 67.75em) {
+
+	.cbp-contentslider { font-size: 85%; }
+
+	.cbp-contentslider nav a[class^="icon-"]:before, 
+	.cbp-contentslider nav a[class*=" icon-"]:before {
+		left: 50%;
+		margin-left: -1.250em;
+	}
+
+	.cbp-contentslider nav a span {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 43em) {
+
+	.cbp-contentslider h3 {
+		font-size: 2em;
+	}
+
+	.cbp-contentslider .cbp-content {
+		-webkit-column-count: 1;
+		-moz-column-count: 1;
+		-o-column-count: 1;
+		column-count: 1;
+	}
+
+	.cbp-contentslider li > div {
+		top: 5em;
+	}
+
+}
+
+@media screen and (max-width: 25em) { 
+	.cbp-contentslider nav a { padding: 0;}
+	.cbp-contentslider h3[class^="icon-"]:before, 
+	.cbp-contentslider h3[class*=" icon-"]:before { display: none;}
+}

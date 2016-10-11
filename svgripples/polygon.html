@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Polygon Ripple</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- SVG Sprite -->
+    <div style="height: 0; width: 0; position: absolute; visibility: hidden;" aria-hidden="true">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+        <symbol id="ripply-scott" viewBox="0 0 100 100">
+          <g>
+            <polygon points="5.6,77.4 0,29 39.1,0 83.8,19.3 89.4,67.7 50.3,96.7"/>
+            <polygon fill="rgba(255,255,255,0.35)" transform="scale(0.5), translate(50, 50)" points="5.6,77.4 0,29 39.1,0 83.8,19.3 89.4,67.7 50.3,96.7"/>
+            <polygon fill="rgba(255,255,255,0.25)" transform="scale(0.25), translate(145, 145)" points="5.6,77.4 0,29 39.1,0 83.8,19.3 89.4,67.7 50.3,96.7"/>
+          </g>
+        </symbol>
+      </svg>
+    </div>
+    <!-- /end sprite -->
+
+    <div class="container">
+      <header class="codrops-header">
+        <h1>SVG Ripples</h1>
+        <nav class="codrops-demos">
+          <a href="circle.html">circle</a>
+          <a href="radial-gradient.html">circle+radialGradient</a>
+          <a class="current-demo" href="polygon.html">polygon</a>
+          <a href="linear-gradient.html">rect+linearGradient</a>
+        </nav>
+      </header>
+
+      <!-- button component -->
+      <button id="js-ripple-btn" class="button styl-material">
+        Click for Ripple
+        <svg class="ripple-obj" id="js-ripple">
+          <use width="4" height="4" xlink:href="#ripply-scott" class="js-ripple"></use>
+        </svg>
+      </button>
+      <!-- /end button component -->
+    </div>
+    <!-- /container -->
+
+    <!-- GreenSock Power : Required for Demo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenMax.min.js"></script>
+    <script src="js/ripple-config.js"></script>
+  </body>
+</html>

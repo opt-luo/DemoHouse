@@ -1,0 +1,143 @@
+@charset "utf-8";
+/*sprite*/
+.loadFailed-animate,
+.loadFailed-animate .bubble,
+.loadFailed-animate .l-hand,
+.loadFailed-animate .r-hand,
+.loadFailed-animate .eyebrow,
+.loadFailed-animate .tail,
+.loadFailed-animate .tear,
+.loadFailed-animate .text{background-image: url(../images/load-failed@2x.png);background-size: 157px auto;background-repeat: no-repeat;}
+
+/* 全页面加载失败 */
+.loadFailed-box {padding-top: 75px;text-align: center;}
+.loadFailed-box p.ellips_line2{font-size: 15px;color: #666;width: 190px;margin: 0 auto;}
+.loadFailed-box .btn-retry,
+.loadFailed-box .btn-call{position: relative;display: block;height: 44px;line-height: 44px;margin:20px 35px 0;background-color: #52bceb;color: #fff;font-size: 20px;border-radius: 5px;}
+.loadFailed-box .btn-call {margin: 0 35px;background-color: #fff;color: #099fde;}
+.loadFailed-box .line-spacing {display: block;height: 1px;margin: 20px 35px;background-color: #bcbcbc;position: relative;}
+.loadFailed-box .line-spacing:before {position: absolute;width:30px;top: -10px;left: 50%;content: "或";background-color: #f5f5f5;text-align: center;margin-left: -15px;color: #bcbcbc;}
+.loadFailed-box .btn-clicked:before {content:"";position: absolute;left:0;top:0;width: 100%;height: 100%;border-radius: 5px;background-color: rgba(0,0,0,0.3);}
+.loadFailed-animate {position: relative;margin: 0 auto 40px;width: 57px;height: 81px;background-position: 0 0;
+  -webkit-animation:bodyMove 3.4s linear 0s infinite;
+  animation:bodyMove 3.4s linear 0s infinite;}
+.loadFailed-animate .bubble {position: absolute;width: 94px;height: 57px;left: -12px;top: 24px;background-position: -64px 0;
+  -webkit-animation:bubbleMove 3.4s linear 0s infinite;
+  animation:bubbleMove 3.4s linear 0s infinite;}
+.loadFailed-animate .l-hand {position: absolute;width: 19px;height: 20px;left: -5px;top: 35px;background-position: -138px -66px;
+  -webkit-animation:lHandMove 1.1s linear 0s infinite;
+  animation:lHandMove 1.1s linear 0s infinite;}
+.loadFailed-animate .r-hand {position: absolute;width: 17px;height: 14px;left: 49px;top: 31px;background-position: -28px -91px;
+  -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
+  transform-origin: left top;
+  -webkit-animation:rHandMove 1.7s linear 0s infinite;
+  animation:rHandMove 1.7s linear 0s infinite;}
+.loadFailed-animate .eyebrow {position: absolute;width: 27px;height: 7px;left: 5px;top: 17px;background-position: -125px -97px;}
+.loadFailed-animate .tail {position: absolute;width: 23px;height: 17px;left: 14px;top: 78px;background-position: 0px -90px;
+  -webkit-transform-origin: right top;
+  -ms-transform-origin: right top;
+  transform-origin: right top;
+  -webkit-animation:tailMove 1.7s linear 0s infinite;
+  animation:tailMove 1.7s linear 0s infinite;}
+.loadFailed-animate .tear {position: absolute;width: 39px;height: 0;left: 1px;top: 24px;background-position: -77px -67px;
+  -webkit-transform: rotate(-12deg);
+  -ms-transform: rotate(-12deg);
+  transform: rotate(-12deg);
+  -webkit-animation:tearDown 3.4s linear 0s infinite;
+  animation:tearDown 3.4s linear 0s infinite;}
+.loadFailed-animate .text {position: absolute;width: 33px;height: 28px;left: 53px;top: -16px;background-position: -56px -87px;}
+.loadFailed-animate .text:before {content: "";width: 9px;height: 10px;background-color: #bedcf2;position: absolute;top: 6px;right: 3px;
+-webkit-animation:textShow 3.4s linear 0s infinite;
+animation:textShow 3.4s linear 0s infinite;}
+/* 局部页面加载失败 */
+.small-loadFailed .loadFailed-box {padding-top: 25px;}
+.small-loadFailed .btn-retry {margin-top: 20px;}
+.small-loadFailed .loadFailed-animate {margin-bottom: 30px;}
+
+@-webkit-keyframes bodyMove{
+  0%{top:0;}
+  25%{top:4px;}
+  50%{top:0;}
+  75%{top:4px;}
+  100%{top:0;}
+}
+@keyframes bodyMove{
+  0%{top:0;}
+  25%{top:4px;}
+  50%{top:0;}
+  75%{top:4px;}
+  100%{top:0;}
+}
+@-webkit-keyframes tearDown{
+  0%{height:0;}
+  100%{height:13px;}
+}
+@keyframes tearDown{
+  0%{height:0;}
+  100%{height:13px;}
+}
+@-webkit-keyframes rHandMove{
+  0%{-webkit-transform:rotate(0);}
+  25%{-webkit-transform:rotate(-15deg);}
+  50%{-webkit-transform:rotate(0deg);}
+  75%{-webkit-transform:rotate(-15deg);}
+  100%{-webkit-transform:rotate(0);}
+}
+@keyframes rHandMove{
+  0%{transform:rotate(0);}
+  25%{transform:rotate(-15deg);}
+  50%{transform:rotate(0deg);}
+  75%{transform:rotate(-15deg);}
+  100%{transform:rotate(0);}
+}
+@-webkit-keyframes lHandMove{
+  0%{left: -5px;}
+  50%{left: -3px;}
+  100%{left: -5px;}
+}
+@keyframes lHandMove{
+  0%{left: -5px;}
+  50%{left: -3px;}
+  100%{left: -5px;}
+}
+@-webkit-keyframes bubbleMove{
+  0%{top: 24px;}
+  25%{top: 23px;}
+  50%{top: 24px;}
+  75%{top: 23px;}
+  100%{top: 24px;}
+}
+@keyframes bubbleMove{
+  0%{top: 24px;}
+  25%{top: 23px;}
+  50%{top: 24px;}
+  75%{top: 23px;}
+  100%{top: 24px;}
+}
+@-webkit-keyframes tailMove{
+  0%{-webkit-transform:rotate(0);}
+  25%{-webkit-transform:rotate(15deg);}
+  50%{-webkit-transform:rotate(0deg);}
+  75%{-webkit-transform:rotate(15deg);}
+  100%{-webkit-transform:rotate(0);}
+}
+@keyframes tailMove{
+  0%{transform:rotate(0);}
+  25%{transform:rotate(15deg);}
+  50%{transform:rotate(0deg);}
+  75%{transform:rotate(15deg);}
+  100%{transform:rotate(0);}
+}
+@-webkit-keyframes textShow{
+  0%{width: 9px;}
+  33%{width: 7px;}
+  66%{width: 4px;}
+  100%{width: 0;}
+}
+@keyframes textShow{
+  0%{width: 9px;}
+  33%{width: 7px;}
+  66%{width: 4px;}
+  100%{width: 0;}
+}

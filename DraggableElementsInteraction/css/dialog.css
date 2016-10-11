@@ -1,0 +1,217 @@
+.dialog {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	pointer-events: none;
+	z-index: 1000;
+}
+
+.dialog::before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: rgba(55, 58, 71, 0.9);
+	opacity: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+	-webkit-backface-visibility: hidden;
+}
+
+.dialog--open::before {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.dialog__content {
+	width: 50%;
+	max-width: 380px;
+	min-width: 290px;
+	position: relative;
+	z-index: 5;
+	opacity: 0;
+}
+
+.dialog--open .dialog__content {
+	opacity: 1;
+	pointer-events: auto;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.dialog__content-inner {
+	background: #fff;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	overflow: hidden;
+	opacity: 0;
+	pointer-events: none;
+	-webkit-transform: translate3d(0,450px,0);
+	transform: translate3d(0,450px,0);
+}
+
+.dialog--open .dialog__content-inner {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	-webkit-transition: opacity 0.3s, -webkit-transform 0.6s cubic-bezier(0.2,1,0.3,1);;
+	transition: opacity 0.3s, transform 0.6s cubic-bezier(0.2,1,0.3,1);;
+}
+
+.handle {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.handle:hover {
+	cursor: move;
+	cursor: -webkit-grab;
+	cursor: grab;
+}
+
+.handle:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing;
+}
+
+.mover {
+	pointer-events: none;
+}
+
+.dialog__header {
+	background: #647FEA;
+	color: #fff;
+	padding: 20px 35px;
+	text-align: left;
+}
+
+.dialog__header h2 {
+	font-size: 1.15em;
+	margin: 0;
+	line-height: 1.75;
+}
+
+.actions {
+	padding: 10px 30px;
+	background: #fff;
+	overflow: hidden;
+}
+
+.action {
+	background: none;
+	padding: 0;
+	margin: 0;
+	font-family: 'Avenir Next', 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+	border: none;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	text-align: left;
+	color: #201c1c;
+	pointer-events: auto;
+}
+
+.actions .action {
+	padding: 20px 0 25px 4.5em;
+	opacity: 0;
+	-webkit-transform: translate3d(0,100px,0);
+	transform: translate3d(0,100px,0);
+}
+
+.dialog--open .actions .action {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	-webkit-transition: opacity 0.3s, -webkit-transform 1s cubic-bezier(0.2,1,0.3,1);
+	transition: opacity 0.3s, transform 1s cubic-bezier(0.2,1,0.3,1);
+}
+
+.dialog--open .actions div:first-child .action {
+	-webkit-transition-delay: 0.07s;
+	transition-delay: 0.07s;
+}
+
+.dialog--open .actions div:nth-child(2) .action {
+	-webkit-transition-delay: 0.14s;
+	transition-delay: 0.14s;
+}
+
+.dialog--open .actions div:nth-child(3) .action {
+	-webkit-transition-delay: 0.21s;
+	transition-delay: 0.21s;
+}
+
+.action:focus,
+.action:hover {
+	color: #647FEA;
+}
+
+.action:focus {
+	outline: none;
+}
+
+.action--close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	color: #4760C2;
+	font-size: 1.5em;
+	z-index: 1000;
+}
+
+.action--close:hover {
+	color: #fff;
+}
+
+.text-hidden {
+	position: absolute;
+	top: 200%;
+}
+
+.icon--action {
+	font-size: 1.5em;
+	border: 2px solid;
+	position: absolute;
+	border-radius: 50%;
+	padding: 15px;
+	left: 0;
+	top: 12px;
+	color: #B6C9E0;
+}
+
+.action__title {
+	display: block;
+	font-weight: bold;
+}
+
+.action__subline {
+	font-size: 0.9em;
+	color: #989E9E;
+}
+
+.dialog__footer {
+	padding: 1.25em;
+	background: #B6C9E0;
+}
+
+.dialog__footer a {
+	color: #fff;
+	font-size: 0.85em;
+	font-weight: bold;
+	pointer-events: auto;
+}

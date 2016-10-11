@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SVG Loader with GSAP | Flip Box Loader</title>
+	<meta name="description" content="Some loaders made with SVG and GSAP" />
+	<meta name="keywords" content="svg, animation, GSAP, loader, inspiration, web design" />
+	<meta name="author" content="Codrops" />
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<script type="text/javascript" src="js/greensock/minified/TweenMax.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body class="demo-2">
+	<div class="container">
+		<header class="codrops-header">
+			<h1>SVG Loader <span>with <a href="http://greensock.com/gsap">GSAP</a> by <a href="https://twitter.com/chrisgannon">Chris Gannon</a></span></h1>
+			<div class="codrops-links">
+				<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/CreativeGooeyEffects/" title="Previous Demo"><span>Previous Demo</span></a>
+				<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=23648" title="Back to the article"><span>Back to the Codrops article</span></a>
+			</div>
+			<nav class="codrops-demos">
+				<a href="index.html">Jump Loader</a>
+				<span>More ideas:</span>
+				<a class="current-demo" href="index2.html">Flip Box Loader</a>
+				<a href="index3.html">Creeper</a>
+				<a href="index4.html">Squash Box Loader</a>
+				<a href="index5.html">Veggie Loader</a>
+				<a href="index6.html">Infinity Loader</a>
+				<a href="index7.html">Goo Loader</a>
+			</nav>
+		</header>
+		<div class="content">
+			<div class="svg-container" id="boxContainer">
+				<svg id="boxLoader" width="70px" height="70px" viewBox="0 0 35 35" preserveAspectRatio="none">
+					<rect x="0" fill="#fff" width="35" height="35" />
+				</svg>
+				<svg id="base" width="210px" height="210px" viewBox="0 0 105 105" preserveAspectRatio="none">
+					<line stroke-width="1.5" fill="none" stroke="#383845" stroke-miterlimit="10" x1="0" y1="52.5" x2="105" y2="52.5" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<script>
+	(function() {
+		var boxContainer = document.getElementById('boxContainer');
+		var boxLoader = document.getElementById('boxLoader');
+		var box = document.getElementById('box');
+		var base = document.getElementById('base');
+
+		TweenMax.set([boxLoader, base], {
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: -50
+		})
+
+		TweenMax.set([boxContainer], {
+			position: 'absolute',
+			top:'50%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: -50
+		})
+
+		var tl = new TimelineMax({
+			repeat: -1
+		});
+		
+		tl.timeScale(1.2)
+		
+		tl.set(boxLoader, {
+			transformOrigin: '0% 100%',
+			left: '+=70',
+			top: '-=' + 70 / 2
+		})
+		.to(boxLoader, 1, {
+			rotation: '-=90',
+			ease: Power4.easeInOut
+		})
+		.set(boxLoader, {
+			transformOrigin: '0% 100%',
+			left: '-=70',
+			rotation: 0
+		})
+		.to(boxLoader, 1, {
+			rotation: '-=90',
+			ease: Power4.easeInOut
+		})
+		.set(boxLoader, {
+			transformOrigin: '0% 100%',
+			left: '-=70',
+			rotation: 0
+		})
+		.to(boxLoader, 1, {
+			rotation: '-=270',
+			ease: Power4.easeInOut
+		})
+		.to(boxContainer, 1, {
+			rotation: '+=180',
+			ease: Back.easeInOut
+		}, '-=1')
+		.set(boxLoader, {
+			transformOrigin: '100% 0%',
+			top: '+=70',
+			rotation: 0
+		})
+		.to(boxLoader, 1, {
+			rotation: '-=90',
+			ease: Power4.easeInOut
+		})
+		.set(boxLoader, {
+			transformOrigin: '100% 0%',
+			left: '+=70',
+			rotation: 0
+		})
+		.to(boxLoader, 1, {
+			rotation: '-=90',
+			ease: Power4.easeInOut
+		})
+		.set(boxLoader, {
+			transformOrigin: '100% 0%',
+			left: '+=70',
+			rotation: 0
+		})
+		.to(boxLoader, 1, {
+			rotation: '-=270',
+			ease: Power4.easeInOut
+		})
+		.to(boxContainer, 1, {
+			rotation: '+=180',
+			ease: Back.easeInOut
+		}, '-=1')
+	})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+	@include font-smoothing;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+header {
+	position: relative;
+	height: 180px;
+	line-height: 180px;
+	
+	h1 {
+		font-size: 2.4rem;
+		text-align: center;
+	}
+
+	@include MQ(L) {
+		height: 300px;
+		line-height: 300px;
+
+		h1 {
+			font-size: 3.2rem;
+			font-weight: 300;
+		}
+	}
+}
+
+.cd-section {
+	padding: 2em;
+	text-align: center;
+}
+
+.cd-bouncy-nav-trigger {
+	/* button style */
+	background: $color-2;
+	color: $color-4;
+	padding: 1.2em 2em;
+	border-radius: 10em;
+	box-shadow: inset 0 1px 0 rgba(#fff, .3), 0 0 10px darken($color-3, 5%);
+
+	.no-touch &:hover {
+		background: lighten($color-2, 5%);
+	}
+}
+
+.cd-bouncy-nav-modal {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba($color-3, .9);
+	
+	opacity: 0;
+	visibility: hidden;
+	@include transition( opacity 0.3s 0.6s, visibility 0s 0.9s);
+
+	&.fade-in {
+		visibility: visible;
+		opacity: 1;
+		@include transition( opacity 0.1s 0s, visibility 0s 0s);
+	}
+
+	.cd-close {
+		display: block;
+		position: fixed;
+		top: 20px;
+		right: 5%;
+		width: 44px;
+		height: 44px;
+
+		/* image replacement */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+
+		background: url('../img/cd-icon-close.svg') no-repeat center center;
+		@include transform(scale(0) translateZ(0));
+		@include transition(transform .3s 0s, visibility 0s .3s);
+	}
+
+	&.fade-in .cd-close {
+		@include transform(scale(1));
+		@include transition(transform .3s 0s, visibility .3s 0s);
+	}
+
+	@include MQ(L) {
+
+		.cd-close {
+			top: 60px;
+		}
+	}
+}
+
+.cd-bouncy-nav {
+	position: absolute;
+	left: 50%;
+	top: 50vh;
+	@include transform(translateX(-50%) translateY(-50%));
+	width: 90%;
+	max-width: 300px;
+
+	li {
+		@include column(.5); // see partials > _layout.scss
+		@include transform(translateZ(0));
+		@include transform(translateY(100vh));
+		text-align: center;
+
+		.is-visible & {
+			/* used to assign a tranlsateY value when the animation is over */
+			@include transform(translateY(0));
+		}
+
+		.fade-in & {
+			@include animation(cd-move-in .4s);
+		}
+
+		.fade-out & {
+			@include animation(cd-move-out .4s);
+		}
+
+		.fade-in &, .fade-out & {
+			@include animation-fill-mode(forwards);
+
+			&:nth-of-type(2) {
+				@include animation-delay(0.1s);
+			}
+			&:nth-of-type(3) {
+				@include animation-delay(0.15s);
+			}
+			&:nth-of-type(4) {
+				@include animation-delay(0.25s);
+			}
+			&:nth-of-type(5) {
+				@include animation-delay(0.3s);
+			}
+			&:nth-of-type(6) {
+				@include animation-delay(0.4s);
+			}
+		}
+	}
+
+	a {
+		display: inline-block;
+		min-width: 80px;
+		position: relative;
+		padding: 90px 20px 0;
+		margin-bottom: 30px;
+		color: $color-4;
+
+		&::before {
+			/* icons */
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			@include center(x);
+			height: 80px;
+			width: 80px;
+			border-radius: 50%;
+			background-color: $color-5;
+			background-image: url('../img/cd-category-icons.svg');
+			background-repeat: no-repeat;
+			background-position: 0 0;
+		}
+
+		.no-touch &:hover::before {
+			background-color: $color-2;
+		}
+	}
+
+	li:nth-of-type(2) a::before {
+		background-position: -80px 0;
+	}
+	li:nth-of-type(3) a::before {
+		background-position: -160px 0;
+	}
+	li:nth-of-type(4) a::before {
+		background-position: -240px 0;
+	}
+	li:nth-of-type(5) a::before {
+		background-position: -320px 0;
+	}
+	li:nth-of-type(6) a::before {
+		background-position: -400px 0;
+	}
+
+	@include MQ(M) {
+		max-width: 450px;
+		
+		li {
+			@include column(.3333);
+
+			.fade-in &, .fade-out & {
+
+				&:nth-of-type(1) {
+					@include animation-delay(0.1s);
+				}
+				&:nth-of-type(2) {
+					@include animation-delay(0s);
+				}
+				&:nth-of-type(4) {
+					@include animation-delay(0.3s);
+				}
+				&:nth-of-type(5) {
+					@include animation-delay(0.25s);
+				}
+				
+			}
+		}
+
+		a {
+			margin-bottom: 50px;
+		}
+	}
+}
+
+@include keyframes(cd-move-in) {
+	0% {
+		@include transform(translateY(100vh));
+	}
+
+	65% {
+		@include transform(translateY(-1.5vh));
+	}
+
+	100% {
+		@include transform(translateY(0vh));
+	}
+}
+
+@include keyframes(cd-move-out) {
+	0% {
+		@include transform(translateY(0vh));
+	}
+
+	100% {
+		@include transform(translateY(-100vh));
+	}
+}

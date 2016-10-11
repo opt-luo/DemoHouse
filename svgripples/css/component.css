@@ -1,0 +1,47 @@
+/* Component styles */
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.3), 0 1px 1.5px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.2);
+  font-family: 'Roboto',sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #bcdffb;
+}
+
+.button {
+  height: 100%;
+  padding: 2em;
+  position: relative;
+  width: 100%;
+}
+
+.button.styl-material {
+  -webkit-transition: 200ms background cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 200ms background cubic-bezier(0.4, 0, 0.2, 1);
+  background: #2196F3;
+}
+
+.button.styl-material:hover,
+.button.styl-material:focus {
+  outline: none;
+  background: #2b9bf4;
+}
+
+.ripple-obj {
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  fill: #0c7cd5;
+}
+
+.ripple-obj use {
+  opacity: 0;
+}

@@ -1,0 +1,58 @@
+/* Main stuff */
+.text {
+  fill: url("#p-stars");
+  stroke: #551f7a;
+  stroke-width: 3;
+}
+/* Colorize & animate pattern */
+$colors: #551F7A, #BA2799, #D9587A, #FFDD00, #fff3a1;
+$max: length($colors);
+$time: 2s;
+$time-step: $time/$max;
+.g-stars polygon {
+  stroke-width: 0;
+  -webkit-animation: stroke $time infinite;
+  animation: stroke $time infinite;
+  @for $item from 1 through $max {
+    &:nth-child(#{$max}n + #{$item}) {
+      $color: nth($colors, $item);
+      fill: $color;
+      stroke: $color;
+      -webkit-animation-delay: -($time-step*$item);
+      animation-delay: -($time-step*$item);
+    }
+  }
+}
+/* Change stroke-width within animation */
+@-webkit-keyframes stroke {
+  50% {
+    stroke-width: 8;
+  }
+}
+@keyframes stroke {
+  50% {
+    stroke-width: 8;
+  }
+}
+/* Other stuff */
+$bgcolor: darken(#551F7A, 16%);
+html,
+body {
+  height: 100%;
+}
+body {
+  background: $bgcolor -webkit-linear-gradient(90deg, $bgcolor 50%, lighten($bgcolor, 2%) 50%);
+  background: $bgcolor linear-gradient(90deg, $bgcolor 50%, lighten($bgcolor, 2%) 50%);
+  background-size: 3em 100%;
+  color: #fff;
+}
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Multi-Element Selection</title>
+		<meta name="description" content="Multi-Element Selection: Click and hold to select multiple items" />
+		<meta name="keywords" content="checkbox, selection, javascript, hover, click and hold, drag, multi-select" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container demo-1">
+			<!-- Top Navigation -->
+			<div class="codrops-top clearfix">
+				<a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/ThumbnailGridAnimations/"><span>Previous Demo</span></a>
+				<span class="right"><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16730"><span>Back to the Codrops Article</span></a></span>
+			</div>
+			<header>
+				<h1>Multi-Element Selection <span>Just click + hold (300ms) &amp; move over the checkboxes to select/deselect them</span></h1>
+				<nav class="codrops-demos"><a href="index.html" class="current-demo">Checkbox only</a><a href="index2.html">Entire item</a></nav>
+			</header>
+			<section>
+				<form class="me-select">
+					<ul id="me-select-list">
+						<li><input id="cb1" name="cb1" type="checkbox"><label for="cb1"><span>Mary Jane</span><span>What have you been up to?</span><span>09:32 pm</span></label></li>
+						<li><input id="cb2" name="cb2" type="checkbox"><label for="cb2"><span>Carrie Johnston</span><span>Design Mockups for Fancy Burger</span><span>08:16 pm</span></label></li>
+						<li><input id="cb3" name="cb3" type="checkbox"><label for="cb3"><span>Barry White</span><span>Please consider my SEO services... please?</span><span>08:11 pm</span></label></li>
+						<li><input id="cb4" name="cb4" type="checkbox"><label for="cb4"><span>Dave Rookie</span><span>Check out this cat video</span><span>07:55 pm</span></label></li>
+						<li><input id="cb5" name="cb5" type="checkbox"><label for="cb5"><span>Jim Jimbo</span><span>You order with Jimbo Direct</span><span>07:38 pm</span></label></li>
+						<li><input id="cb6" name="cb6" type="checkbox"><label for="cb6"><span>Art Van Dim</span><span>I need a pie chart</span><span>06:24 pm</span></label></li>
+						<li><input id="cb7" name="cb7" type="checkbox"><label for="cb7"><span>W. Willson</span><span>Saturday night dinner</span><span>06:45 pm</span></label></li>
+						<li><input id="cb8" name="cb8" type="checkbox"><label for="cb8"><span>Gary</span><span>Games from FunkyCrazyGames.com</span><span>05:38 pm</span></label></li>
+						<li><input id="cb9" name="cb9" type="checkbox"><label for="cb9"><span>Dan Richards</span><span>One last warning</span><span>04:32 pm</span></label></li>
+						<li><input id="cb10" name="cb10" type="checkbox"><label for="cb10"><span>Henry Bright</span><span>I need you opinion</span><span>03:49 pm</span></label></li>
+						<li><input id="cb11" name="cb11" type="checkbox"><label for="cb11"><span>Olivia Grant</span><span>When are you coming home?</span><span>03:23 pm</span></label></li>
+						<li><input id="cb12" name="cb12" type="checkbox"><label for="cb12"><span>Becky Turner</span><span>I have your tickets</span><span>02:55 pm</span></label></li>
+						<li><input id="cb13" name="cb13" type="checkbox"><label for="cb13"><span>Bookmeister</span><span>Your booking at Loft 523</span><span>01:46 pm</span></label></li>
+					</ul>
+				</form>
+			</section>
+			<section class="related">
+				<p>You might also like:</p>
+				<p><a href="http://tympanus.net/Development/AnimatedCheckboxes/">Animated Checkboxes</a></p>
+				<p><a href="http://tympanus.net/Tutorials/ExpandingSearchBar/">Expanding Search Bar</a></p>
+			</section>
+		</div><!-- /container -->
+		<script src="js/magicselection.js"></script>
+		<script>
+			(function() {
+				var selList = document.getElementById( 'me-select-list' ),
+					items = selList.querySelectorAll( 'li' );
+				
+				// fill the initial checked elements (mozilla)
+				[].slice.call( items ).forEach( function( el ) {
+					el.parentNode.className = el.checked ? 'selected' : '';
+				} );
+
+				function checkUncheck( el ) {
+					el.parentNode.className = el.checked ? '' : 'selected';
+					el.checked = !el.checked;
+				}
+
+				new magicSelection( selList.querySelectorAll( 'li > input[type="checkbox"]' ), {
+					onSelection : function( el ) { checkUncheck( el ); },
+					onClick : function( el ) {
+						el.parentNode.className = el.checked ? 'selected' : '';
+					}
+				} );
+
+			} )();
+		</script>
+	</body>
+</html>

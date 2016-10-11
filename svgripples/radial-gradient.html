@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Radial Gradient</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- SVG Sprite -->
+    <div style="height: 0; width: 0; position: absolute; visibility: hidden;" aria-hidden="true">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+        <!-- Because of Firefox -->
+        <defs>
+          <radialGradient id="gradient">
+            <stop offset="0" stop-color="#0868BB"/>
+            <stop offset="0.25" stop-color="#0075D8"/>
+            <stop offset="0.35" stop-color="#0868BB"/>
+            <stop offset="0.50" stop-color="#0075D8"/>
+            <stop offset="0.60" stop-color="#0868BB"/>
+            <stop offset="0.85" stop-color="#0075D8"/>
+            <stop offset="1" stop-color="#0868BB"/>
+          </radialGradient>
+        </defs>
+        <!-- /end Because of Firefox -->
+
+        <symbol id="ripply-scott" viewBox="0 0 100 100">
+          <circle id="ripple-shape" fill="url(#gradient)" cx="1" cy="1" r="1"/>
+        </symbol>
+      </svg>
+    </div>
+    <!-- /end sprite -->
+
+    <div class="container">
+      <header class="codrops-header">
+        <h1>SVG Ripples</h1>
+        <nav class="codrops-demos">
+          <a href="circle.html">circle</a>
+          <a class="current-demo" href="radial-gradient.html">circle+radialGradient</a>
+          <a href="polygon.html">polygon</a>
+          <a href="linear-gradient.html">rect+linearGradient</a>
+        </nav>
+      </header>
+
+      <!-- button component -->
+      <button id="js-ripple-btn" class="button styl-material">
+        Click for Ripple
+        <svg class="ripple-obj" id="js-ripple">
+          <use height="100" width="100" xlink:href="#ripply-scott" class="js-ripple"></use>
+        </svg>
+      </button>
+      <!-- /end button component -->
+    </div>
+    <!-- /container -->
+
+    <!-- GreenSock Power : Required for Demo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenMax.min.js"></script>
+    <script src="js/ripple-config.js"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+// colors
+
+$main-text: #333; // main text
+$background: #fff; // body background color
+
+$color-1: #f2ecbd; // yellow
+$color-2: #f25f5c; // red
+$color-3: #8abeb2; // blue
+$color-4: #5c4b51; // purple-dark
+
+// fonts 
+
+$primary-font: 'Droid Serif', serif;
+$secondary-font: 'Droid Sans', sans-serif;
+
+// z-index
+
+$close-bio: 3;
+$main-zindex: 2;
+$bio-zindex: 1;
+
+// Width of the hidden author bio section
+
+$bio-width-S: 270px; // > 320px - see partials > _layout.scss
+$bio-width-M: 600px; // > 768px
+$bio-width-L: 800px; // > 1200px

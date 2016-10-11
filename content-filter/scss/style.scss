@@ -1,0 +1,667 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html {
+	font-size: 62.5%;
+}
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: lighten($color-4, 30%);
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-header {
+	position: relative;
+	height: 150px;
+	background-color: $color-1;
+
+	h1 {
+		color: $color-3;
+		line-height: 150px;
+		text-align: center;
+		font-size: 2.4rem;
+		font-weight: 300;
+	}
+
+	@include MQ(L) {
+		height: 180px;
+
+		h1 {
+			line-height: 180px;
+		}
+	}
+}
+
+.cd-main-content {
+	position: relative;
+	min-height: 100vh;
+	@include clearfix;
+
+	&.is-fixed {
+		.cd-tab-filter-wrapper {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+		}
+
+		.cd-gallery {
+			padding-top: 26px+$tab-filter-height;
+		}
+
+		.cd-filter {
+			position: fixed;
+			height: 100vh;
+			overflow: hidden;
+
+			form {
+				height: 100vh;
+				overflow: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+		}
+
+		.cd-filter-trigger {
+			position: fixed;
+		}
+
+		@include MQ(M) {
+			.cd-gallery {
+				padding-top: 40px+$tab-filter-height;
+			}
+		}
+
+		@include MQ(L) {
+			.cd-gallery {
+				padding-top: 50px+$tab-filter-height;
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+xtab-filter 
+
+-------------------------------- */
+
+.cd-tab-filter-wrapper {
+	background-color: $color-3;
+	box-shadow: 0 1px 1px rgba(#000, .08);
+	z-index: 1;
+	@include clearfix;
+}
+
+.cd-tab-filter {
+	/* tabbed navigation style on mobile - dropdown */
+	position: relative;
+	height: $tab-filter-height;
+	width: 140px;
+	margin: 0 auto;
+	z-index: 1;
+
+	&::after { 
+		/* small arrow icon */
+		content:'';
+		position: absolute;
+		right: 14px;
+		@include center(y); // see partials > mixins
+
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+
+		background: url('../img/cd-icon-arrow.svg') no-repeat center center;
+
+		@include transition(all .3s);
+		pointer-events: none;
+	}
+
+	ul {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		background-color: $color-3;
+		box-shadow: inset 0 -2px 0 $color-2;
+	}
+
+	li {
+		display: none; 
+
+		&:first-child {
+			/* this way the placehodler is alway visible */
+			display: block; 
+		}
+	}
+
+	a {
+		display: block;
+		/* set same size of the .cd-tab-filter */
+		height: $tab-filter-height;
+		width: 140px;
+		line-height: $tab-filter-height;
+		padding-left: 14px;
+
+		&.selected {
+			background: $color-2;
+			color: $color-3;
+		}
+	}
+
+	&.is-open {
+
+		&::after {
+			/* small arrow rotation */
+			@include transform(translateY(-50%) rotate(-180deg));  
+		}
+
+		ul {
+			box-shadow: inset 0 -2px 0 $color-2, 0 2px 10px rgba(#000, .2);
+		}
+
+		ul li {
+			display: block;
+		}
+
+		.placeholder a {
+			/* reduces the opacity of the placeholder on mobile when the menu is open */
+			opacity: .4; 
+		}
+	}
+
+	@include MQ(M) {
+		/* tabbed navigation style on medium devices */
+		width: auto;
+		cursor: auto;
+
+		&::after {
+			/* hide the arrow */
+			display: none;
+		}
+
+		ul {
+			background: transparent;
+			position: static;
+			box-shadow: none;
+			text-align: center;
+		}
+
+		li {
+			display: inline-block;
+
+			&.placeholder {
+				display: none !important; 
+			}
+		}
+
+		a {
+			display: inline-block;
+			padding: 0 1em;
+			width: auto;
+
+			color: $color-4;
+			text-transform: uppercase;
+			font-weight: 700;
+			font-size: 1.3rem;
+
+			.no-touch &:hover {
+				color: $color-2;
+			}
+
+			&.selected {
+				background: transparent;
+				color: $color-2;
+				/* create border bottom using box-shadow property */
+				box-shadow: inset 0 -2px 0 $color-2;
+			}
+		}
+
+		&.is-open {
+			ul li {
+				display: inline-block;
+			}
+		}
+	}
+
+	@include MQ(L) {
+		/* tabbed navigation on big devices */
+		width: 100%;
+		float: right;
+		margin: 0;
+		@include transition(width .3s);
+
+		&.filter-is-visible {
+			/* reduce width when filter is visible */
+			width: 80%;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+xgallery 
+
+-------------------------------- */
+
+.cd-gallery {
+	padding: 26px 5%;
+	width: 100%;
+
+	li {
+		margin-bottom: 1.6em;
+		box-shadow: 0 1px 4px rgba(#000, .1);
+		display: none;
+
+		&.gap {
+			/* used in combination with text-align: justify to align gallery elements */
+			opacity: 0;
+			height: 0;
+			display: inline-block;
+		}
+	}
+
+	img {
+		display: block;
+		width: 100%;
+	}
+
+	.cd-fail-message {
+		display: none;
+		text-align: center;
+	}
+
+	@include MQ(M) {
+		padding: 40px 3%;
+
+		ul {
+			@include clearfix;
+			text-align: justify;
+		}
+
+		li {
+			width: 48%;
+			margin-bottom: 2em;
+		}
+	}
+
+	@include MQ(L) {
+		padding: 50px 2%;
+		float: right;
+		@include transition(width .3s);
+
+		li { 
+			width: 23%;
+		}
+
+		&.filter-is-visible {
+			/* reduce width when filter is visible */
+			width: 80%;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+xfilter 
+
+-------------------------------- */
+
+.cd-filter {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 280px;
+	height: 100%;
+	background: $color-3;
+	box-shadow: 4px 4px 20px rgba(#000, 0);
+	z-index: 2;
+
+	/* Force Hardware Acceleration in WebKit */
+	@include transform(translateZ(0));
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+	@include transform(translateX(-100%));
+	@include transition(transform .3s, box-shadow .3s);
+
+	&::before {
+		/* top colored bar */
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: $tab-filter-height;
+		width: 100%;
+		background-color: $color-2;
+		z-index: 2;
+	}
+
+	form {
+		padding: $tab-filter-height+20px 20px;
+	} 
+
+	.cd-close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: $tab-filter-height;
+		line-height: $tab-filter-height;
+		width: 60px;
+
+		color: $color-3;
+		font-size: 1.3rem;
+		text-align: center;
+
+		background: darken($color-2, 5%);
+		opacity: 0;
+
+		@include transition(opacity .3s);
+		z-index: 3;
+
+		.no-touch &:hover {
+			background: darken($color-2, 8%);
+		}
+	}
+
+	&.filter-is-visible {
+		@include transform(translateX(0));
+		box-shadow: 4px 4px 20px rgba(#000, .2);
+
+		.cd-close {
+			opacity: 1;
+		}
+	}
+
+	@include MQ(L) {
+		width: 20%;
+
+		form {
+			padding: $tab-filter-height+20px 10%;
+		}
+	}
+}
+
+.cd-filter-trigger {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: $tab-filter-height;
+	line-height: $tab-filter-height;
+	width: 60px;
+
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	color: transparent;
+	white-space: nowrap;
+	background: transparent url('../img/cd-icon-filter.svg') no-repeat center center;
+
+	z-index: 3;
+
+	&.filter-is-visible {
+		pointer-events: none;
+	}
+
+	@include MQ(L) {
+		width: auto;
+		left: 2%;
+
+		text-indent: 0;
+		color: $color-4;
+		text-transform: uppercase;
+		font-size: 1.3rem;
+		font-weight: 700;
+
+		padding-left: 24px;
+		background-position: left center;
+
+		@include transition(color .3s);
+
+		.no-touch &:hover {
+			color: $color-2;
+		}
+
+		&.filter-is-visible,
+		&.filter-is-visible:hover {
+			color: $color-3;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+xcustom form elements 
+
+-------------------------------- */
+
+.cd-filter-block {
+	margin-bottom: 1.6em;
+
+	h4 {
+		/* filter block title */
+		position: relative;
+		margin-bottom: .2em;
+		padding: 10px 0 10px 20px;
+
+		color: $color-4;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 1.3rem;
+
+		@include user-select(none);
+		cursor: pointer;
+
+		.no-touch &:hover {
+			color: $color-2;
+		}
+
+		&::before {
+			/* arrow */
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 16px;
+			height: 16px;
+			background: url('../img/cd-icon-arrow.svg') no-repeat center center;
+
+			@include transform(translateY(-50%));
+			@include transition(transform .3s);
+		}
+
+		&.closed::before {
+			@include transform(translateY(-50%) rotate(-90deg));
+		}
+	}
+
+	input, select,
+	.radio-label::before,
+	.checkbox-label::before {
+		/* shared style for input elements */
+		font-family: $primary-font;
+		border-radius: 0;
+		background-color: $color-3;
+		border: 2px solid darken($color-3, 10%);
+	}
+
+	input[type='search'],
+	input[type='text'],
+	select {
+		width: 100%;
+		padding: .8em;
+		@include appearance(none);
+		box-shadow: none;
+
+		&:focus {
+			outline: none;
+			background-color: $color-3;
+			border-color: $color-2;
+		}
+	}
+
+	input[type='search'] {
+		/* custom style for the search element */
+		border-color: transparent;
+		background-color: darken($color-3, 10%);
+		/* prevent jump - ios devices */
+		font-size: 1.6rem !important;
+	}
+
+	input[type='search']::-webkit-search-cancel-button {
+		display: none;
+	}
+
+	.cd-select {
+		/* select element wrapper */
+		position: relative;
+	}
+
+	.cd-select::after {
+		/* switcher arrow for select element */
+		content: '';
+		position: absolute;
+		z-index: 1;
+		right: 14px;
+		top: 50%;
+		@include transform(translateY(-50%));
+
+		display: block;
+		width: 16px;
+		height: 16px;
+
+		background: url('../img/cd-icon-arrow.svg') no-repeat center center;
+		pointer-events: none;
+	}
+
+	select {
+		cursor: pointer;
+		font-size: 1.4rem;
+	}
+
+	select::-ms-expand {
+      display: none;
+	}
+
+	.list li {
+		position: relative;
+		margin-bottom: .8em;
+
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+
+	input[type=radio],
+	input[type=checkbox] {
+		/* hide original check and radio buttons */
+		position: absolute;
+		left: 0;
+		top: 0;
+		margin: 0;
+		padding: 0;
+		opacity: 0;
+		z-index: 2;
+	}
+
+	.checkbox-label,
+	.radio-label {
+		padding-left: 24px;
+		font-size: 1.4rem;
+		@include user-select(none);
+
+		&::before,
+		&::after {
+			/* custom radio and check boxes */
+			content: '';
+			display: block;
+			position: absolute;
+			top: 50%;
+			@include transform(translateY(-50%));
+		}
+
+		&::before {
+			width: 16px;
+			height: 16px;
+			left: 0;
+		}
+
+		&::after {
+			/* check mark - hidden */
+			display: none;
+		}
+	}
+
+	.checkbox-label::after {
+		/* check mark style for check boxes */
+		width: 16px;
+		height: 16px;
+		background: url('../img/cd-icon-check.svg') no-repeat center center;
+	}
+
+	.radio-label::before,
+	.radio-label::after {
+		border-radius: 50%;
+	}
+
+	.radio-label::after {
+		/* check mark style for radio buttons */
+		width: 6px;
+		height: 6px;
+		background-color: $color-3;
+		left: 5px;
+	}
+
+	input[type=radio]:checked + label::before,
+	input[type=checkbox]:checked + label::before {
+		border-color: $color-2;
+		background-color: $color-2;
+	}
+
+	input[type=radio]:checked + label::after,
+	input[type=checkbox]:checked + label::after {
+		display: block;
+	}
+}
+
+@-moz-document url-prefix(){
+	/* hide custom arrow on Firefox - select element */
+	.cd-filter-block .cd-select::after {
+		display: none;
+	}
+}

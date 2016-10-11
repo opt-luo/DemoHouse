@@ -1,0 +1,299 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+*::after, *::before {
+	content: '';
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+html, body {
+	height: 100%;
+}
+
+.cd-main-content {
+	text-align: center;
+
+	h1 {
+		@include font-size(20px);
+		color: lighten($color-3, 16%);
+		padding: 4em 0;
+	}
+
+	.cd-btn {
+		position: relative;
+		display: inline-block;
+		padding: 1em 2em;
+		background-color: $color-2;
+		color: $color-4;
+		font-weight: bold;
+		@include font-smoothing;
+		border-radius: 50em;
+		box-shadow: inset 0 1px 0 rgba(#fff, .5), 0 0 5px rgba(#000, .1);
+		@include transition(all .2s);
+
+		.no-touch &:hover {
+			box-shadow: inset 0 1px 0 rgba(#fff, .5), 0 0 20px rgba(#000, .3);
+		}
+	}
+
+	@include MQ(L) {
+		h1 {
+			@include font-size(32px);
+		}
+	}
+}
+
+.cd-panel {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	visibility: hidden;
+	@include transition(visibility 0s .6s);
+
+	&::after {
+		/* overlay layer */
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(#000, 0);
+		cursor: pointer;
+		@include transition(background .3s .3s);
+	}
+
+	&.is-visible {
+		visibility: visible;
+		@include transition(visibility 0s 0s);
+
+		&::after {
+			background: rgba(#000, .6);
+			@include transition(background .3s 0s);
+		}
+
+		.cd-panel-close::before {
+			@include animation(cd-close-1 .6s .3s);
+		}
+
+		.cd-panel-close::after {
+			@include animation(cd-close-2 .6s .3s);
+		}
+	}
+}
+
+@include keyframes(cd-close-1) {
+	0%, 50% {
+		@include transform(rotate(0));
+	}
+
+	100% {
+		@include transform(rotate(45deg));
+	}
+}
+
+@include keyframes(cd-close-2) {
+	0%, 50% {
+		@include transform(rotate(0));
+	}
+
+	100% {
+		@include transform(rotate(-45deg));
+	}
+}
+
+.cd-panel-header {
+	position: fixed;
+	width: $panel-width-S; // variables inside partials > _variables.scss
+	height: 50px;
+	line-height: 50px;
+	background: rgba($color-4, .96);
+	z-index: 2;
+	box-shadow: 0 1px 1px rgba(#000, .08);
+	@include transition(top .3s 0s);
+
+	h1 {
+		font-weight: bold;
+		color: $color-2;
+		padding-left: 5%;
+	}
+
+	.from-right &, .from-left & {
+		top: -50px;
+	}
+
+	.from-right & {
+		right: 0;
+	}
+
+	.from-left & {
+		left: 0;
+	}
+
+	.is-visible & {
+		top: 0;
+		@include transition(top .3s .3s);
+	}
+
+	@include MQ(M) {
+		width: $panel-width-M;
+	}
+
+	@include MQ(L) {
+		width: $panel-width-L;
+	}
+}
+
+.cd-panel-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 60px;
+
+	/* image replacement */
+	display: inline-block;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	&::before, &::after {
+		/* close icon created in CSS */
+		position: absolute;
+		top: 22px;
+		left: 20px;
+		height: 3px;
+		width: 20px;
+		background-color: $color-3;
+		/* this fixes a bug where pseudo elements are slighty off position */
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+
+	&::before {
+		@include transform(rotate(45deg));
+	}
+
+	&::after {
+		@include transform(rotate(-45deg));
+	}
+
+	.no-touch &:hover {
+		background-color: $color-3;
+
+		&::before, &::after {
+			background-color: $color-4;
+			@include transition-property(transform);
+			@include transition-duration(.3s);
+		}
+
+		&::before {
+			@include transform(rotate(220deg));
+		}
+
+		&::after {
+			@include transform(rotate(135deg));
+		}
+	}
+}
+
+.cd-panel-container {
+	position: fixed;
+	width: $panel-width-S;
+	height: 100%;
+	top: 0;
+	background: $color-1;
+	z-index: 1;
+	@include transition-property(transform);
+	@include transition-duration(.3s);
+	@include transition-delay(.3s);
+
+	.from-right & {
+		right: 0;
+		@include transform(translate3d(100%, 0, 0));
+	}
+
+	.from-left & {
+		left: 0;
+		@include transform(translate3d(-100%, 0, 0));
+	}
+
+	.is-visible & {
+		@include transform(translate3d(0, 0, 0));
+		@include transition-delay(0s);
+	}
+
+	@include MQ(M) {
+		width: $panel-width-M;
+	}
+
+	@include MQ(L) {
+		width: $panel-width-L;
+	}
+}
+
+.cd-panel-content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 70px 5%;
+	overflow: auto;
+
+	/* smooth scrolling on touch devices */
+	-webkit-overflow-scrolling: touch;
+
+	p {
+		@include font-size(14px);
+		color: $color-3;
+		line-height: 1.4;
+		margin: 2em 0;
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+	}
+
+	@include MQ(M) {
+		p {
+			@include font-size(16px);
+			line-height: 1.6;
+		}
+	}
+}

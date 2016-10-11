@@ -1,0 +1,525 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Patterns - reusable parts of our design
+
+-------------------------------- */
+
+.cd-btn {
+	display: inline-block;
+	padding: 1.4em 2em;
+
+	border-radius: 50em;
+	background-color: $color-2;
+	box-shadow: 0 1px 20px rgba($color-2, .2), inset 0 1px 0 rgba(#fff, .4);
+
+	color: $color-4;
+	font-size: 1.3rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+
+	@include transition(box-shadow .2s);
+
+	.no-touch &:hover {
+		box-shadow: 0 1px 30px rgba($color-2, .4), inset 0 1px 0 rgba(#fff, .4);
+	}
+}
+
+.cd-img-replace {
+	/* replace text with image */
+	color: transparent;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+}
+
+/* -------------------------------- 
+
+Intro page
+
+-------------------------------- */
+
+.cd-intro-block {
+	position: relative;
+	z-index: 2;
+	height: 100vh;
+	width: 100%;
+	background-color: tint($color-1, 10%);
+	/* used to vertical align its content */
+	display: table;
+
+	@include transition(transform $animation-duration);
+	@include transition-timing-function(cubic-bezier(.67,.15,.83,.83));
+
+	&::after {
+		/* arrow icon visible when .cd-intro-block slides out */
+		content: '';
+		position: absolute;
+		@include center;
+		top: 95%;
+		height: 24px;
+		width: 24px;
+		background: url(../img/cd-arrow-back.svg) no-repeat center center;
+		opacity: 0;
+		@include transition(opacity .2s);
+	}
+
+	.content-wrapper {
+		/* vertical align the .cd-intro-block content */
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	h1 {
+		width: 90%;
+		margin: 0 auto .6em;
+
+		font-size: 2.4rem;
+		color: $color-3;
+		@include font-smoothing;
+	}
+
+	&.projects-visible {
+		/* translate the .cd-intro-block element to reveal the projects slider */
+		@include transform(translateY(-90%));
+		box-shadow: 0 4px 40px rgba(#000, .6);
+		cursor: pointer; 
+
+		&:after {
+			/* show arrow icon */
+			opacity: 1;
+		}
+	}
+
+	@include MQ(M) {
+
+		&::after {
+			top: 97.5%;
+		}
+
+		h1 {
+			font-size: 4.4rem;
+			font-weight: 300;
+		}
+
+		&.projects-visible {
+			@include transform(translateY(-95%));
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Projects Slider
+
+-------------------------------- */
+
+.cd-projects-wrapper {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	background-color: $color-1;
+	@include transition(visibility 0s $animation-duration);
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */
+		content: 'mobile';
+		display: none;
+	}
+
+	&.projects-visible {
+		visibility: visible;
+		@include transition(visibility 0s 0s);
+	}
+
+	@include MQ(M) {
+		&::before {
+			/* never visible - this is used in jQuery to check the current MQ */
+			content: 'desktop';
+		}
+	}
+}
+
+.cd-slider {
+	padding-top: 10vh;
+	height: 100%;
+	overflow-y: auto;
+
+	.projects-visible & {
+		/* smooth scrolling on iOS */
+		-webkit-overflow-scrolling: touch;
+	}
+
+	li {
+		margin: 4%;
+		opacity: 0;
+		border-radius: .25em;
+		box-shadow: 0 0 20px rgba(#000, .2);
+		@include transition(opacity 0s $animation-duration);
+
+		/* Force hardware acceleration */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden); 
+
+		&.slides-in {
+			@include transition(opacity 0s 0s);
+			opacity: 1;
+			@include animation(cd-translate 0.5s);
+		}
+	}
+
+	a {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	img {
+		display: block;
+		border-radius: .25em .25em 0 0;
+		width: 100%;
+	}
+
+	.project-info {
+		padding: 1em 1.6em;
+		background-color: $color-3;
+		border-radius: 0 0 .25em .25em;
+	}
+
+	h2 {
+		font-size: 2.5rem;
+		font-weight: bold;
+		line-height: 1.2;
+	}
+
+	p {
+		font-size: 1.4rem;
+		opacity: .6;
+		padding: .4em 0;
+
+		/* truncate text with ellipsis if too long */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	h2, p {
+		line-height: 1.2;
+		color: $color-1;
+	}
+
+	@include MQ(M) {
+		padding: 0;
+		overflow: hidden;
+		@include transition(transform .5s);
+
+		/* Force hardware acceleration */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden); 
+
+		@include clearfix;
+
+		li {
+			position: relative;
+			float: left;
+			width: 26vw;
+			margin: 0 0 0 2vw;
+			top: 50%;
+			@include transform( translateX(400%) translateY(-50%) rotate(-10deg));
+			@include transition(opacity 0s 0.3s, transform 0s 0.3s);
+
+			&:first-of-type {
+				margin-left: 9vw;
+			}
+
+			&.slides-in {
+				/* this class is used to trigger the entrance animation */
+				@include animation(none);
+				@include transform(translateY(-50%));
+
+				&:first-of-type {
+					/* change transition duration/delay for the entrance animation */
+					@include transition(transform 0.55s 0s);
+				}
+
+				&:nth-of-type(2) {
+					@include transition(transform 0.53s 0.05s);
+				}
+
+				&:nth-of-type(3) {
+					@include transition(transform 0.50s 0.1s);
+				}
+
+				&:nth-of-type(4) {
+					@include transition(transform 0.48s 0.15s);
+				}
+			}
+		}
+
+		&.next li.current {
+			/* next slide animation */
+			@include animation(cd-slide-1 0.5s);
+		}
+
+		&.next li.current + li {
+			@include animation(cd-slide-2 0.5s);
+		}
+
+		&.next li.current + li + li {
+			@include animation(cd-slide-3 0.5s);
+		}
+
+		&.next li.current + li + li + li +li{
+			@include animation(cd-slide-4 0.5s);
+		}
+
+		&.next li.current + li + li + li +li + li {
+			@include animation(cd-slide-5 0.5s);
+		}
+
+		&.next li.current + li + li + li +li + li ~ li {
+			@include animation(cd-slide-6 0.5s);
+		} 
+
+		&.prev li {
+			/* previous slide animation */
+			@include animation(cd-slide-7 0.5s);
+		}
+
+		&.prev li.previous  {
+			/* previous slide animation - the previous class is used to target the slide which was visible right before the current one */
+			@include animation(cd-slide-1 0.5s);
+		}
+
+		&.prev li.previous + li  {
+			@include animation(cd-slide-2 0.5s);
+		}
+
+		&.prev li.previous + li + li {
+			@include animation(cd-slide-3 0.5s);
+		}
+
+		&.prev li.current + li {
+			@include animation(cd-slide-4 0.5s);
+		}
+
+		&.prev li.current + li + li {
+			@include animation(cd-slide-5 0.5s);
+		}
+
+		&.prev li.current, &.prev li.current + li + li ~ li {
+			@include animation(none);
+		}
+	}
+}
+
+//different animation for each slide - mixin inside partials > _mixins.scss
+@include squeezebox(cd-slide-1, -85%);
+@include squeezebox(cd-slide-2, -55%);
+@include squeezebox(cd-slide-3, -23%);
+@include squeezebox(cd-slide-4, 23%);
+@include squeezebox(cd-slide-5, 55%);
+@include squeezebox(cd-slide-6, 65%);
+@include squeezebox(cd-slide-7, -95%);
+
+/* -------------------------------- 
+
+Project slider navigation
+
+-------------------------------- */
+
+.cd-slider-navigation {
+	display: none;
+
+	a {
+		position: absolute;
+		@include center(y);
+		left: 0;
+		height: 60px;
+		width: 4%;
+		background: url(../img/cd-arrow.svg) no-repeat center center;
+		@include transition(opacity 0.2s 0s, visibility 0s 0s);
+
+		&.next {
+			right: 0;
+			left: auto;
+		}
+
+		&.prev {
+			@include transform(translateY(-50%) rotate(180deg));
+		}
+
+		&.inactive {
+			visibility: hidden;
+			opacity: 0;
+			@include transition(opacity 0.2s 0s, visibility 0s 0.2s);
+		}
+	}
+
+	@include MQ(M) {
+		display: block;
+	}
+}
+
+/* -------------------------------- 
+
+Project content panel 
+
+-------------------------------- */
+
+.cd-project-content {
+	position: fixed;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	background-color: $color-3;
+	
+	/* Force Hardware Acceleration */
+	@include transform(translateZ(0));
+	@include backface-visibility(hidden);
+	
+	@include transform(translateY(100%)); 
+	@include transition(transform 0.4s 0s, visibility 0s 0.4s);
+	@include transition-timing-function(cubic-bezier(.67,.15,.83,.83));
+
+	> div {
+		height: 100%;
+		overflow-y: auto;
+		padding: 4em 2em;
+		
+		> * {
+			max-width: 800px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	&.is-visible {
+		visibility: visible;
+		@include transform(translateY(0));
+		@include transition(transform 0.4s 0s, visibility 0s 0s);
+		@include transition-timing-function(cubic-bezier(.67,.15,.83,.83));
+
+		> div {
+			/* smooth scrolling on iOS */
+			-webkit-overflow-scrolling: touch;
+		}
+	}
+
+	h2 {
+		font-size: 2.4rem;
+		font-weight: bold;
+	}
+
+	em {
+		display: block;
+		font-size: 1.8rem;
+		font-style: italic;
+		margin: 1em auto;
+	}
+
+	p {
+		margin-bottom: 1em;
+		font-size: 1.4rem;
+		color: tint($color-1, 40%);
+	}
+
+	em , p {
+		line-height: 1.6;
+	}
+
+	.close {
+		display: block;
+		height: 32px;
+		width: 32px;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		background: url(../img/cd-close-dark.svg) no-repeat center center;
+	}
+
+	@include MQ(M) {
+		h2 {
+			font-size: 6rem;
+		}
+
+		em {
+			font-size: 2.4rem;
+		}
+
+		p {
+			font-size: 1.8rem;
+		}
+
+		.close {
+			top: 30px;
+			right: 5%;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Keyframes
+
+-------------------------------- */
+
+@include keyframes(cd-translate) {
+	0% {
+		opacity: 0;
+		@include transform(translateY(100px));
+	}
+
+	100% {
+		@include transform(translateY(0));
+		opacity: 1;
+	}
+}

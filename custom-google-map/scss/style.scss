@@ -1,0 +1,122 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $main-text;
+	background-color: $background;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+header {
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+	background: $color-1;
+
+	h1 {
+		color: $color-3;
+		@include font-size(20px);
+	}
+
+	@include MQ(M) {
+		height: 300px;
+		line-height: 300px;
+	}
+}
+
+#google-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: $background;
+
+    @include MQ(M) {
+    	height: 300px;
+    }
+
+    @include MQ(L) {
+    	height: 600px;
+    }
+}
+
+#cd-google-map {
+	position: relative;
+
+	address {
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+		padding: 1em 1em;
+		background-color: rgba($color-2, .9);
+		color: $color-3;
+		@include font-size(13px);
+
+		@include MQ(M) {
+			@include font-size(15px);
+			text-align: center;
+		}
+	}
+}
+
+#cd-zoom-in, #cd-zoom-out {
+	height: 32px;
+	width: 32px;
+	cursor: pointer;
+	margin-left: 10px;
+	background-color: rgba($color-2, .9);
+	background-repeat: no-repeat;
+	background-size: 32px 64px;
+	background-image: url('../img/cd-icon-controller.svg');
+
+	.no-touch &:hover {
+		background-color: rgba($color-2, 1);
+	}
+
+	@include MQ(M) {
+		margin-left: 50px;
+	}
+}
+
+#cd-zoom-in {
+	background-position: 50% 0;
+	margin-top: 10px;
+	margin-bottom: 1px;
+
+	@include MQ(M) {
+		margin-top: 50px;
+	}
+}
+
+#cd-zoom-out {
+	background-position: 50% -32px;
+}

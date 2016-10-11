@@ -1,0 +1,36 @@
+/* Main stuff */
+$title-text-color: white;
+$title-bg-color: black;
+.box-with-text {
+  background: url("../img/image3.jpg") 50% 70% / cover;
+  /* Hack to hide thin transparent lines while resize objects */
+  &:after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    display: block;
+    border: 4px solid $title-bg-color;
+  }
+}
+.text {
+  background: $title-bg-color;
+  color: $title-text-color;
+  mix-blend-mode: darken;
+}
+/* Other stuff */
+body {
+  background: $title-bg-color;
+  color: #fff;
+}
+.box-with-text {
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  font: 26vmax/.9 Open Sans, Impact;
+  width: 90%;
+  overflow: hidden;
+  margin: 0 auto 50px;
+}

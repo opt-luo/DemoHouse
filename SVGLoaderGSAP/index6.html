@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SVG Loader with GSAP | Infinity Loader</title>
+	<meta name="description" content="Some loaders made with SVG and GSAP" />
+	<meta name="keywords" content="svg, animation, GSAP, loader, inspiration, web design" />
+	<meta name="author" content="Codrops" />
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<script type="text/javascript" src="js/greensock/minified/TweenMax.min.js"></script>
+	<script type="text/javascript" src="js/greensock/minified/plugins/DrawSVGPlugin.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body class="demo-6">
+	<div class="container">
+		<header class="codrops-header">
+			<h1>SVG Loader <span>with <a href="http://greensock.com/gsap">GSAP</a> by <a href="https://twitter.com/chrisgannon">Chris Gannon</a></span></h1>
+			<div class="codrops-links">
+				<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/CreativeGooeyEffects/" title="Previous Demo"><span>Previous Demo</span></a>
+				<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=23648" title="Back to the article"><span>Back to the Codrops article</span></a>
+			</div>
+			<nav class="codrops-demos">
+				<a href="index.html">Jump Loader</a>
+				<span>More ideas:</span>
+				<a href="index2.html">Flip Box Loader</a>
+				<a href="index3.html">Creeper</a>
+				<a href="index4.html">Squash Box Loader</a>
+				<a href="index5.html">Veggie Loader</a>
+				<a class="current-demo" href="index6.html">Infinity Loader</a>
+				<a href="index7.html">Goo Loader</a>
+			</nav>
+		</header>
+		<div class="content">
+			<div id="container">
+				<svg width="300px" height="200px" viewBox="0 0 187.3 93.7" preserveAspectRatio="xMidYMid meet">
+					<path style="-webkit-filter:url(#f2)" stroke="#ededed" id="outline" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1
+				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+					<path id="outline-bg" opacity="0.05" fill="none" stroke="#ededed" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1
+				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<script>
+	(function() {
+		var container = document.getElementById('container');
+
+		TweenMax.set(['svg'], {
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: -50
+		})
+
+		TweenMax.set([container], {
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: -50
+		})
+
+		var tl = new TimelineMax({
+			repeat: -1
+		});
+
+		tl.set('#outline', {
+			drawSVG: '0% 0%'
+		})
+		.to('#outline', 0.2, {
+			drawSVG: '11% 25%',
+			ease: Linear.easeNone
+		})
+		.to('#outline', 0.5, {
+			drawSVG: '35% 70%',
+			ease: Linear.easeNone
+		})
+		.to('#outline', 0.9, {
+			drawSVG: '99% 100%',
+			ease: Linear.easeNone
+		})
+	})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+// colors
+
+$color-1: #3d3536; // brown
+$color-2: #99a478; // green dark
+$color-3: #b4d7a8; // green light
+$color-4: #ffffff; // white
+
+//header height
+
+$header-height-S: 50px;
+$header-height-M: 70px;
+
+// fonts 
+
+$primary-font: 'Roboto', sans-serif;
+
+//z-index - order the elements from the lowest z-index(left) to the highest(right)
+
+$main-elements: main-content, navigation;
+$bg-elements: fixed-bg, scrolling-bg;

@@ -1,0 +1,39 @@
+/* Main stuff */
+.text-copy-stroke {
+  fill: none;
+  stroke: white;
+  stroke-width: 10px; }
+
+.text-copy--shadow {
+  fill: rgba(0, 0, 0, 0.25);
+  -webkit-transform: translate(0.06em, 0.06em);
+  transform: translate(0.06em, 0.06em); }
+
+.c-fill {
+  fill: url("#p-lines");
+  -webkit-transform-origin: 400px 150px;
+  transform-origin: 400px 150px;
+  -webkit-transform: rotate(32deg);
+  transform: rotate(32deg); }
+
+/* Fix for firefox */
+.r-fill--color {
+  fill: #1a8cff; }
+
+/* Other stuff */
+body {
+  background: gold -webkit-radial-gradient(gold, orangered);
+  background: gold radial-gradient(gold, orangered);
+  background-size: 100% 100%;
+  color: #fff; }
+
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact; }
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=style13.css.map */

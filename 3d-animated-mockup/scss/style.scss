@@ -1,0 +1,685 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html {
+	font-size: 62.5%;
+	overflow-x: hidden;
+
+	* {
+		-webkit-font-smoothing: antialiased;
+  		-moz-osx-font-smoothing: grayscale;
+	}
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: lighten($color-1, 40%);
+	background-color: $color-1;
+}
+
+@include MQ(L) {
+	body, html {
+		overflow-x: hidden; 
+	}
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+
+.cd-img-replace {
+	/* replace text with background images */
+	display: inline-block;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+}
+
+.cd-btn {
+	display: inline-block;
+	width: 120px;
+	height: 40px;
+	line-height: 40px;
+	margin-right: 8px;
+	text: {
+		align: center;
+		transform: uppercase;
+	}
+	font: {
+		weight: bold;
+		size: 1.2rem;
+		family: $secondary-font;
+	}
+	color: $color-3;
+	background-color: lighten($color-1, 20%);
+	box-shadow: 0 1px 6px rgba(#000, .1), inset 0 1px 0 rgba(#FFF, .2);
+
+	.no-touch &:hover {
+		background-color: lighten($color-1, 25%);
+	}
+
+	@include MQ(L) {
+		width: 190px;
+		height: 60px;
+		line-height: 60px;
+		margin-right: 15px;
+		font-size: 1.4rem;
+		letter-spacing: 2px;
+	}
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+.cd-product {
+	position: relative;
+	width: 90%;
+	max-width: $L; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	@include MQ(L) {
+		padding-top: 100px;
+		height: 100vh;
+
+		&.is-product-tour {
+			height: auto;
+			padding-bottom: 100px;
+		}
+	}
+}
+
+.cd-product-intro {
+	padding: 50px 0;
+	text-align: center;
+
+	h1 {
+		margin-bottom: 10px;
+		font-size: 2.5rem;
+		font-weight: 700;
+		font-family: $secondary-font;
+		color: $color-3;
+	}
+
+	p {
+		max-width: 560px;
+		margin: 0 auto;
+		padding: 0 0 20px;
+		font-size: 1.4rem;
+		line-height: 1.8;
+	}
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */ 
+		content: 'mobile';
+		display: none;
+	}
+
+	@include MQ(L) {
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden);
+
+		position: absolute;
+		top: 200px;
+		left: 0;
+		width: 50%;
+
+		padding: 0;
+		text-align: left;
+
+		@include transition(transform .6s, opacity .6s);
+
+		.is-product-tour & {
+			opacity: 0;
+			@include transform(translateX(-50%));
+		}
+
+		h1 {
+			font-size: 4rem;
+		}
+
+		p {
+			font-size: 1.6rem;
+			padding: 10px 0 44px;
+			margin: 0;
+		}
+
+		&::before {
+			/* never visible - this is used in jQuery to check the current MQ */ 
+			content: 'desktop';
+		}
+	}
+}
+	
+.no-csstransforms3d #cd-start {
+	/* remove start button if CSS 3D Transforms are not supported */
+	display: none;
+}
+
+.cd-product-mockup {
+	width: 90%;
+	/* set here the max-width for the mockup */
+	max-width: 450px;
+	margin: 0 auto 50px;
+	position: relative;
+
+	img {
+		display: block;
+		position: relative;
+		/* Firefox bug - 3D CSS transform, jagged edges */ 
+		outline: 1px solid transparent;
+	}
+
+	@include MQ(L) {
+		margin-bottom: 0;
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden);
+
+		@include transform-style(preserve-3d);
+		@include transform-origin(center top);
+		@include transform(rotateX(-60deg) rotateZ(-40deg) translateX(50px) translateY(300px));
+		@include transition(transform .6s);
+
+		&::before {
+			/* mockup shadow */ 
+			display: block;
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+			/* play with these values to create a realistic shadow */
+			height: 45%;
+			box-shadow: 0px 0px 30px 225px rgba(#000 , .1);
+			
+			@include transform(translateZ(-100px) translateY(480px));
+			@include transition(transform .6s);
+		}
+
+		.is-product-tour & {
+			@include transform(translateX(0));
+
+			&::before {
+				@include transform(translateZ(-100px) translateX(226px) translateY(216px));
+			}
+		}
+	}
+}
+
+.no-csstransforms3d {
+	
+	.cd-product  {
+		@include clearfix;
+	}
+
+	.cd-product-mockup {
+		float: right;
+
+		&::before {
+			display: none;
+		}
+	}
+}
+
+.cd-3d-right-side, .cd-3d-bottom-side {
+	display: none;
+
+	@include MQ(L) {
+		display: block;
+		position: absolute;
+		left: 0;
+		background-image: url(../img/cd-app-image.png);
+		/* Firefox bug - 3D CSS transform, jagged edges */ 
+		outline: 1px solid transparent;
+
+		&::after {
+			/* darken the right/bottom sides */ 
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(#000, .2);
+		}
+	}
+}
+
+@include MQ(L) {
+
+	.cd-3d-right-side {
+		top: -1px;
+		width: 10px;
+		height: 100%;
+		background-size: auto 100%;
+		@include transform-origin(left center);		
+		@include transform(translateZ(-1px) translateY(1px) rotateY(-90deg));
+	}
+
+	.cd-3d-bottom-side {
+		bottom: 0;
+		width: 100%;
+		height: 10px;
+		background-position: bottom center;
+		background-size: 100% auto;
+		@include transform-origin(center bottom);
+		@include transform(translateZ(-1px) rotateX(-90deg));
+
+		&::after {
+			background-color: rgba(#000, .4);
+		}
+	}
+}
+
+.no-csstransforms3d .cd-3d-right-side, .no-csstransforms3d .cd-3d-bottom-side {
+	display: none;
+}
+
+.cd-close-product-tour {
+	/* close icon - product tour */
+	display: none;
+
+	@include MQ(L) {
+		display: block;
+		position: absolute;
+		top: 40px;
+		right: 0;
+		height: 40px;
+		width: 40px;
+		opacity: 0;
+		visibility: hidden;
+
+		.no-touch &:hover {
+			opacity: .8;
+		}
+
+		&::after, &::before {
+			/* these are used to create the 'X' icon */
+			content: '';
+			height: 40px;
+			width: 2px;
+			position: absolute;
+			left: 50%;
+    		top: 50%;
+    		background-color: $color-3;
+		}
+
+		&::after {
+			@include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+		}
+
+		&::before {
+			@include transform(translateX(-50%) translateY(-50%) rotate(-45deg));
+		}
+
+		&.is-visible {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+}
+
+.cd-single-point {
+	position: absolute;
+	border-radius: 50%;
+
+	> a {
+		position: relative;
+		display: block;
+		width: 30px;
+		height: 30px;
+		border-radius: inherit;
+		background: $color-2;
+		box-shadow: 0 0 10px rgba(#000, .5), inset 0 1px 0 rgba(#fff, .3);
+		z-index: 2;
+		@include transition(background-color .3s);
+
+		&::after, &:before {
+			/* rotating plus icon */
+			content: '';
+			position: absolute;
+			@include center;
+			background-color: $color-3;
+			@include transition(transform .3s);
+		}
+
+		&::after {
+			height: 2px;
+			width: 12px;
+		}
+
+		&::before {
+			height: 12px;
+			width: 2px;
+		}
+	}
+	
+	&::after {
+		/* this is used to create the pulse animation */
+		content: '';
+		position: absolute;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		border-radius: inherit;
+		background-color: transparent;
+		@include animation(cd-pulse 2s infinite);
+	}
+
+	&:nth-of-type(1) { // set these positions of interest points according to your product image
+		bottom: 58%;
+		right: 40%;
+	}
+
+	&:nth-of-type(2) {
+		top: 6%;
+		right: 5%;
+	}
+
+	&:nth-of-type(3) {
+		top: 6%;
+		left: 14%;
+	}
+
+	&.is-open {
+
+		> a {
+			background-color: lighten($color-1, 20%);
+
+			&::after, &::before {
+				@include transform(translateX(-50%) translateY(-50%) rotate(135deg) );
+			}	
+		}
+
+		&::after {
+			/* remove pulse effect */
+			display: none;
+		}
+
+		.cd-more-info {
+			visibility: visible;
+			opacity: 1;
+			@include transform(scale(1));
+			@include transition(opacity .3s 0s, visibility 0s 0s, transform .3s 0s, top .3s 0s, bottom .3s 0s, left .3s 0s, right .3s 0s);
+		}
+	}
+
+	&.visited {
+
+		> a {
+			background-color: lighten($color-1, 20%);	
+		}
+
+		&::after {
+			/* pulse effect no more active on visited elements */
+			display: none;
+		}
+	}
+
+	@include MQ(S) {
+
+		&.is-open .cd-more-info {
+			
+			&.cd-left { 
+				right: 140%;
+			}
+
+			&.cd-right { 
+				left: 140%;
+			}
+
+			&.cd-top {
+				bottom: 140%;
+			}
+
+			&.cd-bottom {
+				top: 140%;
+			}
+		}
+	}
+
+	@include MQ(L) {
+		@include transform(scale(0));
+
+		&::after {
+			@include animation(none);
+		}
+
+		.points-enlarged & {
+			@include transform(scale(1));
+			@include animation(cd-bounce .4s);
+		}
+
+		.points-pulsing &::after {
+			@include animation(cd-pulse 2s infinite);
+		}
+	}
+}
+
+.no-csstransforms3d .cd-single-point {
+	@include transform(scale(1));
+}
+
+@include keyframes(cd-bounce) {
+	0% {
+		@include transform(scale(0));
+	}
+
+	60% {
+		@include transform(scale(1.2));
+	}
+
+	100% {
+		@include transform(scale(1));
+	}
+}
+
+@include keyframes(cd-pulse) {
+	0% {
+		@include transform(scale(1));
+		box-shadow: inset 0 0 1px 1px rgba($color-2, .8);
+	}
+
+	50% {
+		box-shadow: inset 0 0 1px 1px rgba($color-2, .8);
+	}
+
+	100% {
+		@include transform(scale(1.6));
+		box-shadow: inset 0 0 1px 1px rgba($color-2, 0);
+	}
+}
+
+.cd-single-point .cd-more-info {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto; 
+	-webkit-overflow-scrolling: touch;
+
+	text-align: left;
+	line-height: 1.5;
+
+	background-color: rgba($color-3, .95);
+	padding: 2em 1em 1em;
+
+	visibility: hidden;
+	opacity: 0;
+	@include transform(scale(.8));
+	@include transition(opacity .3s 0s, visibility 0s .3s, transform .3s 0s, top .3s 0s, bottom .3s 0s, left .3s 0s, right .3s 0s);
+	
+	&::before {
+		/* triangle next to the interest point description - hidden on mobile */
+		content: '';
+		position: absolute;
+		height: 0;
+		width: 0;
+		display: none;
+		border: 8px solid transparent;
+	}
+
+	h2 {
+		font: {
+			size: 2.2rem;
+			family: $secondary-font;
+			weight: bold;
+		}
+		margin-bottom: .6em;
+	}
+
+	p {
+		color: $color-1;
+	}
+
+	@include MQ(S) {
+		position: absolute;
+		width: 220px;
+		height: 240px;
+		padding: 1em;
+		overflow-y: visible;
+		line-height: 1.4;
+		border-radius: .25em;
+		box-shadow: 0 0 20px rgba($color-1, .3);
+
+		&::before {
+			display: block;
+		}
+
+		&.cd-left, &.cd-right {
+			@include center(y);
+
+			&::before {
+				@include center(y);
+			}
+		} 
+
+		&.cd-left {
+			right: 160%;
+			left: auto;
+
+			&::before {
+				border-left-color: rgba($color-3, .95);
+				left: 100%;
+			}
+		}
+
+		&.cd-right {
+			left: 160%;
+
+			&::before {
+				border-right-color: rgba($color-3, .95);
+				right: 100%;
+			}
+		}
+
+		&.cd-top, &.cd-bottom {
+			@include center(x);
+
+			&::before {
+				@include center(x);
+			}
+		} 
+
+		&.cd-top {
+			bottom: 160%;
+			top: auto;
+
+			&::before {
+				border-top-color: rgba($color-3, .95);
+				top: 100%;
+			}
+		}
+
+		&.cd-bottom {
+			top: 160%;
+
+			&::before {
+				border-bottom-color: rgba($color-3, .95);
+				bottom: 100%;
+			}
+		}
+
+		h2 {
+			margin-bottom: 0;
+		}
+
+		p {
+			font-size: 1.3rem;
+		}
+	}
+}
+
+.cd-close-info {
+	/* close the interest point description - only on mobile */
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 44px;
+	width: 44px;
+
+	&::after, &:before {
+		content: '';
+		position: absolute;
+		left: 50%;
+	    top: 50%;
+	    bottom: auto;
+	    right: auto;
+		background-color: $color-2;
+		@include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+		@include transition-property(transform .2s);
+	}
+
+	&::after {
+		height: 2px;
+		width: 16px;
+	}
+
+	&::before {
+		height: 16px;
+		width: 2px;
+	}
+
+	@include MQ(S) {
+		display: none;
+	}
+}

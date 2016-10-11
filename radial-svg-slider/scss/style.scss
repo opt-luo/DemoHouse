@@ -1,0 +1,395 @@
+// Note: we use Autoprefixer to add vendor prefixes to our CSS -> https://github.com/postcss/autoprefixer
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-5;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img, svg, image {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Slider
+
+-------------------------------- */
+
+.cd-radial-slider-wrapper {
+	position: relative;
+	width: 100%;
+	max-width: $L;
+	margin: 2em auto;
+	
+	/* hide horizontal scrollbar on IE11 */
+	overflow: hidden;
+}
+
+.cd-radial-slider > li {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	opacity: 0;
+	transition: transform .2s;
+
+	/* hide vertical scrollbar on IE11 */
+	overflow: hidden;
+
+	&.visible {
+		position: relative;
+		opacity: 1;
+	}
+
+	&.is-animating, &.prev-slide, &.next-slide {
+		opacity: 1;
+	}
+
+	&.is-animating {
+		z-index: 2;
+	}
+
+	&.scale-down, &.move-up {
+		z-index: 3;
+	}
+
+	&.move-up {
+		/* class added to the navigation round element when clicked - used to create the click effect */
+		animation: cd-clicked .2s;
+	}
+
+	&.scale-down {
+		/* class added to the navigation round element to create the scale down effect  */
+		transform: scale(0);
+	}
+
+	&.prev-slide image, &.next-slide image {
+		/* make sure the prev/next round elements are visible */
+		z-index: 3;
+	}
+
+	&.next-slide {
+		/* for the scale-down/click effect - change the transform origin so that it is the center of the navigation round element */
+		transform-origin: 92.14% 50%;
+	}
+
+	&.prev-slide {
+		transform-origin: 7.86% 50%;
+	}
+}
+
+.cd-radial-slider .svg-wrapper {
+	position: relative;
+	z-index: 1;
+	/* using padding Hack to fix bug on IE - svg height not properly calculated */
+	height: 0;
+	padding-bottom: 57.15%;
+}
+
+.cd-radial-slider li.prev-slide .svg-wrapper, 
+.cd-radial-slider li.next-slide .svg-wrapper {
+	/* change its z-index so that it's always below the .cd-radial-slider-content */
+	z-index: 2;
+}
+
+.cd-radial-slider-wrapper svg {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.cd-radial-slider-content {
+	position: absolute;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateZ(0);
+	@include font-smoothing;
+
+	.wrapper {
+		/* vertically center its content */
+		display: table;
+		height: 100%;
+		width: 100%;
+
+		> div {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			padding: 0 17%;
+			color: $color-5;
+		}
+	}
+
+	h2 {
+		font-size: 2rem;
+		font-family: $secondary-font;
+	}
+
+	p {
+		font-size: 1.4rem;
+		margin: .6em auto .8em;
+	}
+
+	.cd-btn {
+		display: inline-block;
+		padding: 1em;
+		border: 2px solid $color-5;
+		color: $color-5;
+		text-transform: uppercase;
+		letter-spacing: .1em;
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+
+	.visible & {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	.prev-slide & {
+		transform: translateX(50px);
+	}
+
+	.next-slide & {
+		transform: translateX(-50px);
+	}
+
+	.content-reveal-left &,
+	.content-reveal-right & {
+		/* animate slide content when entering the viewport */
+		animation-delay: .1s;
+		animation-fill-mode: both;
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.content-hide-left &,
+	.content-hide-right & {
+		/* animate slide content when leaving the viewport */
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	.content-reveal-left &,
+	.content-reveal-right &,
+	.content-hide-left &,
+	.content-hide-right & {
+		animation-duration: .4s;
+	}
+
+	.content-reveal-left & {
+		animation-name: cd-reveal-left;
+	}
+
+	.content-reveal-right & {
+		animation-name: cd-reveal-right;
+	}
+
+	.content-hide-left & {
+		animation-name: cd-hide-left;
+	}
+
+	.content-hide-right & {
+		animation-name: cd-hide-right;
+	}
+
+	@include MQ(L) {
+		h2 {
+			font-size: 4.4rem;
+		}
+
+		p {
+			font-size: 2rem;
+			margin: 1.2em auto 1.6em;
+		}
+
+		.cd-btn {
+			font-size: 1.6rem;
+			transition: background .2s, color .2s;
+
+			&:hover {
+				background: $color-5;
+				color: $color-1;
+			}
+		}
+	}
+}
+
+.cd-round-mask {
+	/* wrapper for the svg mask elements */
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	z-index:0;
+}
+
+/* -------------------------------- 
+
+Slider navigation
+
+-------------------------------- */
+
+.cd-radial-slider-navigation li {
+	position: absolute;
+	z-index: 6;
+	right: 3.58%;
+	top: 42.5%;
+	height: 15%;
+	width: 8.57%;
+
+	a {
+		display: block;
+		height: 100%;
+		/* replace text with image */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		color: transparent;
+		transition: transform .2s;
+
+		&::after {
+			/* arrow icon */
+			content: '';
+			position: absolute;
+			@include center;
+			height: 16px;
+			width: 16px;
+			background: url(../img/cd-icon-arrows-mini.svg) no-repeat 0 0;
+		}
+
+		&:hover {
+			transform: scale(1.1);
+		}
+	}
+
+	&:last-of-type {
+		left: 3.58%;
+		right: auto;
+
+		a::after {
+			background-position: -16px 0;
+		}
+	}
+
+	@include MQ(M) {
+
+		a::after {
+			height: 48px;
+			width: 48px;
+			background-image: url(../img/cd-icon-arrows.svg);
+		}
+
+		&:last-of-type a::after {
+			background-position: -48px 0;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Keyframes
+
+-------------------------------- */
+
+@keyframes cd-reveal-left {
+    0% {
+		opacity: 0;
+		visibility: hidden;
+      	transform: translateX(50px);
+  	}
+
+  	100% {
+  		opacity: 1;
+		visibility: visible;
+      	transform: translateX(0px);
+  	}
+}
+
+@keyframes cd-reveal-right {
+    0% {
+		opacity: 0;
+		visibility: hidden;
+      	transform: translateX(-50px);
+  	}
+
+  	100% {
+  		opacity: 1;
+		visibility: visible;
+      	transform: translateX(0px);
+  	}
+}
+
+@keyframes cd-hide-left {
+    0% {
+		opacity: 1;
+		visibility: visible;
+      	transform: translateX(0px);
+  	}
+
+  	100% {
+  		opacity: 0;
+		visibility: hidden;
+      	transform: translateX(-50px);
+  	}
+}
+
+@keyframes cd-hide-right {
+    0% {
+		opacity: 1;
+		visibility: visible;
+      	transform: translateX(0px);
+  	}
+
+  	100% {
+  		opacity: 0;
+		visibility: hidden;
+      	transform: translateX(50px);
+  	}
+}
+
+@keyframes cd-clicked {
+	0%, 100% {
+      	transform: scale(1);
+  	}
+
+  	50% {
+  		transform: scale(.9);
+  	}
+}

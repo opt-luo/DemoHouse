@@ -1,0 +1,271 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-3;
+	background-color: $color-2;
+	@include font-smoothing;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+h1 {
+	text-align: center;
+	width: 90%;
+	margin: 2em auto 0;
+	font-size: 2.4rem;
+	color: shade($color-2, 50%);
+	font-weight: bold;
+
+	@include MQ(M) {
+		font-size: 3.2rem;
+	}
+}
+
+input {
+	font-family: $primary-font;
+	font-size: 1.6rem;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-accordion-menu {
+	width: 90%;
+	max-width: $M;
+	background: $color-1;
+	margin: 4em auto;
+	box-shadow: 0 4px 40px shade($color-2, 30%);
+
+	ul {
+		/* by default hide all sub menus */
+		display: none;
+	}
+
+	li {
+		@include user-select(none);
+	}
+
+	input[type=checkbox] {
+		/* hide native checkbox */
+		position: absolute;
+		opacity: 0;
+	}
+
+	label, a {
+		position: relative;
+		display: block;
+		padding: $item-padding-S $item-padding-S $item-padding-S ($item-padding-S * 3) + 10px;
+		background: $color-1;
+		box-shadow: inset 0 -1px tint($color-1, 5%);
+		color: $color-3;
+		font-size: 1.6rem;
+
+		.no-touch &:hover {
+			background: tint($color-1, 3%);
+		}
+	}
+
+	label::before, label::after, a::after {
+		/* icons */
+		content: '';
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		position: absolute;
+		top: 50%;
+		@include transform(translateY(-50%));
+	}
+
+	label {
+		cursor: pointer;
+
+		&::before, &::after {
+			background-image: url(../img/cd-icons.svg);
+			background-repeat: no-repeat;
+		}
+
+		&::before {
+			/* arrow icon */
+			left: $item-padding-S;
+			background-position: 0 0;
+			@include transform(translateY(-50%) rotate(-90deg));
+		}
+
+		&::after {
+			/* folder icons */
+			left: ($item-padding-S * 2) + 5px;
+			background-position: -16px 0;
+		}
+	}
+
+	a::after {
+		/* image icon */
+		left: $item-padding-S * 2;
+		background: url(../img/cd-icons.svg) no-repeat -48px 0;
+	}
+
+	input[type=checkbox]:checked + label::before {
+		/* rotate arrow */
+		@include transform(translateY(-50%));
+	}
+
+	input[type=checkbox]:checked + label::after {
+		/* show open folder icon if item is checked */
+		background-position: -32px 0;
+	}
+
+	input[type=checkbox]:checked + label + ul,
+	input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+		/* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+		/* show children when item is checked */
+		display: block;
+	}
+
+	ul label,
+	ul a {
+		background: darken($color-1, 10%);
+		box-shadow: inset 0 -1px darken($color-1, 5%);
+		padding-left: ($item-padding-S * 4) + 10px;
+
+		.no-touch &:hover {
+			background: darken($color-1, 7%);
+		}
+	}
+
+	> li:last-of-type > label,
+	> li:last-of-type > a,
+	> li > ul > li:last-of-type label,
+	> li > ul > li:last-of-type a {
+		box-shadow: none;
+	}
+
+	ul label::before {
+		left: $item-padding-S * 2;
+	}
+
+	ul label::after,
+	ul a::after {
+		left: ($item-padding-S * 3) + 5px;
+	}
+
+	ul ul label,
+	ul ul a {
+		padding-left: ($item-padding-S * 5) + 10px;
+	}
+
+	ul ul label::before {
+		left: $item-padding-S * 3;
+	}
+
+	ul ul label::after,
+	ul ul a::after {
+		left: ($item-padding-S * 4) + 5px;
+	}
+
+	ul ul ul label,
+	ul ul ul a {
+		padding-left: ($item-padding-S * 6) + 10px;
+	}
+
+	ul ul ul label::before {
+		left: $item-padding-S * 4;
+	}
+
+	ul ul ul label::after,
+	ul ul ul a::after {
+		left: ($item-padding-S * 5) + 5px;
+	}
+
+	@include MQ(M) {
+		label, a {
+			padding: $item-padding-M $item-padding-M $item-padding-M ($item-padding-M * 3) + 10px;
+			font-size: 1.9rem;
+		}
+
+		label::before {
+			left: $item-padding-M;
+		}
+
+		label::after {
+			left: ($item-padding-M * 2) + 5px;
+		}
+
+		ul label,
+		ul a {
+			padding-left: ($item-padding-M * 4) + 10px;
+		}
+
+		ul label::before {
+			left: $item-padding-M * 2;
+		}
+
+		ul label::after,
+		ul a::after {
+			left: ($item-padding-M * 3) + 5px;
+		} 
+
+		ul ul label,
+		ul ul a {
+			padding-left: ($item-padding-M * 5) + 10px;
+		}
+
+		ul ul label::before {
+			left: $item-padding-M * 3;
+		}
+
+		ul ul label::after,
+		ul ul a::after {
+			left: ($item-padding-M * 4) + 5px;
+		}
+
+		ul ul ul label,
+		ul ul ul a {
+			padding-left: ($item-padding-M * 6) + 10px;
+		}
+
+		ul ul ul label::before {
+			left: $item-padding-M * 4;
+		}
+
+		ul ul ul label::after,
+		ul ul ul a::after {
+			left: ($item-padding-M * 5) + 5px;
+		}
+	}
+
+	&.animated label::before {
+		/* this class is used if you're using jquery to animate the accordion */
+		@include transition(transform .3s);
+	}
+}
+

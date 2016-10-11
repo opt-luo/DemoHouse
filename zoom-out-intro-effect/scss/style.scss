@@ -1,0 +1,258 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $background;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $M; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+.cd-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: $header-height-S;
+	background: $color-1;
+	box-shadow: 0 1px 3px rgba(#000, .2);
+	z-index: index($elements, navigation); // see partials > _variables.scss
+	@include clearfix;
+
+	#cd-logo {
+		float: left;
+		margin: 13px 0 0 5%;
+
+		img {
+			display: block;
+		}
+	}
+
+	@include MQ(M) {
+		height: $header-height-M;
+
+		#cd-logo {
+			margin: 23px 0 0 5%;
+		}
+	}
+}
+
+.cd-main-nav {
+	float: right;
+	margin-right: 5%;
+	width: 44px;
+	height: 100%;
+	background: url('../img/cd-icon-menu.svg') no-repeat center center;
+	background-size: 44px 44px;
+	cursor: pointer;
+
+	ul {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		@include transform(translateY(-100%));
+
+		&.is-visible {
+			@include transform(translateY($header-height-S));
+		}
+	}
+
+	a {
+		display: block;
+		height: $header-height-S;
+		line-height: $header-height-S;
+		padding-left: 5%;
+		background: $background;
+		border-top: 1px solid lighten($background, 3%);
+		color: #FFF;
+	}
+
+	@include MQ(M) {
+		width: auto;
+		height: auto;
+		background: none;
+		cursor: auto;
+
+		ul {
+			position: static;
+			width: auto;
+			@include transform(translateY(0));
+			line-height: $header-height-M;
+
+			&.is-visible {
+				@include transform(translateY(0));
+			}
+		}
+
+		li {
+			display: inline-block;
+			margin-left: 1em;
+		}
+
+		a {
+			display: inline-block;
+			height: auto;
+			line-height: normal;
+			background: transparent;
+			padding: .6em 1em;
+			border-top: none;
+			@include font-size(13px);
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+}
+
+#cd-intro {
+	position: relative;
+	height: $intro-height-S;
+	margin-top: $header-height-S;
+	z-index: index($elements, intro-image);
+
+	#cd-intro-background {
+		height: 100%;
+		width:100%;
+		background: url('../img/cd-intro-background.jpg') no-repeat center center;
+		background-size: cover;
+		box-shadow: 0 0 30px rgba(#000, .5);
+	}
+
+	#cd-intro-tagline {
+		position: absolute;
+		width: 90%;
+		max-width: $L;
+		@include center; // see partials > _mixins.scss
+	}
+
+	h1 {
+		text-transform: uppercase;
+		@include font-size(24px);
+		text-align: center;
+		color: #FFF;
+		text-shadow: 0 2px 6px rgba(#000, .2);
+	}
+
+	@include MQ(M) {
+		height: $intro-height-M;
+		margin-top: $header-height-M;
+
+		h1 {
+			@include font-size(30px);
+		}
+	}
+
+	@include MQ(L) {
+		position: fixed;
+		/* do not overlap the header */
+		top: $header-height-M;
+		left: 0;
+		width: 100%;
+		height: $intro-height-L;
+		margin-top: 0;
+
+		h1 {
+			@include font-size(32px);
+		}
+	}
+}
+
+.cd-content {
+	position: relative;
+	padding: 2em 0;
+	line-height: 1.6;
+	color: $color-3;
+	background-color: $color-2;
+	z-index: index($elements, main-content);
+
+	&::before {
+		/* subtle gradient right above the main content */
+		content: '';
+		position: absolute;
+		bottom: 100%;
+		left: 0;
+		width: 100%;
+		height: 50px;
+		@include background(linear-gradient(to top, rgba($background, .5), rgba($background, 0)));
+
+		.no-cssgradients & {
+			/* use Modernizr to detect whether the browser supports or not css gradients */
+			display: none;
+		}
+	}
+
+	h2 {
+		@include font-size(20px);
+	}
+
+	p {
+		margin: 1em 0;
+	}
+
+	@include MQ(M) {
+		line-height: 1.8;
+
+		h2 {
+			@include font-size(30px);
+		}
+	}
+
+	@include MQ(L) {
+		padding: 4em 0;
+		margin-top: $intro-height-L + $header-height-M;
+
+		p {
+			@include font-size(20px);
+		}
+	}
+}

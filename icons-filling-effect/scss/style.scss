@@ -1,0 +1,253 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-2;
+	background-color: $color-1;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $L; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+html, body {
+	height: 100%;
+}
+
+@include MQ(L) {
+	body.new-color-1::before {
+		background-color: $color-4;
+	}
+
+	body.new-color-2::before {
+		background-color: $color-5;
+	}
+
+	body.new-color-3::before {
+		background-color: $color-6;
+	}
+}
+
+body::before, body::after {
+	/* the 2 underneath colored sections */
+	content: '';
+	position: fixed;
+	/* trick to remove some annoying flickering on webkit browsers */
+	width: 89.8%;
+	max-width: $L;
+	@include center(x);
+	height: 50%;
+	z-index: -1;
+}
+
+body::before {
+	top: 0;
+	background-color: $color-3;
+	@include transition(all .8s);
+}
+
+body::after {
+	top: 50%;
+	background-color: $color-2;
+}
+
+header {
+	position: relative;
+	height: 50%;
+	background-color: $color-1;
+	z-index: 2;
+
+	h1 {
+		position: absolute;
+		@include center;
+		width: 90%;
+		max-width: $L;
+		text-align: center;
+		color: $color-6;
+		@include font-size(26px);
+	}
+}
+
+.cd-service {
+	position: relative;
+	z-index: 2;
+	min-height: $icon-small-height;
+	margin-left: $icon-small-width;
+	background-color: $color-1;
+	padding: 1em 1em 4em;
+
+	&::before, &::after {
+		content: '';
+		position: absolute;
+		width: $icon-small-width;
+		right: 100%;
+		z-index: 2;
+	}
+	
+	&::before {
+		top: 0;
+		height: $icon-small-height;
+		background-repeat: no-repeat;
+	}
+
+	&::after {
+		top: $icon-small-height;
+		bottom: 0;
+		background-image: url('../img/cd-pattern-small.svg');
+		background-repeat: repeat-y;
+	}
+
+	&.cd-service-divider::after {
+		top: 0;
+	}
+
+	&.cd-service-divider:last-child {
+		display: none;
+	}
+
+	&.cd-service-1::before {
+		background-image: url('../img/cd-icon-1-small.svg');
+	}
+
+	&.cd-service-2::before {
+		background-image: url('../img/cd-icon-2-small.svg');
+	}
+
+	&.cd-service-3::before {
+		background-image: url('../img/cd-icon-3-small.svg');
+	}
+	
+	&.cd-service-4::before {
+		background-image: url('../img/cd-icon-4-small.svg');
+	}
+
+	h2 {
+		text-transform: uppercase;
+		color: $color-7;
+		margin-bottom: 1em;
+		font-family: $secondary-font;
+	}
+
+	p {
+		@include font-size(14px);
+		line-height: 1.4;
+		color: rgba($color-7, .5);
+	}
+
+	@include MQ(L) {
+		min-height: $icon-large-height + 200px;
+		margin-left: $icon-large-width;
+		padding: 6em 2em;
+
+		&::before, &::after {
+			width: $icon-large-width;
+		}
+
+		&::before {
+			height: $icon-large-height;
+		}
+
+		&::after {
+			top: $icon-large-height;
+			background-image: url('../img/cd-pattern-large.svg');
+		}
+
+		&.cd-service-divider:first-child, &.cd-service-divider:last-child {
+			min-height: 50px;
+			padding: 0;
+		}
+
+		&.cd-service-divider:last-child {
+			display: block;
+		}
+
+		&.cd-service-1::before {
+			background-image: url('../img/cd-icon-1-large.svg');
+		}
+
+		&.cd-service-2::before {
+			background-image: url('../img/cd-icon-2-large.svg');
+		}
+
+		&.cd-service-3::before {
+			background-image: url('../img/cd-icon-3-large.svg');
+		}
+		
+		&.cd-service-4::before {
+			background-image: url('../img/cd-icon-4-large.svg');
+		}
+
+		h2, p {
+			color: $color-2;
+			@include transition(color, .5s);
+		}
+
+		h2 {
+			@include font-size(30px);
+		}
+
+		p {
+			@include font-size(18px);
+			line-height: 1.6;
+		}
+
+		&.focus h2 {
+			color: $color-7;
+		}
+
+		&.focus p {
+			color: rgba($color-7, .5);
+		}
+	}
+}
+
+footer {
+	position: relative;
+	height: 50%;
+	background: $color-1;
+	z-index: 2;
+}

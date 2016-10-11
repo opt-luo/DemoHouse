@@ -1,0 +1,308 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+	@include font-smoothing;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+h1 {
+	color: $color-3;
+	margin-bottom: 1em;
+	font-size: 2.2rem;
+
+	@include MQ(M) {
+		font-size: 4.4rem;
+		font-weight: 300;
+	}
+}
+
+/* -------------------------------- 
+
+Patterns - reusable parts of our design
+
+-------------------------------- */
+
+.cd-btn {
+	display: inline-block;
+	padding: 1.4em 1.6em;
+	margin-bottom: 2em;
+	border-radius: 50em;
+	background-color: $color-2;
+	color: $color-3;
+	font-weight: bold;
+	font-size: 1.3rem;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	box-shadow: 0 1px 4px rgba(#000, .1);
+
+	.no-touch &:hover {
+		background-color: lighten($color-2, 5%);
+	}
+
+	.cd-about & {
+		background-color: $color-1;
+	}
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+body {
+
+	&::after, &::before {
+		/* these are the 2 half blocks which cover the content once the animation is triggered */
+		content: '';
+		height: 50vh;
+		width: 100%;
+		position: fixed;
+		left: 0;
+		background-color: $color-3;
+		z-index: 1;
+	
+		/* Force Hardware Acceleration */
+		@include backface-visibility(hidden);
+		@include transform(translateZ(0));
+
+		@include transition(transform 0.4s 0.4s);
+	}
+
+	&::before {
+		top: 0;
+		@include transform(translateY(-100%));
+	}
+
+	&::after {
+		bottom: 0;
+		@include transform(translateY(100%));
+	}
+
+	&.page-is-changing::after, &.page-is-changing::before {
+		@include transform(translateY(0));
+		@include transition(transform 0.4s 0s);
+	}
+}
+
+main {
+	height: 100vh;
+	padding: 10px;
+	text-align: center;
+	
+	.cd-main-content {
+		position: relative;
+		height: calc(100vh - 20px);
+
+		> div {
+			height: 100%;
+			overflow: hidden;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		&::after, &::before {
+			/* these are the 2 gradient overlay at the top and bottom of the .cd-main-content - to indicate that you can scroll */
+			content: '';
+			position: absolute;
+			left: 0;
+			height: 50px;
+			width: 100%;
+		}
+
+		&::before {
+			top: 0;
+		}
+		
+		&::after {
+			bottom: 0;
+		}
+
+		&.cd-index {
+			/* .cd-main-content basic style - index page */
+			background-color: $color-1;
+			/* vertically center its content */ 
+			display: table;
+			width: 100%;
+
+			> div {
+				/* vertically center the content inside the .cd-index */ 
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			&::after {
+				@include linear-gradient(to top, rgba($color-1, 1), rgba($color-1, 0), $fallback: rgba($color-1, 0));
+			}
+
+			&::before {
+				@include linear-gradient(to bottom, rgba($color-1, 1), rgba($color-1, 0), $fallback: rgba($color-1, 0));
+			}
+		}
+
+		&.cd-about {
+			/* .cd-main-content basic style - about page */
+			background-color: $color-2;
+			
+			> div {
+				padding-top: 50px;
+			}
+
+			&::after {
+				@include linear-gradient(to top, rgba($color-2, 1), rgba($color-2, 0), $fallback: rgba($color-2, 0));
+			}
+
+			&::before {
+				@include linear-gradient(to bottom, rgba($color-2, 1), rgba($color-2, 0), $fallback: rgba($color-2, 0));
+			}
+		}
+	} 
+
+	p {
+		width: 90%;
+		max-width: $M;
+		margin: 3em auto;
+		font-size: 1.4rem;
+		line-height: 1.6;
+		color: tint($color-2, 20%);
+		text-align: left;
+	}
+
+	@include MQ(M) {
+		padding: 20px;
+
+		.cd-main-content {
+			height: calc(100vh - 40px);
+		}
+
+		&.cd-index > div {
+			padding-top: 200px;
+		}
+
+		&.cd-index > div {
+			padding-top: 50px;
+		}
+
+		p {
+			font-size: 1.8rem;
+			line-height: 2;
+		}
+	}
+}
+
+.cd-cover-layer {
+	/* layer that covers the content when the animation is triggered */
+	position: fixed;
+	@include center;
+	height: calc(100% - 20px);
+	width: calc(100% - 20px);
+	opacity: 0;
+	visibility: hidden;
+	background-color: $color-1;
+	@include transition(opacity 0.4s 0.4s, visibility 0s 0.8s);
+
+	.cd-about & {
+		background-color: $color-2;
+	}
+
+	.page-is-changing & {
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity 0.3s 0s, visibility 0s 0s);
+	}
+
+	@include MQ(M) {
+		height: calc(100% - 40px);
+		width: calc(100% - 40px);
+	}
+}
+
+.cd-loading-bar {
+	/* this is the loding bar - visible while switching from one page to the following one */
+	position: fixed;
+	z-index: 2;
+	left: 50%;
+    top: 50%;
+	height: 2px;
+	width: 90%;
+	background-color: $color-1;
+	visibility: hidden;
+	@include transition(visibility 0s 0.4s, transform 0.4s 0s ease-in);
+
+	/* Force Hardware Acceleration */
+	@include backface-visibility(hidden);
+	@include transform(translateZ(0));
+
+	@include transform(translateX(-50%) translateY(-50%));
+
+	.cd-about & {
+		background-color: $color-2;
+
+		&::before {
+			background-color: $color-1;
+		}
+	}
+
+	&::before {
+		/* this is the progress bar inside the loading bar */
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		background-color: $color-2;
+
+		/* Force Hardware Acceleration */
+		@include backface-visibility(hidden);
+		@include transform(translateZ(0));
+
+		@include transform(scaleX(0));
+		@include transform-origin(left center);
+	}
+
+	.page-is-changing & {
+		visibility: visible;
+		@include transform(translateX(-50%) translateY(-50%) scaleX(.3));
+		@include transition(visibility 0s 0.3s, transform 0.4s 0.4s);
+
+		&::before {
+			@include transform(scaleX(1));
+			@include transition(transform 0.8s 0.8s ease-in);
+		}
+	}
+
+	@include MQ(M) {
+		width: calc(100% - 40px);
+	}
+}

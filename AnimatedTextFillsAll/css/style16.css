@@ -1,0 +1,60 @@
+/* Main stuff */
+.text-copy--stroke {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 4; }
+
+.text-copy--shadow {
+  fill: rgba(0, 0, 0, 0.25);
+  -webkit-transform: translate(0.06em, 0.06em);
+  transform: translate(0.06em, 0.06em); }
+
+.r-fill {
+  fill: url("#p-circles");
+  -webkit-transform-origin: 300px 150px;
+  transform-origin: 300px 150px;
+  -webkit-animation: rotate 30s infinite linear;
+  animation: rotate 30s infinite linear; }
+
+.c-ring {
+  fill: none;
+  stroke-width: 2;
+  stroke: white; }
+
+.c-ring--fill {
+  fill: white;
+  stroke-width: 0;
+  stroke: white;
+  -webkit-animation: stroke 5s infinite;
+  animation: stroke 5s infinite; }
+
+@-webkit-keyframes stroke {
+  50% {
+    stroke-width: 15; } }
+@keyframes stroke {
+  50% {
+    stroke-width: 15; } }
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+/* Other stuff */
+body {
+  background: #9b70b6 -webkit-radial-gradient(#9b70b6, #301e3c);
+  background: #9b70b6 radial-gradient(#9b70b6, #301e3c);
+  color: #fff; }
+
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact; }
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=style16.css.map */

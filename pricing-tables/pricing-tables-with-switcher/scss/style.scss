@@ -1,0 +1,661 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html {
+	font-size: 62.5%;
+}
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-1;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-header {
+	height: 100px;
+	line-height: 170px;
+	position: relative;
+
+	h1 {
+		text-align: center;
+		color: $color-4;
+		font-size: 2.2rem;
+	}
+
+	@include MQ(M) {
+		height: 160px;
+		line-height: 280px;
+
+		h1 {
+			font-size: 3.6rem;
+			font-weight: 300;
+		}
+	}
+}
+
+.cd-pricing-container {
+	width: 90%;
+	max-width: $L;
+	margin: 4em auto;
+
+	@include MQ(M) {
+		margin: 6em auto;
+
+		&.cd-full-width {
+			width: 100%;
+			max-width: none;
+		}
+	}
+}
+
+.cd-pricing-switcher {
+	text-align: center;
+
+	.fieldset {
+		display: inline-block;
+		position: relative;
+		padding: 2px;
+		border-radius: 50em;
+		border: 1px solid lighten($color-1, 10%);
+	}
+
+	input[type="radio"] {
+		position: absolute;
+		opacity: 0;
+	}
+
+	label {
+		position: relative;
+		z-index: 1;
+		display: inline-block;
+		float: left;
+		width: 90px;
+		height: 40px;
+		line-height: 40px;
+		cursor: pointer;
+		font-size: 1.4rem;
+		color: $color-4;
+	}
+
+	.cd-switch {
+		/* floating background */
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		height: 40px;
+		width: 90px;
+		background-color: darken($color-1, 10%);
+		border-radius: 50em;
+		@include transition(transform $cd-animation-duration);
+	}
+
+	input[type="radio"]:checked + label + .cd-switch, 
+	input[type="radio"]:checked + label:nth-of-type(n) + .cd-switch {
+		/* use label:nth-of-type(n) to fix a bug on safari with multiple adjacent-sibling selectors*/
+		@include transform(translateX(90px));
+	}
+}
+
+.no-js .cd-pricing-switcher {
+	display: none
+}
+
+.cd-pricing-list {
+	margin: 2em 0 0;
+
+	> li {
+		position: relative;
+		margin-bottom: 1em;
+	}
+
+	@include MQ(M) {
+		margin: 3em 0 0;
+		@include clearfix;
+
+		> li {
+			@include column(1/$pt-number); // see partials > _layout.scss and partials > _variables.scss 
+		}
+
+		.cd-has-margins & > li {
+			@include column(( 1 - $pt-number * $pt-margin + $pt-margin )/$pt-number);
+			margin-right: $pt-margin*100%;
+
+			&:last-of-type {
+				margin-right: 0
+			}
+		}
+	}
+}
+
+.cd-pricing-wrapper { /* this is the item that rotates */
+	position: relative;
+
+	.touch & {
+		/* fix a bug on IOS8 - rotating elements dissapear*/
+		@include perspective($cd-perspective);
+	}
+
+	&.is-switched {
+		/* totate the tables - anticlockwise rotation */
+		.is-visible {
+			@include transform(rotateY(180deg));
+			@include animation(cd-rotate $cd-animation-duration);
+		}
+
+		.is-hidden {
+			@include transform(rotateY(0));
+			@include animation(cd-rotate-inverse $cd-animation-duration);
+			opacity: 0;
+		}
+
+		.is-selected {
+			opacity: 1;
+		}
+	}
+
+	&.is-switched.reverse-animation {
+		/* invert rotation direction - clockwise rotation */
+		.is-visible {
+			@include transform(rotateY(-180deg));
+			@include animation(cd-rotate-back $cd-animation-duration);
+		}
+
+		.is-hidden {
+			@include transform(rotateY(0));
+			@include animation(cd-rotate-inverse-back $cd-animation-duration);
+			opacity: 0;
+		}
+
+		.is-selected {
+			opacity: 1;
+		}
+	}
+
+	> li {
+		background-color: $color-4;
+		@include backface-visibility(hidden);
+		/* Firefox bug - 3D CSS transform, jagged edges */ 
+		outline: 1px solid transparent;
+
+		&::after {
+			/* subtle gradient layer on the right - to indicate it's possible to scroll */
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 100%;
+			width: 50px;
+			pointer-events: none;
+			@include background(linear-gradient(to left, $color-4, rgba($color-4, 0)));
+		}
+
+		&.is-ended::after {
+			/* class added in jQuery - remove the gradient layer when it's no longer possible to scroll */
+			display: none;
+		}
+	}
+	
+	.is-visible { 
+		/* the front item, visible by default */
+		position: relative;
+		z-index: 5;
+	}
+
+	.is-hidden { 
+		/* the hidden items, right behind the front one */
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+		@include transform(rotateY(180deg)); 
+	}
+
+	.is-selected { 
+		/* the next item that will be visible */
+		z-index: 3 !important;
+	}
+
+	@include MQ(M) {
+
+		> li {
+			
+
+			&::before {
+				/* separator between pricing tables - visible when number of tables > 3 */
+				content: '';
+				position: absolute;
+				z-index: 6;
+				left: -1px;
+				@include center(y);
+				height: 50%;
+				width: 1px;
+				background-color: lighten($color-1, 60%);
+			}
+
+			&::after {
+				/* hide gradient layer */
+				display: none;
+			}
+
+			.cd-popular & {
+				box-shadow: inset 0 0 0 3px $color-2;
+			}
+
+			.cd-has-margins &,
+			.cd-has-margins .cd-popular & {
+				box-shadow: 0 1px 5px rgba(#000, .1);
+			}
+
+			.cd-secondary-theme & {
+				background: $color-3;
+				@include background(linear-gradient(to top, $color-3, adjust-color($color-3, $green: 50)));
+			}
+
+			.cd-secondary-theme .cd-popular & {
+				background: $color-2;
+				@include background(linear-gradient(to top, $color-2, adjust-color($color-2, $green: 30)));
+				box-shadow: none;
+			}
+		}
+
+		:nth-of-type(1) > & > li::before {
+			/* hide table separator for the first table */
+			display: none
+		} 
+
+		.cd-has-margins & > li {
+			border-radius: 4px 4px 6px 6px;
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+
+	@include MQ(XL) {
+		.cd-full-width &  > li {
+			padding: 2.5em 0;
+		}
+	}
+}
+
+.no-js .cd-pricing-wrapper .is-hidden {
+	position: relative;
+	@include transform(rotateY(0)); 
+	margin-top: 1em;
+}
+
+@include MQ(M) {
+
+	.cd-popular .cd-pricing-wrapper > li::before {
+		/* hide table separator for .cd-popular table */
+		display: none;
+	} 
+
+	.cd-popular + li .cd-pricing-wrapper > li::before {
+		/* hide table separator for tables following .cd-popular table */
+		display: none;
+	} 
+}
+
+.cd-pricing-header {
+	position: relative;
+	z-index: 1;
+	height: $pt-header-mobile-height;
+	padding: 1em;
+	pointer-events: none;
+	background-color: $color-3;
+	color: $color-4;
+
+	h2 {
+		margin-bottom: 3px;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.cd-popular & {
+		background-color: $color-2;
+	} 
+
+	@include MQ(M) {
+		height: auto;
+		padding: 1.9em 0.9em 1.6em;
+		pointer-events: auto;
+		text-align: center;
+		color: $color-1;
+		background-color: transparent;
+
+		.cd-popular & {
+			color: $color-2;
+			background-color: transparent;
+		}
+
+		.cd-secondary-theme & {
+			color: $color-4;
+		}
+
+		h2 {
+			font-size: 1.8rem;
+			letter-spacing: 2px;
+		}
+	}
+}
+
+.cd-currency, .cd-value {
+	font-size: 3rem;
+	font-weight: 300;
+}
+
+.cd-duration {
+	font-weight: 700;
+	font-size: 1.3rem;
+	color: lighten($color-3, 20%);
+	text-transform: uppercase;
+
+	.cd-popular & {
+		color: lighten($color-2, 15%)
+	}
+
+	&::before {
+		content: '/';
+		margin-right: 2px;
+	}
+}
+
+@include MQ(M) {
+	
+	.cd-value {
+		font-size: 7rem;
+		font-weight: 300;
+	}
+
+	.cd-currency, .cd-duration {
+		color: rgba($color-1, .4);
+
+		.cd-popular & {
+			color: $color-2;
+		}
+
+		.cd-secondary-theme & {
+			color: shade($color-3, 20%);
+		}
+
+		.cd-secondary-theme .cd-popular & {
+			color: shade($color-2, 20%);
+		}
+	}
+
+	.cd-currency {
+		display: inline-block;
+		margin-top: 10px;
+		vertical-align: top;
+		font-size: 2rem;
+		font-weight: 700;
+	}
+
+	.cd-duration {
+		font-size: 1.4rem;
+	}
+}
+
+.cd-pricing-body {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+
+	.is-switched & {
+		/* fix a bug on Chrome Android */ 
+		overflow: hidden;
+	}
+
+	@include MQ(M) {
+		overflow-x: visible;
+	}
+}
+
+.cd-pricing-features {
+	@include clearfix;
+	width: $pt-features-number * $pt-feature-mobile-width;
+
+	li {
+		width: $pt-feature-mobile-width;
+		float: left;
+		padding: 1.6em 1em;
+		font-size: 1.4rem;
+		text-align: center;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	em {
+		display: block;
+		margin-bottom: 5px;
+		font-weight: 600;
+	}
+
+	@include MQ(M) {
+		width: auto;
+
+		li {
+			float: none;
+			width: auto;
+			padding: 1em;
+
+			.cd-popular & {
+				margin: 0 3px;
+			}
+
+			&:nth-of-type(2n+1) {
+				background-color: rgba($color-1, .06);
+			}
+		}
+
+		em {
+			display: inline-block;
+			margin-bottom: 0;
+		}
+
+		.cd-has-margins .cd-popular & li,
+		.cd-secondary-theme .cd-popular & li {
+			margin: 0;
+		}
+
+		.cd-secondary-theme & li {
+			color: $color-4;
+		}
+
+		.cd-secondary-theme & li:nth-of-type(2n+1) {
+			background-color: transparent;
+		}
+	}
+}
+
+.cd-pricing-footer {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	/* on mobile it covers the .cd-pricing-header */
+	height: $pt-header-mobile-height;
+	width: 100%;
+
+	&::after {
+		/* right arrow visible on mobile */
+		content: '';
+		position: absolute;
+		right: 1em;
+		@include center(y);
+		height: 20px;
+		width: 20px;
+		background: url(../img/cd-icon-small-arrow.svg);
+	}
+
+	@include MQ(M) {
+		position: relative;
+		height: auto;
+		padding: 1.8em 0;
+		text-align: center;
+
+		&::after {
+			/* hide arrow */
+			display: none;
+		}
+
+		.cd-has-margins & {
+			padding-bottom: 0;
+		}
+	}
+}
+
+.cd-select {
+	position: relative;
+	z-index: 1;
+	display: block;
+	height: 100%;
+	/* hide button text on mobile */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	color: transparent;
+
+	@include MQ(M) {
+		position: static;
+		display: inline-block;
+		height: auto;
+		padding: 1.3em 3em;
+		color: $color-4;
+		border-radius: 2px;
+		background-color: darken($color-1, 10%);
+		font-size: 1.4rem;
+		text-indent: 0;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+
+		.no-touch &:hover {
+			background-color: darken($color-1, 5%);
+		}
+
+		.cd-popular & {
+			background-color: $color-2;
+
+			.no-touch &:hover {
+				background-color: lighten($color-2, 5%);
+			}
+		}
+
+		.cd-secondary-theme .cd-popular & {
+			background-color: darken($color-1, 10%);
+
+			.no-touch &:hover {
+				background-color: darken($color-1, 5%);
+			}
+		}
+
+		.cd-has-margins & {
+			display: block;
+			padding: 1.7em 0;
+			border-radius: 0 0 4px 4px;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+xkeyframes 
+
+-------------------------------- */
+
+@include keyframes(cd-rotate) {
+	0% {
+		@include transform(perspective($cd-perspective) rotateY(0));
+	}
+
+	70% {
+		/* this creates the bounce effect */
+		@include transform(perspective($cd-perspective) rotateY(200deg)); 
+	}
+
+	100% {
+		@include transform(perspective($cd-perspective) rotateY(180deg));
+	}
+}
+
+@include keyframes(cd-rotate-inverse) {
+	0% {
+		@include transform(perspective($cd-perspective) rotateY(-180deg));
+	}
+
+	70% {
+		/* this creates the bounce effect */
+		@include transform(perspective($cd-perspective) rotateY(20deg));
+	}
+
+	100% {
+		@include transform(perspective($cd-perspective) rotateY(0));
+	}
+}
+@include keyframes(cd-rotate-back) {
+	0% {
+		@include transform(perspective($cd-perspective) rotateY(0));
+	}
+
+	70% {
+		/* this creates the bounce effect */
+		@include transform(perspective($cd-perspective) rotateY(-200deg)); 
+	}
+
+	100% {
+		@include transform(perspective($cd-perspective) rotateY(-180deg));
+	}
+}
+
+@include keyframes(cd-rotate-inverse-back) {
+	0% {
+		@include transform(perspective($cd-perspective) rotateY(180deg));
+	}
+
+	70% {
+		/* this creates the bounce effect */
+		@include transform(perspective($cd-perspective) rotateY(-20deg));
+	}
+
+	100% {
+		@include transform(perspective($cd-perspective) rotateY(0));
+	}
+}

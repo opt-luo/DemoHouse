@@ -1,0 +1,565 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	min-height: 100%;
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+	overflow-x: hidden;	
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+xnugget info 
+
+-------------------------------- */
+
+.cd-nugget-info {
+	position: absolute;
+	width: 60%;
+	@include center;
+	z-index: 1;
+	text-align: center;
+	@include font-smoothing;
+
+	h1 {
+		color: $color-4;
+		font-size: 2.4rem;
+		margin: .6em 0;
+	}
+
+	.cd-btn {
+		@include appearance(none);
+		border: none;
+		border-radius: 50em;
+		background: $color-2;
+		padding: 1em 2em;
+		color: $color-4;
+		font-weight: bold;
+		font-size: 1.4rem;
+		cursor: pointer;
+		box-shadow: inset 0 1px 0 rgba(#fff, .2);
+
+		&:active {
+			@include transform(scale(.9));
+		}
+
+		.no-touch &:hover, &:focus {
+			outline: none;
+			background: lighten($color-2, 5%);
+		}
+	}
+
+	@include MQ(L) {
+		h1 {
+			font-size: 4.2rem;
+			font-weight: 300;
+		}
+
+		.cd-btn {
+			font-size: 1.6rem;
+		}
+	}
+}
+
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-tour-wrapper {
+	position: fixed;
+	z-index: 2;
+	height: 90%;
+	width: 90%;
+	@include center;
+	visibility: hidden;
+	opacity: 0;
+	@include transition(opacity 0.4s 0s, visibility 0s 0.4s);
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */ 
+		display: none;
+		content: 'mobile';
+	}
+
+	&.active {
+		/* start tour */
+		visibility: visible;
+		opacity: 1;
+		@include transition(opacity 0.4s 0s, visibility 0s 0s);
+	}
+
+	@include MQ(M) {
+		max-width: 500px;
+		max-height: 600px;
+	}
+
+	@include MQ(L) {
+		/* reset style */
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		max-width: none;
+		max-height: none;
+		opacity: 1;
+		@include transform(translateX(0));
+		
+		&::before {
+			/* never visible - this is used in jQuery to check the current MQ */ 
+			content: 'desktop';
+		}
+
+		&.active {
+			visibility: hidden;
+		}
+	}
+}
+
+.cd-single-step {
+	/* tour single step */
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	left: 0;
+    top: 0;
+	background-color: $color-4;
+	border-radius: 4px;
+	box-shadow: 0 3px 10px rgba(#000, .2);
+	opacity: 0;
+	
+	/* Force Hardware Acceleration */
+	@include transform(translateZ(0));
+
+	@include transform(scale(0));
+	@include transition(transform 0.4s 0s, opacity 0s 0.4s);
+
+	> span {
+		/* dot indicator - visible on desktop version only */
+		position: relative;
+		z-index: 1;
+		display: block;
+		width: 10px;
+		height: 10px;
+		border-radius: inherit;
+		background: $color-2;
+		@include transform(scale(0));
+		@include transition(transform 0.4s);
+
+		/* replace text with background images */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		
+		/* hide on mobile */
+		display: none;
+	}
+	
+	&::after {
+		/* this is used to create the pulse animation */
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		border-radius: inherit;
+		
+		/* Force Hardware Acceleration */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden);
+		
+		/* hide on mobile */
+		display: none;
+	}
+
+	.active & {
+		/* tour started */
+		@include transform(scale(1) translateX(100%));
+		@include transition(transform 0.4s 0s, opacity 0.4s 0s);
+	}
+
+	.active &.move-left {
+		@include transform(scale(1) translateX(-100%));
+	}
+
+	.active &.is-selected {
+		/* visible step */
+		opacity: 1;
+		@include transform(scale(1));
+		@include transition(transform 0.4s 0s);
+	}
+
+	@include MQ(L) {
+		/* reset style */
+		height: auto;
+		width: auto;
+		top: auto;
+		left: auto;
+		@include transform(translateX(0));
+		border-radius: 50%;
+		visibility: hidden;
+		opacity: 1;
+		background-color: transparent;
+		box-shadow: none;
+		@include transition(visibility 0s 0.4s);
+
+		&:nth-of-type(1) { 
+			/* set tour points positions */
+			bottom: 40%;
+			right: 30%;
+		}
+
+		&:nth-of-type(2) {
+			bottom: 60%;
+			right: 48%;
+		}
+
+		&:nth-of-type(3) {
+			top: 28%;
+			left: 20%;
+		}
+
+		> span, &::after {
+			display: block;
+		}
+
+		.active &, .active &.move-left {
+			@include transition(visibility 0s 0.4s);
+			@include transform(translateX(0));
+		}
+
+		&.is-selected {
+			visibility: visible;
+			@include transition(visibility 0s 0s);
+
+			> span {
+				@include transform(scale(1));
+			}
+
+			&::after {
+				@include animation(cd-pulse 2s infinite);
+				@include animation-delay(.5s);
+			}
+
+			.cd-more-info  {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+@include keyframes(cd-pulse) {
+	0% {
+		box-shadow: 0 0 0 0 rgba($color-2, 1);
+	}
+
+	100% {
+		box-shadow: 0 0 0 20px rgba($color-2, 0);
+	}
+}
+
+.cd-single-step .cd-more-info {
+	z-index: 1;
+	padding: 1.5em;
+	width: 100%;
+	@include clearfix;
+
+	&::before {
+		/* triangle next to the step description - hidden on mobile */
+		content: '';
+		position: absolute;
+		height: 0;
+		width: 0;
+		border: 6px solid transparent;
+		display: none;
+	}
+
+	h2 {
+		font-size: 2rem;
+		line-height: 1.2;
+		margin-bottom: .4em;
+	}
+
+	p {
+		font-size: 1.3rem;
+		line-height: 1.6;
+		margin-bottom: 1.4em;
+		font-family: $secondary-font;
+		color: shade($color-4, 50%);
+	}
+
+	img {
+		margin-bottom: 1.4em;
+	}
+
+	.cd-close {
+		/* 'X' icon to skip the tour */
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		width: 32px;
+		height: 32px;
+
+		/* replace text with background images */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		
+		&::after, &:before {
+			/* these are the 2 lines of the 'X' icon */
+			content: '';
+			position: absolute;
+			left: 50%;
+		    top: 50%;
+		    height: 2px;
+			width: 16px;
+			border-radius: 4em;
+			background-color: shade($color-4, 20%);
+			
+			/* Force Hardware Acceleration */
+			@include transform(translateZ(0));
+			@include backface-visibility(hidden);
+		}
+
+		&::after {
+			@include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+		}
+
+		&::before {
+			@include transform(translateX(-50%) translateY(-50%) rotate(-45deg));
+		}
+	}
+
+	span {
+		/* step count e.g. 1 of 3*/
+		float: left;
+		padding-top: .1em;
+		font-size: 1.3rem;
+		font-family: $secondary-font;
+	}
+
+	@include MQ(L) {
+		position: absolute;
+		width: 340px;
+		border-radius: 4px;
+		box-shadow: 0 3px 20px rgba(#000, .15);
+		opacity: 0;
+		background-color: $color-4;
+		@include transition(opacity .4s);
+		border-color: $color-4;
+
+		p {
+			margin-bottom: 2.5em;
+		}
+
+		img {
+			display: none;
+		}
+
+		&::before {
+			/* triangle next to the step description - hidden on mobile */
+			display: block;
+		}
+
+		&.left {
+			right: calc(100% + 15px);
+			@include transform(translateY(-50%));
+		}
+
+		&.right { 
+			left: calc(100% + 15px);
+			@include transform(translateY(-50%));
+		}
+
+		&.left, &.right {
+			top: 50%;
+		}
+
+		&.top {
+			bottom: calc(100% + 15px);
+			@include transform(translateX(-50%));
+		}
+
+		&.bottom {
+			top: calc(100% + 15px);
+			@include transform(translateX(-50%));
+		}
+
+		&.top, &.bottom {
+			left: 50%;
+		}
+
+		&.left::before, &.right::before {
+			@include center(y);
+		} 
+
+		&.top::before, &.bottom::before {
+			@include center(x);
+		}
+
+		&.left::before {
+			border-left-color: inherit;
+			left: 100%;
+		}
+
+		&.right::before {
+			border-right-color: inherit;
+			right: 100%;
+		}
+
+		&.top::before {
+			border-top-color: inherit;
+			top: 100%;
+		}
+
+		&.bottom::before {
+			border-bottom-color: inherit;
+			bottom: 100%;
+		}
+
+		.is-selected & {
+			opacity: 1;
+		}
+	}
+}
+
+.cd-tour-nav {
+	float: right;
+	@include clearfix;
+
+	li {
+		display: inline-block;
+		float: left;
+
+		&:first-of-type {
+			margin-right: 1.5em;
+		}
+	}
+
+	a {
+		font-size: 1.3rem;
+		color: $color-1;
+		font-weight: bold;
+
+		&.inactive {
+			/* item not clickable */
+			color: shade($color-4, 20%);
+			cursor: not-allowed;
+		}
+	}
+}
+
+.cd-cover-layer {
+	/* background cover layer - visible when tour is activated */
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(#000, .6);
+	visibility: hidden;
+	opacity: 0;
+	@include transition(opacity 0.4s 0s, visibility 0s 0.4s);
+
+	&.is-visible {
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity 0.4s 0s, visibility 0s 0s);
+	}
+
+	@include MQ(L) {
+
+		&.is-visible {
+			opacity: 0;
+			@include animation(cd-fade-in 2.1s);
+		}
+	}
+}
+
+@include keyframes(cd-fade-in) {
+	0%, 100% {
+		opacity: 0;
+	}
+
+	14%, 40% {
+		opacity: 1;
+	}
+}
+
+/* -------------------------------- 
+
+xapp prototype - no need to import this in production 
+
+-------------------------------- */
+
+
+.cd-app-screen {
+	position: absolute;
+	@include center;
+	width: 90%;
+	height: 80%;
+	background: $color-1;
+	border-radius: 4px;
+	box-shadow: 0 10px 60px darken($color-3, 12%);
+
+	&::before, &::after {
+		content: '';
+		position: absolute;
+	}
+
+	&::before {
+		top: 0;
+		left: 0;
+		height: 40px;
+		width: 100%;
+		background: $color-4;
+		border-radius: 4px 4px 0 0;
+	}
+
+	&::after {
+		top: 14px;
+		left: 20px;
+		height: 12px;
+		width: 60px;
+		background: shade($color-4, 10%);
+		border-radius: 3px;
+	}
+}

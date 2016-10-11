@@ -1,0 +1,45 @@
+{
+  "name": "elastic-progress",
+  "version": "0.0.3",
+  "description": "Creates a button that turns into a progress bar with a elastic effect.",
+  "main": "src/main.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/codrops/ElasticProgress"
+  },
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^11.1.0",
+    "extend": "^3.0.0",
+    "gsap": "^1.18.0",
+    "gulp": "^3.9.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-streamify": "^1.0.2",
+    "gulp-uglify": "^1.4.1",
+    "opener": "^1.4.1",
+    "svg-pathdata": "^1.0.1",
+    "svgify": "0.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "",
+    "start": "gulp connect",
+    "build:css": "gulp css",
+    "build:js": "gulp js",
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "commit": "git add -A && git commit",
+    "push": "npm run commit && git push",
+    "patch": "npm run build && npm run commit && npm version patch"
+  },
+  "author": "Lucas Bebber",
+  "license": "SEE LICENSE IN http://tympanus.net/codrops/licensing/",
+  "browserify": {
+    "transform": [
+      "svgify"
+    ]
+  }
+}

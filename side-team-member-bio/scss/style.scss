@@ -1,0 +1,431 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $main-text;
+	background-color: $background;
+
+	/* prevent ie from showing the horizontal scrollbar */
+	overflow-x: hidden;
+
+	&.overflow-hidden {
+		/* when author bio is visible, the out-of-focus content won't scroll */
+		overflow: hidden;
+	}
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $L; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+main {
+	position: relative;
+	z-index: $main-zindex;
+	@include transition-property(transform);
+	@include transition-duration(.3s);
+
+	&.slide-out {
+		/* the main element slides to the left when the author bio is visible */
+		@include transform(translateX(-$bio-width-S));
+
+		.cd-overlay {
+			/* the overlay layer gets visible when the author bio slides in */
+			display: block;
+			@include animation(cd-fade-in .3s);
+		}
+	}
+
+	@include MQ(M) {
+		&.slide-out {
+			/* change in size of the author bio section */
+			@include transform(translateX(-$bio-width-M));
+		}
+	}
+
+	@include MQ(L) {
+		&.slide-out {
+			@include transform(translateX(-$bio-width-L));
+		}
+	}
+}
+
+.cd-section {
+	padding: 2em 0;
+	text-align: center;
+
+	.cd-container {
+		/* this modifies the .cd-container default max-width */
+		max-width: $M;
+	}
+
+	h2 {
+		font-family: $secondary-font;
+		font-weight: bold;
+		text-transform: uppercase;
+		margin-bottom: 1em;
+		@include font-size(20px);
+	}
+
+	p {
+		line-height: 1.4;
+	}
+
+	@include MQ(M) {
+		padding: 4em;
+
+		p {
+			line-height: 1.6;
+		}
+	}
+
+	@include MQ(L) {
+		padding: 6em;
+
+		h2 {
+			margin-bottom: 2em;
+		}
+
+		p {
+			line-height: 1.8;
+			@include font-size(18px);
+		}
+	}
+}
+
+header {
+	background: $color-1;
+
+	h1 {
+		@include font-size(30px);
+		font-family: $secondary-font;
+		font-weight: bold;
+		text-transform: uppercase;
+		margin-bottom: .4em;
+		color: darken($color-1, 70%);
+	}
+
+	p {
+		@include font-size(13px);
+		color: darken($color-1, 50%);
+	}
+}
+
+.cd-placeholder-1 {
+	background: $color-2;
+	color: lighten($color-2, 30%);
+}
+
+.cd-placeholder-2 {
+	background: #FFF;
+}
+
+#cd-team {
+	background: $color-3;
+
+	.cd-container {
+		max-width: $L;
+	}
+
+	h2 {
+		color: darken($color-3, 50%);
+	}
+
+	li {
+		margin-bottom: 2em;
+		@include border-radius;
+		box-shadow: 0 0 10px rgba($color-4, 0);
+		@include transition(all .3s);
+
+		.no-touch &:hover {
+			box-shadow: 0 0 10px rgba($color-4, .3);
+
+			.cd-img-overlay {
+				opacity: 1;
+			}
+		}
+	}
+
+	figure {
+		position: relative;
+	}
+
+	img {
+		display: block;
+		width: 100%;
+		border-radius: .25em .25em 0 0;
+	}
+
+	.cd-img-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba($color-4, .9);
+		opacity: 0;
+		border-radius: .25em .25em 0 0;
+		@include transition(opacity .3s);
+
+		span {
+			position: absolute;
+			@include center; // see partials > _mixins.scss
+			color: #FFF;
+		}
+	}
+
+	.cd-member-info {
+		height: 80px;
+		background: #FFF;
+		text-align: center;
+		font-family: $secondary-font;
+		font-weight: bold;
+		padding-top: 20px;
+		border-radius: 0 0 .25em .25em;
+
+		span {
+			display: block;
+			font-family: $primary-font;
+			font-weight: normal;
+			color: lighten($main-text, 40%);
+			@include font-size(14px);
+			margin-top: .5em;
+		}
+	}
+
+	@include MQ(M) {
+		li {
+			@include column(.31);
+			margin-right: 3.5%;
+
+			&:nth-child(3n) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.cd-member-bio {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: $bio-width-S;
+	height: 100%;
+	overflow-y: auto;
+
+	/* smooth scrolling on mobile phones and tablets */
+	-webkit-overflow-scrolling: touch;
+
+	background: $color-4;
+	z-index: $bio-zindex;
+
+	/* this how we move the author bio section off the canvas */
+	@include transform(translateX($bio-width-S));
+
+	@include transition-property (transform);
+	@include transition-duration(.3s);
+
+	&.slide-in {
+		/* the author bio section slides in when the user clicks on the team member picture */
+		@include transform(translateX(0));
+	}
+
+	.cd-member-bio-pict {
+		position: relative;
+
+		&::after { /* gradient at the bottom of the image - same color of the background of the section */
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 80px;
+			@include background(linear-gradient(to top, $color-4, rgba($color-4, 0)));
+
+			.no-cssgradients & {
+				display: none;
+			}
+		}
+	}
+
+	img {
+		width: 100%;
+		display: block;
+	}
+
+	.cd-bio-content {
+		padding: 1em;
+		color: #FFF;
+
+		h1 {
+			font-family: $secondary-font;
+			font-weight: bold;
+			text-transform: uppercase;
+			text-align: center;
+			@include font-size(20px);
+		}
+
+		p {
+			@include font-size(14px);
+			margin: 1em 0;
+			line-height: 1.4;
+			color: lighten($color-4, 50%);
+		}
+	}
+
+	@include MQ(M) {
+		width: $bio-width-M;
+		@include transform(translateX($bio-width-M));
+
+		.cd-bio-content {
+			padding: 2em;
+
+			p {
+				line-height: 1.6;
+				margin: 2em 0;
+			}
+		}
+	}
+
+	@include MQ(L) {
+		width: $bio-width-L;
+		@include transform(translateX($bio-width-L));
+
+		.cd-member-bio-pict::after {
+			height: 150px;
+		}
+
+		.cd-bio-content {
+			padding: 4em;
+			/* we move the content up so the title is over the color gradient */
+			@include transform(translateY(-80px));
+
+			h1 {
+				@include font-size(40px);
+			}
+
+			p {
+				@include font-size(16px);
+			}
+
+			.no-cssgradients & {
+				@include transform(translateY(0));
+			}
+		}
+	}
+}
+
+.cd-member-bio-close {
+	width: 32px;
+	height: 32px;
+	overflow: hidden;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	background: url('../img/cd-icon-close.svg') no-repeat center center;
+
+	text-indent: 100%;
+	white-space: nowrap;
+	z-index: $close-bio;
+
+	display: none;
+
+	&.is-visible {
+		display: block;
+		@include animation(cd-move-in .8s);
+	}
+
+	@include MQ(L) {
+		right: 20px;
+		top: 20px;
+	}
+}
+
+.cd-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba($color-3, .8);
+	cursor: pointer;
+	display: none;
+}
+
+/* -------------------------------- 
+
+xkeyframes 
+
+-------------------------------- */
+
+@include keyframes(cd-fade-in) {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@include keyframes(cd-move-in) {
+	0% {
+		@include transform(translateX(100px));
+	}
+
+	100% {
+		@include transform(translateX(0));
+	}
+}

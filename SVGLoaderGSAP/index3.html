@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SVG Loader with GSAP | Creeper</title>
+	<meta name="description" content="Some loaders made with SVG and GSAP" />
+	<meta name="keywords" content="svg, animation, GSAP, loader, inspiration, web design" />
+	<meta name="author" content="Codrops" />
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<script type="text/javascript" src="js/greensock/minified/TweenMax.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body class="demo-3">
+	<div class="container">
+		<header class="codrops-header">
+			<h1>SVG Loader <span>with <a href="http://greensock.com/gsap">GSAP</a> by <a href="https://twitter.com/chrisgannon">Chris Gannon</a></span></h1>
+			<div class="codrops-links">
+				<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/CreativeGooeyEffects/" title="Previous Demo"><span>Previous Demo</span></a>
+				<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=23648" title="Back to the article"><span>Back to the Codrops article</span></a>
+			</div>
+			<nav class="codrops-demos">
+				<a href="index.html">Jump Loader</a>
+				<span>More ideas:</span>
+				<a href="index2.html">Flip Box Loader</a>
+				<a class="current-demo" href="index3.html">Creeper</a>
+				<a href="index4.html">Squash Box Loader</a>
+				<a href="index5.html">Veggie Loader</a>
+				<a href="index6.html">Infinity Loader</a>
+				<a href="index7.html">Goo Loader</a>
+			</nav>
+		</header>
+		<div class="content">
+			<svg id="line-svg-node" width="100%" height="120px" viewBox="0 0 600 120">
+				<path id="l0" fill="none" stroke="#383845" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M400,200 Q500,200 600,200 " />
+				<circle id="p0" cx="0" cy="0" r="14" fill="rgba(0,0,0,0)" stroke-width="0" stroke="red"></circle>
+				<circle id="p1" cx="0" cy="0" r="14" fill="rgba(0,0,0,0)" stroke-width="0" stroke="red"></circle>
+			</svg>
+			<div id="null-object"></div>
+			<div id="p0-null-object"></div>
+			<div id="p1-null-object"></div>
+			<div id="container-null-object"></div>
+		</div>
+	</div>
+	<!-- /container -->
+	<script>
+	(function() {
+		var bezierPoint = document.getElementById('null-object');
+		var p0NullObject = document.getElementById('p0-null-object');
+		var p1NullObject = document.getElementById('p1-null-object');
+		var containerNullObject = document.getElementById('container-null-object');
+
+		var lineSVGNode = document.getElementById('line-svg-node');
+		var l0 = document.getElementById('l0');
+		var p0 = document.getElementById('p0');
+		var p1 = document.getElementById('p1');
+
+		var lineLength = 100;
+
+		TweenMax.set(lineSVGNode, {
+			position: 'absolute',
+			top: '50%',
+			left: 0,
+			xPercent: 0,
+			yPercent: -50
+		})
+
+		TweenMax.set([p0, p1], {
+			position: 'absolute'
+		})
+
+		TweenMax.set(bezierPoint, {
+			position: 'absolute',
+			x: 300,
+			y: 300
+		})
+
+		TweenMax.set(p0NullObject, {
+			position: 'absolute',
+			x: 10,
+			y: 100
+		})
+
+		TweenMax.set(p1NullObject, {
+			position: 'absolute',
+			x: 100,
+			y: 100
+		})
+
+		TweenMax.ticker.addEventListener('tick', updateLine);
+
+		function point0Update(e) {
+			TweenMax.set(p0, {
+				attr: {
+					cx: p0NullObject._gsTransform.x,
+					cy: p0NullObject._gsTransform.y
+				}
+			})
+			p0cX = p0NullObject._gsTransform.x;
+			p0cY = p0NullObject._gsTransform.y;
+			p1cX = p1NullObject._gsTransform.x;
+			p1cY = p1NullObject._gsTransform.y;
+		}
+
+		function point1Update(e) {
+			TweenMax.set(p1, {
+				attr: {
+					cx: p1NullObject._gsTransform.x,
+					cy: p1NullObject._gsTransform.y
+				}
+			})
+			p0cX = p0NullObject._gsTransform.x;
+			p0cY = p0NullObject._gsTransform.y;
+			p1cX = p1NullObject._gsTransform.x;
+			p1cY = p1NullObject._gsTransform.y;
+		}
+
+		function updateLine() {
+			var bezierDiffX = Math.abs(p0NullObject._gsTransform.x - p1NullObject._gsTransform.x) / 2;
+			var bezierOffsetX = Math.min(p0NullObject._gsTransform.x, p1NullObject._gsTransform.x) + bezierDiffX;
+			var bezierOffsetY = Math.min(p0NullObject._gsTransform.y, p1NullObject._gsTransform.y) - (lineLength);
+
+			TweenMax.to(bezierPoint, 0.08, {
+				x: bezierOffsetX,
+				y: bezierOffsetY,
+				ease: Power1.easeIn
+			});
+
+			nullX = bezierPoint._gsTransform.x;
+			nullY = bezierPoint._gsTransform.y;
+
+			TweenMax.set(l0, {
+				attr: {
+					d: "M" + p0cX + "," + p0cY + " Q" + nullX + "," + nullY + " " + p1cX + "," + p1cY
+				}
+			})
+		}
+
+		function initPoints() {
+			TweenMax.set(p0, {
+				attr: {
+					cx: p0NullObject._gsTransform.x,
+					cy: p0NullObject._gsTransform.y
+				}
+			})
+			TweenMax.set(p1, {
+				attr: {
+					cx: p1NullObject._gsTransform.x,
+					cy: p1NullObject._gsTransform.y
+				}
+			})
+			point0Update();
+			point1Update();
+			updateLine();
+		}
+
+		var tl = new TimelineMax({
+			repeatDelay: 0,
+			repeat: -1,
+			yoyo: true
+		});
+
+		tl.timeScale(2);
+
+		tl.to(p0NullObject, 1, {
+			x: 200,
+			onUpdate: point0Update,
+			ease: Power4.easeInOut
+		})
+		.to(p1NullObject, 1, {
+			x: 300,
+			onUpdate: point1Update,
+			ease: Power4.easeInOut
+		})
+
+		tl.to(p0NullObject, 1, {
+			x: 400,
+			onUpdate: point0Update,
+			ease: Power4.easeInOut
+		})
+		.to(p1NullObject, 1, {
+			x: 500,
+			onUpdate: point1Update,
+			ease: Power4.easeInOut
+		})
+
+		initPoints();
+	})();
+	</script>
+</body>
+</html>

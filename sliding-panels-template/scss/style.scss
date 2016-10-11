@@ -1,0 +1,600 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-6;
+	background-color: $color-5;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Patterns - reusable parts of our design
+
+-------------------------------- */
+
+.cd-text-replace {
+	/* replace text with image */
+	color: transparent;
+	text-indent: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+/* -------------------------------- 
+
+Menu trigger
+
+-------------------------------- */
+
+.cd-nav-trigger {
+	position: absolute;
+	z-index: 4;
+	top: 24px;
+	right: 5%;
+	height: 52px;
+	width: 52px;
+	border-radius: 50%;
+	background-color: rgba(#000, .8);
+	@include transition(background .2s);
+
+	.cd-icon, 
+	.cd-icon::before, 
+	.cd-icon::after {
+		/* menu icon created in CSS */
+		position: absolute;
+		background-color: $color-6;
+		border-radius: 2px;
+
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden);
+	}
+
+	.no-touch &:hover {
+		background-color: rgba(#000, 1);
+	}
+
+	.cd-icon {
+		/* middle line of the menu icon */
+		display: inline-block;
+		width: 18px;
+		height: 2px;
+		@include center; // mixin inside partials > _mixins.scss
+		@include transition(transform .3s, background-color .3s);
+
+		&::before, &::after {
+			/* upper and lower lines of the menu icon */
+			content: '';
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%; 
+			@include transition(transform .3s);
+		}
+
+		&::before {
+			@include transform(translateY(-6px));
+		}
+
+		&::after {
+			@include transform(translateY(6px));
+		}
+	}
+
+	&.project-open .cd-icon {
+		/* user selects a projects - transform the icon into a 'X' */
+		background-color: rgba($color-6, 0);
+
+		&::before, &::after {
+			background-color: rgba($color-6, 1);
+		}
+		
+		&::before {
+			@include transform(translateY(0) rotate(45deg));
+		}
+
+		&::after {
+			@include transform(translateY(0) rotate(-45deg));
+		}
+	}
+
+	&.nav-visible .cd-icon {
+		/* user opens the navigation - transform the icon into an arrow */
+		@include transform(translateY(-50%) translateX(-50%));
+
+		&::after {
+			@include transform(translateX(5px) translateY(3px) rotate(-45deg) scaleX(.5));
+		}
+
+		&::before {
+			@include transform(translateX(5px) translateY(-3px) rotate(45deg) scaleX(.5));
+		}
+	}
+
+	@include MQ(M) {
+		&.nav-visible .cd-icon {
+			@include transform(translateY(-50%) translateX(-50%) rotate(-90deg));
+
+			&::after {
+				@include transform(translateX(-5px) translateY(3px) rotate(45deg) scaleX(.5));
+			}
+
+			&::before {
+				@include transform(translateX(-5px) translateY(-3px) rotate(-45deg) scaleX(.5));
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Projects
+
+-------------------------------- */
+
+.cd-projects-container {
+	position: relative;
+	z-index: 2;
+	overflow-x: hidden;
+
+	&.project-open {
+		/* smooth scroll on iOS devices */
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
+.cd-projects-previews {
+	position: relative;
+	z-index: 2;
+	height: 100vh;
+	width: 100vw;
+	@include clearfix;
+
+	.project-open & {
+		pointer-events: none;
+	}
+
+	li {
+		height: 100%/$items;
+		width: 100%;
+		overflow: hidden;
+		@include transition(transform .5s);
+
+		/* Force Hardware Acceleration */
+		@include backface-visibility(hidden);
+		@include transform(translateZ(1px));
+
+		&.selected {
+			opacity: 0;
+			/* move selected project preview out of the viewport with no transition */
+			@include transform(translateX(-100%));
+			@include transition(transform 0s);
+		}
+
+		&.slide-out {
+			@include transform(translateX(-100%));
+		}
+	}
+
+	a {
+		display: block;
+		height: 100vh;
+		width: 100%;
+		/* fixes a bug on projects caption width */
+		@include transform(translateY(0%));
+		opacity: 0;
+		@include transition(opacity .5s);
+	}
+
+	li:nth-of-type(2) a {
+		@include transform(translateY(-100%/$items));
+	}
+
+	li:nth-of-type(3) a {
+		@include transform(translateY(-100%*2/$items));
+	}
+
+	li:nth-of-type(4) a {
+		@include transform(translateY(-100%*3/$items));
+	}
+
+	.bg-loaded a {
+		opacity: 1;
+	}
+
+	@include MQ(M) {
+
+		li {
+			display: inline-block;
+			height: 100%;
+			width: 100%/$items;
+			float: left;
+
+			&.selected {
+				@include transform(translateY(-100%));
+			}
+
+			&.slide-out {
+				@include transform(translateY(-100%));
+			}
+		}
+
+		a {
+			/* width equal to window width */
+			width: 100%*$items;
+		}
+
+		li:nth-of-type(2) a {
+			@include transform(translateX(-100%/$items));
+		}
+
+		li:nth-of-type(3) a {
+			@include transform(translateX(-100%*2/$items));
+		}
+
+		li:nth-of-type(4) a {
+			@include transform(translateX(-100%*3/$items));
+		}
+	}
+}
+
+.cd-projects {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+
+	> li {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		opacity: 0;
+		@include transition(opacity .3s);
+
+		&.selected {
+			z-index: 1;
+			opacity: 1;
+			@include transition(opacity 0s);
+		}
+	}
+
+	.preview-image {
+		display: block;
+		height: 100vh;
+	}
+}
+
+.cd-projects-previews a, 
+.cd-projects .preview-image {
+	/* set a background image for each project */
+	background: $color-1 url(../img/img-1.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.cd-projects-previews li:nth-of-type(2) a, 
+.cd-projects > li:nth-of-type(2) .preview-image {
+	background: $color-2 url(../img/img-2.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.cd-projects-previews li:nth-of-type(3) a, 
+.cd-projects > li:nth-of-type(3) .preview-image {
+	background: $color-3 url(../img/img-3.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.cd-projects-previews li:nth-of-type(4) a, 
+.cd-projects > li:nth-of-type(4) .preview-image {
+	background: $color-4 url(../img/img-4.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.cd-project-title {
+	position: absolute;
+	width: 100%;
+	top: calc(50% - 20px);
+	left: 0;
+	color: $color-6;
+	@include transform(translateY(100vh*(2/$items - $items/2)/$items));
+	@include transition(transform .6s .2s);
+	text-align: center;
+	@include font-smoothing;
+
+	&::after {
+		/* line below project title */
+		content: '';
+		position: absolute;
+		left: 50%;
+		bottom: -10px;
+		width: 40px;
+		height: 1px;
+		background: $color-6;
+
+		@include transform(translateX(-50%) scale(0));
+		@include transition(transform .3s);
+	}
+
+	.no-touch .cd-projects-previews a:hover &::after {
+		@include transform(translateX(-50%) scale(1));
+	}
+
+	.cd-projects &::after {
+		@include transform(translateX(-50%) scale(1));
+		@include transition(transform .3s .3s);
+	}
+
+	h2 {
+		font-size: 2.5rem;
+		line-height: 1.5; 
+		font-weight: 700;
+	}
+
+	p {
+		font-size: 1.4rem;
+		font-family: $secondary-font;
+		font-style: italic;
+		line-height: 1.2;
+		padding: .4em 2em;
+		opacity: .8;
+	}
+
+	@include MQ(M) {
+		width: 100%/$items;
+		top: 50vh;
+		@include transform(translateX(0%));
+	}
+}
+
+.cd-projects-previews li:nth-of-type(2) .cd-project-title, 
+.cd-projects > li:nth-of-type(2) .cd-project-title {
+	@include transform(translateY(100vh*(2/$items - $items/2 + 1)/$items));
+
+	@include MQ(M) {
+		@include transform(translateX(100%));
+	}
+}
+
+.cd-projects-previews li:nth-of-type(3) .cd-project-title, 
+.cd-projects > li:nth-of-type(3) .cd-project-title  {
+	@include transform(translateY(100vh*(2/$items - $items/2 + 2)/$items));
+
+	@include MQ(M) {
+		@include transform(translateX(200%));
+	}
+}
+
+.cd-projects-previews li:nth-of-type(4) a .cd-project-title, 
+.cd-projects > li:nth-of-type(4) .cd-project-title  {
+	@include transform(translateY(100vh*(2/$items - $items/2 + 3)/$items));
+
+	@include MQ(M) {
+		@include transform(translateX(300%));
+	}
+}
+
+li.selected .cd-project-title,
+.cd-projects > li:nth-of-type(2).selected .cd-project-title,
+.cd-projects > li:nth-of-type(3).selected .cd-project-title,
+.cd-projects > li:nth-of-type(4).selected .cd-project-title {
+	@include transform(translateY(0));
+
+	@include MQ(M) {
+		@include transform(translateX(150%));
+	}
+}
+
+.cd-projects li.selected .cd-project-title::after {
+	@include transition(transform .3s 0s);
+	@include transform(translateX(-50%) scale(0));
+}
+
+.touch .cd-projects li.selected .cd-project-title::after {
+	@include transition(transform 0s);
+}
+
+.cd-project-info {
+	display: none;
+	padding: 4em 0;
+	background-color: $color-6;
+	color: tint($color-5, 40%);
+
+	.content-visible & {
+		display: block;
+	}
+
+	p {
+		width: 90%;
+		max-width: 800px;
+		margin: 0 auto;
+		line-height: 2;
+	}
+}
+
+.cd-projects-container .scroll {
+	display: block;
+	position: absolute;
+	z-index: 2;
+	bottom: 30px;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+
+	/* rest button default style */
+	cursor: pointer;
+	border: none;
+
+	&:focus {
+		outline: none;
+	}
+
+	background: url('../img/cd-icon-arrow.svg') no-repeat center center;
+	visibility: hidden;
+	@include transform(translateX(-50%) scale(0));
+	@include transition(transform .3s 0s, visibility 0s .3s);
+}
+
+.cd-projects-container.project-open .scroll {
+	visibility: visible;
+	@include transform(translateX(-50%) scale(1));
+	@include transition(transform 0.4s 0s, visibility 0s 0s);
+	@include animation(cd-translate 1.2s 0.8s);
+	@include animation-iteration-count(2);
+}
+
+.no-touch .cd-projects-container.project-open .scroll:hover {
+	@include transform(translateX(-50%) scale(1.2));
+}
+
+@include keyframes(cd-translate) {
+	0% {
+		@include transform(translateX(-50%) scale(1));
+	}
+
+	50% {
+		@include transform(translateY(10px) translateX(-50%) scale(1));
+	}
+
+	100% {
+		@include transform(translateX(-50%) scale(1));
+	}
+}
+
+/* -------------------------------- 
+
+ Navigation
+
+-------------------------------- */
+
+.cd-primary-nav {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	text-align: center;
+	opacity: 0;
+	@include transition(opacity .6s);
+	/* vertically align its content */
+	display: table;
+
+	ul {
+		/* vertically align inside nav */
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	a {
+		display: inline-block;
+		padding: .4em 1em;
+		border-radius: 4px;
+		@include transition(background .2s);
+
+		color: $color-6;
+		font-family: $secondary-font;
+		font-size: 2.4rem;
+		font-weight: 700;
+		@include font-smoothing;
+
+		.no-touch &:hover {
+			background-color: $color-2;
+		}
+	}
+
+	.cd-label {
+		position: relative;
+		margin: 2.4em 0 2em;
+
+		color: $color-2;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 1.2rem;
+		letter-spacing: 1px;
+
+		&::after {
+			/* line below .cd-label*/
+			content: '';
+			position: absolute;
+			@include center(x);
+			bottom: -16px;
+			height: 1px;
+			width: 40px;
+			background-color: currentColor;
+		}
+	}
+
+	&.nav-visible {
+		opacity: 1;
+	}
+
+	&.nav-clickable {
+		z-index: 3;
+	}
+
+	.no-csstransitions &.nav-visible {
+		z-index: 3;
+	}
+
+	@include MQ(L) {
+
+		a {
+			font-size: 4rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+JavaScript Disabled
+
+-------------------------------- */
+
+.no-js .cd-primary-nav {
+	display: block;
+	position: static;
+	opacity: 1;
+	margin-bottom: 1.5em;
+
+	ul {
+		display: block;
+		@include clearfix;
+		padding: 0 5%;
+	}
+
+	li:not(.cd-label) {
+		display: inline-block;
+	}
+}

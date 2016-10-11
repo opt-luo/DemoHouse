@@ -1,0 +1,440 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Lato", sans-serif;
+  color: #0a0b15;
+  background-color: #ffffff;
+}
+
+a {
+  color: #6156a8;
+  text-decoration: none;
+}
+
+img, svg, image {
+  max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Slider
+
+-------------------------------- */
+.cd-radial-slider-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 2em auto;
+  /* hide horizontal scrollbar on IE11 */
+  overflow: hidden;
+}
+
+.cd-radial-slider > li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  -webkit-transition: -webkit-transform .2s;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+  /* hide vertical scrollbar on IE11 */
+  overflow: hidden;
+}
+.cd-radial-slider > li.visible {
+  position: relative;
+  opacity: 1;
+}
+.cd-radial-slider > li.is-animating, .cd-radial-slider > li.prev-slide, .cd-radial-slider > li.next-slide {
+  opacity: 1;
+}
+.cd-radial-slider > li.is-animating {
+  z-index: 2;
+}
+.cd-radial-slider > li.scale-down, .cd-radial-slider > li.move-up {
+  z-index: 3;
+}
+.cd-radial-slider > li.move-up {
+  /* class added to the navigation round element when clicked - used to create the click effect */
+  -webkit-animation: cd-clicked .2s;
+          animation: cd-clicked .2s;
+}
+.cd-radial-slider > li.scale-down {
+  /* class added to the navigation round element to create the scale down effect  */
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
+}
+.cd-radial-slider > li.prev-slide image, .cd-radial-slider > li.next-slide image {
+  /* make sure the prev/next round elements are visible */
+  z-index: 3;
+}
+.cd-radial-slider > li.next-slide {
+  /* for the scale-down/click effect - change the transform origin so that it is the center of the navigation round element */
+  -webkit-transform-origin: 92.14% 50%;
+      -ms-transform-origin: 92.14% 50%;
+          transform-origin: 92.14% 50%;
+}
+.cd-radial-slider > li.prev-slide {
+  -webkit-transform-origin: 7.86% 50%;
+      -ms-transform-origin: 7.86% 50%;
+          transform-origin: 7.86% 50%;
+}
+
+.cd-radial-slider .svg-wrapper {
+  position: relative;
+  z-index: 1;
+  /* using padding Hack to fix bug on IE - svg height not properly calculated */
+  height: 0;
+  padding-bottom: 57.15%;
+}
+
+.cd-radial-slider li.prev-slide .svg-wrapper,
+.cd-radial-slider li.next-slide .svg-wrapper {
+  /* change its z-index so that it's always below the .cd-radial-slider-content */
+  z-index: 2;
+}
+
+.cd-radial-slider-wrapper svg {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cd-radial-slider-content {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.cd-radial-slider-content .wrapper {
+  /* vertically center its content */
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.cd-radial-slider-content .wrapper > div {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0 17%;
+  color: #ffffff;
+}
+.cd-radial-slider-content h2 {
+  font-size: 2rem;
+  font-family: "Vollkorn", serif;
+}
+.cd-radial-slider-content p {
+  font-size: 1.4rem;
+  margin: .6em auto .8em;
+}
+.cd-radial-slider-content .cd-btn {
+  display: inline-block;
+  padding: 1em;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.visible .cd-radial-slider-content {
+  visibility: visible;
+  opacity: 1;
+}
+.prev-slide .cd-radial-slider-content {
+  -webkit-transform: translateX(50px);
+      -ms-transform: translateX(50px);
+          transform: translateX(50px);
+}
+.next-slide .cd-radial-slider-content {
+  -webkit-transform: translateX(-50px);
+      -ms-transform: translateX(-50px);
+          transform: translateX(-50px);
+}
+.content-reveal-left .cd-radial-slider-content, .content-reveal-right .cd-radial-slider-content {
+  /* animate slide content when entering the viewport */
+  -webkit-animation-delay: .1s;
+          animation-delay: .1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  opacity: 1;
+  visibility: visible;
+}
+.content-hide-left .cd-radial-slider-content, .content-hide-right .cd-radial-slider-content {
+  /* animate slide content when leaving the viewport */
+  opacity: 0;
+  visibility: hidden;
+}
+.content-reveal-left .cd-radial-slider-content, .content-reveal-right .cd-radial-slider-content, .content-hide-left .cd-radial-slider-content, .content-hide-right .cd-radial-slider-content {
+  -webkit-animation-duration: .4s;
+          animation-duration: .4s;
+}
+.content-reveal-left .cd-radial-slider-content {
+  -webkit-animation-name: cd-reveal-left;
+          animation-name: cd-reveal-left;
+}
+.content-reveal-right .cd-radial-slider-content {
+  -webkit-animation-name: cd-reveal-right;
+          animation-name: cd-reveal-right;
+}
+.content-hide-left .cd-radial-slider-content {
+  -webkit-animation-name: cd-hide-left;
+          animation-name: cd-hide-left;
+}
+.content-hide-right .cd-radial-slider-content {
+  -webkit-animation-name: cd-hide-right;
+          animation-name: cd-hide-right;
+}
+@media only screen and (min-width: 1100px) {
+  .cd-radial-slider-content h2 {
+    font-size: 4.4rem;
+  }
+  .cd-radial-slider-content p {
+    font-size: 2rem;
+    margin: 1.2em auto 1.6em;
+  }
+  .cd-radial-slider-content .cd-btn {
+    font-size: 1.6rem;
+    -webkit-transition: background .2s, color .2s;
+    transition: background .2s, color .2s;
+  }
+  .cd-radial-slider-content .cd-btn:hover {
+    background: #ffffff;
+    color: #0a0b15;
+  }
+}
+
+.cd-round-mask {
+  /* wrapper for the svg mask elements */
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* -------------------------------- 
+
+Slider navigation
+
+-------------------------------- */
+.cd-radial-slider-navigation li {
+  position: absolute;
+  z-index: 6;
+  right: 3.58%;
+  top: 42.5%;
+  height: 15%;
+  width: 8.57%;
+}
+.cd-radial-slider-navigation li a {
+  display: block;
+  height: 100%;
+  /* replace text with image */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-transition: -webkit-transform .2s;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+}
+.cd-radial-slider-navigation li a::after {
+  /* arrow icon */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  height: 16px;
+  width: 16px;
+  background: url(../img/cd-icon-arrows-mini.svg) no-repeat 0 0;
+}
+.cd-radial-slider-navigation li a:hover {
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.cd-radial-slider-navigation li:last-of-type {
+  left: 3.58%;
+  right: auto;
+}
+.cd-radial-slider-navigation li:last-of-type a::after {
+  background-position: -16px 0;
+}
+@media only screen and (min-width: 900px) {
+  .cd-radial-slider-navigation li a::after {
+    height: 48px;
+    width: 48px;
+    background-image: url(../img/cd-icon-arrows.svg);
+  }
+  .cd-radial-slider-navigation li:last-of-type a::after {
+    background-position: -48px 0;
+  }
+}
+
+/* -------------------------------- 
+
+Keyframes
+
+-------------------------------- */
+@-webkit-keyframes cd-reveal-left {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+}
+@keyframes cd-reveal-left {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+}
+@-webkit-keyframes cd-reveal-right {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+}
+@keyframes cd-reveal-right {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+}
+@-webkit-keyframes cd-hide-left {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+  }
+}
+@keyframes cd-hide-left {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+  }
+}
+@-webkit-keyframes cd-hide-right {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+  }
+}
+@keyframes cd-hide-right {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+  }
+}
+@-webkit-keyframes cd-clicked {
+  0%, 100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+}
+@keyframes cd-clicked {
+  0%, 100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+}

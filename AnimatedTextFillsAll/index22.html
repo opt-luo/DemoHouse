@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Animated) Text Fills - Demo 22</title>
+    <meta name="description" content="How to Create (Animated) Text Fills with various techniques" />
+    <meta name="keywords" content="text, fill, animation, svg, background-clip, clip, mask" />
+    <meta name="author" content="Yoksel for Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/style22.css" />
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container">
+        <header class="codrops-header">
+            <h1>(Animated) Text Fills <span>Demo 22: SVG with html5 video text fill</span></h1>
+            <div class="codrops-links">
+                <a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/ClickEffects/" title="Previous Demo"><span>Previous Demo</span></a>
+                <a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=23145" title="Back to the article"><span>Back to the Codrops article</span></a>
+            </div>
+            <nav class="codrops-demos">
+                <a href="index.html">Demo 1</a>
+                <a href="index2.html">Demo 2</a>
+                <a href="index3.html">Demo 3</a>
+                <a href="index4.html">Demo 4</a>
+                <a href="index5.html">Demo 6</a>
+                <a href="index6.html">Demo 6</a>
+                <a href="index7.html">Demo 7</a>
+                <a href="index8.html">Demo 8</a>
+                <a href="index9.html">Demo 9</a>
+                <a href="index10.html">Demo 10</a>
+                <a href="index11.html">Demo 11</a>
+                <a href="index12.html">Demo 12</a>
+                <a href="index13.html">Demo 13</a>
+                <a href="index14.html">Demo 14</a>
+                <a href="index15.html">Demo 15</a>
+                <a href="index16.html">Demo 16</a>
+                <a href="index17.html">Demo 17</a>
+                <a href="index18.html">Demo 18</a>
+                <a href="index19.html">Demo 19</a>
+                <a href="index20.html">Demo 20</a>
+                <a href="index21.html">Demo 21</a>
+                <a class="current-demo" href="index22.html">Demo 22</a>
+                <a href="index23.html">Demo 23</a>
+            </nav>
+        </header>
+        <div class="content">
+            <div class="wrap">
+                <svg viewBox="0 0 600 300" class="svg-defs">
+
+                    <!-- Symbol with text -->
+                    <symbol id="s-text">
+                        <text text-anchor="middle" x="50%" y="50%" dy=".35em" class="text">
+                            Text
+                        </text>
+                    </symbol>
+
+                    <!-- Mask with text -->
+                    <mask id="m-text" maskunits="userSpaceOnUse" maskcontentunits="userSpaceOnUse">
+
+                        <rect width="100%" height="100%" class="mask__shape">
+                        </rect>
+                        <use xlink:href="#s-text" class="mask__text"></use>
+
+                    </mask>
+                </svg>
+
+                <div class="box-with-text">
+
+                    <!-- Container for video -->
+                    <div class="text-fill">
+                        <video class="video" src="img/bokeh2.mp4" autoplay loop></video>
+                    </div>
+
+                    <!-- Visible SVG -->
+                    <svg viewBox="0 0 600 300" class="svg-inverted-mask">
+                        <rect width="100%" height="100%" mask="url(#m-text)" class="shape--fill" />
+                        <use xlink:href="#s-text" class="text--transparent"></use>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!-- Related demos -->
+        <section class="content-related">
+            <p>If you enjoyed this demo you might also like:</p>
+            <a class="media-item" href="http://tympanus.net/Development/AnimatedHeaderBackgrounds/">
+                <img class="media-item__img" src="img/related/AnimatedHeaderBackgrounds.png">
+                <h3 class="media-item__title">Animated Header Backgrounds</h3>
+            </a>
+            <a class="media-item" href="http://tympanus.net/Tutorials/TexturedText/">
+                <img class="media-item__img" src="img/related/TexturedText.jpg">
+                <h3 class="media-item__title">Techniques for Creating Textured Text</h3>
+            </a>
+        </section>
+    </div>
+    <!-- /container -->
+</body>
+
+</html>

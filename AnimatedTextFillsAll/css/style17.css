@@ -1,0 +1,52 @@
+/* Main stuff */
+.text--transparent {
+  fill: transparent; }
+
+.anim-shape {
+  -webkit-transform-origin: 0x 150px;
+  transform-origin: 0x 150px;
+  -webkit-transform: scale(0, 1) translate(0, 0);
+  transform: scale(0, 1) translate(0, 0);
+  -webkit-animation: moving-panel 3s infinite alternate;
+  animation: moving-panel 3s infinite alternate; }
+  .colortext .anim-shape:nth-child(1) {
+    fill: #0e1826; }
+  .colortext .anim-shape:nth-child(2) {
+    fill: #166973; }
+  .colortext .anim-shape:nth-child(3) {
+    fill: #65bfa6; }
+  .colortext .anim-shape:nth-child(4) {
+    fill: #f2cd5c; }
+  .colortext .anim-shape:nth-child(5) {
+    fill: #f26444; }
+
+.shadow {
+  -webkit-transform: translate(10px, 10px);
+  transform: translate(10px, 10px); }
+
+.anim-shape--shadow {
+  fill: #000;
+  fill-opacity: 0.2; }
+
+@-webkit-keyframes moving-panel {
+  100% {
+    -webkit-transform: scale(1, 1) translate(20px, 0);
+    transform: scale(1, 1) translate(20px, 0); } }
+@keyframes moving-panel {
+  100% {
+    -webkit-transform: scale(1, 1) translate(20px, 0);
+    transform: scale(1, 1) translate(20px, 0); } }
+/* Other stuff */
+body {
+  background: #eee; }
+
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact; }
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=style17.css.map */

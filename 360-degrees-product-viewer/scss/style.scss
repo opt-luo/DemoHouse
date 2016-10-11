@@ -1,0 +1,200 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	@include font-smoothing;
+}
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+header {
+	position: relative;
+	
+	h1 {
+		text-align: center;
+		padding: 2em 5%;
+		font-size: 2rem;
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 3rem;
+			padding: 3em 5% 1em;
+		}
+	}
+
+	@include MQ(L) {
+		h1 {
+			font-weight: 300;
+			padding: 3em 5% 0;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-product-viewer-wrapper {
+	text-align: center;
+	padding: 2em 0;
+
+	> div {
+		display: inline-block;
+	}
+
+	.product-viewer {
+		position: relative;
+		z-index: 1;
+		display: inline-block;
+		overflow: hidden;
+	}
+
+	img {
+		/* this is the image visible before the image sprite is loaded */
+		display: block;
+		position: relative;
+		z-index: 1;
+	}
+
+	.product-sprite {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 0;
+		height: 100%;
+		/* our image sprite is composed by 16 frames */
+		width: 1600%;
+		background: url(../img/img-sprite.png) no-repeat center center;
+		background-size: 100%;
+		opacity: 0;
+		@include transition(opacity .3s);
+	}
+
+	&.loaded .product-sprite {
+		/* image sprite has been loaded */
+		opacity: 1;
+		cursor: ew-resize;
+	}
+}
+
+.cd-product-viewer-handle {
+	position: relative;
+	z-index: 2;
+	width: 60%;
+	max-width: 300px;
+	border-radius: 50em;
+	margin: 1em auto 3em;
+	height: 4px;
+	background: tint($color-3, 30%);
+
+	.fill {
+		/* this is used to create the loading fill effect */
+		position: absolute;
+		z-index: 1;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		border-radius: inherit;
+		background: $color-2;
+		@include transform(scaleX(0));
+		@include transform-origin(left center);
+		@include transition(transform .5s);
+	}
+
+	.no-csstransitions & .fill {
+		display: none;
+	}
+
+	.loaded & .fill {
+		/* image sprite has been loaded */
+		opacity: 0;
+		@include transition(transform .3s, opacity .2s .3s);
+	}
+
+	.handle {
+		position: absolute;
+		z-index: 2;
+		display: inline-block;
+		height: 44px;
+		width: 44px;
+		left: 0;
+		top: -20px;
+		background: $color-2 url(../img/cd-arrows.svg) no-repeat center center;
+		border-radius: 50%;
+		box-shadow: 0 0 0 6px rgba($color-2, .3), 0 0 20px rgba(#000, .2);
+
+		/* replace text with image */
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		color: transparent;
+		@include transform(translateX(-50%) scale(0));
+		@include transition(box-shadow .2s);
+
+		&:active {
+			box-shadow: 0 0 0 0 rgba($color-2, 0), 0 0 20px rgba(#000, .2);
+		}
+	}
+
+	.loaded & .handle {
+		/* image sprite has been loaded */
+		@include transform(translateX(-50%) scale(1));
+		@include animation(cd-bounce .3s .3s);
+		@include animation-fill-mode(both);
+		cursor: ew-resize;
+	}
+}
+
+@include keyframes(cd-bounce) {
+	0% {
+	    @include transform(translateX(-50%) scale(0));
+	}
+
+	60% {
+	    @include transform(translateX(-50%) scale(1.1));
+	}
+
+	100% {
+	    @include transform(translateX(-50%) scale(1));
+	
+	}
+}

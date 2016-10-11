@@ -1,0 +1,215 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,700,800);
+
+@font-face {
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'codropsicons';
+	src:url('../fonts/codropsicons/codropsicons.eot');
+	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+}
+
+*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.clearfix:before, .clearfix:after {display: table;  content: ''; }
+.clearfix:after { clear: both; }
+
+body {
+	background: #7981B2;
+	color: #fff;
+	font-weight: 500;
+	font-size: 1em;
+	position: relative;
+	font-family: 'Raleway', Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	outline: none;
+	color: #7883c4;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	color: #FF4E69;
+}
+
+/* Header */
+.codrops-header {
+	color: #e5e4eb;
+	background: #383845;
+	text-align: center;
+	padding: 2em 10px;
+}
+
+.codrops-header h1 {
+	margin: 0;
+	font-weight: 800;
+	font-size: 1.75em;
+	line-height: 1;
+	padding: 0 10px;
+}
+
+.codrops-header h1 span {
+	font-size: 50%;
+	display: block;
+	margin: 5px 0 0 0;
+	color: rgba(255,255,255,0.5);
+	font-weight: 700;
+}
+
+/* Top Navigation Style */
+.codrops-links {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	font-size: 0.85em;
+	margin: 20px 0 0 0;
+	min-height: 30px;
+}
+
+.codrops-links::after {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -1px;
+	width: 1px;
+	height: 100%;
+	background: #aaa;
+	content: '';
+	-webkit-transform: rotate3d(0,0,1,22.5deg);
+	transform: rotate3d(0,0,1,22.5deg);
+}
+
+.codrops-icon {
+	display: inline-block;
+	margin: 0.5em;
+	padding: 0em 0;
+	width: 1.5em;
+	text-decoration: none;
+}
+
+.codrops-icon span {
+	display: none;
+}
+
+.codrops-icon:before {
+	margin: 0 5px;
+	text-transform: none;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-family: 'codropsicons';
+	line-height: 1;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+.codrops-icon--drop:before {
+	content: "\e001";
+}
+
+.codrops-icon--prev:before {
+	content: "\e004";
+}
+
+/* Demo links */
+.codrops-demos {
+	margin: 2em 0 0;
+	text-align: center;
+}
+
+.codrops-demos a {
+	display: inline-block;
+	font-size: 0.85em;
+	font-weight: bold;
+	padding: 5px 10px;
+	margin: 3px;
+}
+
+.codrops-demos span {
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 0.75em;
+	display: block;
+	margin: 1.5em 0 0.75em 0;
+	background: rgba(0,0,0,0.1);
+	padding: 0.5em;
+	color: rgba(255,255,255,0.5);
+}
+
+.codrops-demos a:first-child {
+	font-size: 1.25em;
+}
+
+.codrops-demos a.current-demo {
+	color: #fff;
+}
+
+/* Content */
+.content {
+	position: relative;
+	min-height: 250px;
+}
+
+.svg-container {
+	width: 100%;
+	height: 250px;
+}
+
+body #cdawrap .carbon-text {
+	color: #f9f9f9;
+}
+
+body #cdawrap a.carbon-poweredby {
+	color: #7883C4;
+}
+
+body #cdawrap a:hover.carbon-poweredby {
+	color: #fff;
+}
+
+@media screen and (min-width: 680px) {
+	body, html, .container, .codrops-header, .content {
+		height: 100vh;
+		min-height: 704px;
+	}
+	.codrops-header {
+		position: absolute;
+		width: 280px;
+		max-width: 100%;
+		height: 100%;
+		height: 100vh;
+		left: 0;
+		padding: 2em 0;
+	}
+	.codrops-demos a {
+		display: block;
+		padding: 7px 20px;
+		margin: 0 0 1px 0;
+	}
+	.content {
+		height: 100%;
+		height: 100vh;
+		margin-left: 280px;
+	}
+	.svg-container {
+		width: 50%;
+		height: 50%;
+	}
+	body #cdawrap {
+		right: auto;
+		position: absolute;
+		left: 0;
+		top: auto;
+		bottom: 0;
+		background: none;
+		border: none;
+		width: 280px;
+		background: rgba(0,0,0,0.1);
+	}
+}

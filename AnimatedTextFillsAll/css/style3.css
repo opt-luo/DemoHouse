@@ -1,0 +1,31 @@
+/* Main stuff */
+.box-with-text {
+  background-image: -webkit-linear-gradient(crimson 50%, white 50%);
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-size: 100% 50px;
+  background-repeat: repeat;
+  -webkit-animation: stripes 3s linear infinite;
+  animation: stripes 3s linear infinite;
+  -webkit-text-fill-color: transparent; }
+
+@-webkit-keyframes stripes {
+  100% {
+    background-position: 0 -50px; } }
+@keyframes stripes {
+  100% {
+    background-position: 0 -50px; } }
+/* Other stuff */
+body {
+  background: #000;
+  color: #fff; }
+
+.box-with-text {
+  text-align: center;
+  overflow: hidden;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font: bold 26vmax/.8 Open Sans, Impact;
+  margin-bottom: 100px; }
+
+/*# sourceMappingURL=style3.css.map */

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Blueprint: Background Slideshow</title>
+		<meta name="description" content="Blueprint: Background Slideshow" />
+		<meta name="keywords" content="blueprint, background image slideshow, fullscreen slideshow, jquery, fullscreen image, web development" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/default.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<header class="clearfix">
+				<span>Blueprint</span>
+				<h1>Background Slideshow</h1>
+				<nav>
+					<a href="http://tympanus.net/Blueprints/ResponsiveFullWidthGrid/" class="icon-arrow-left" data-info="previous Blueprint">Previous Blueprint</a>
+					<a href="http://tympanus.net/codrops/?p=14667" class="icon-drop" data-info="back to the Codrops article">back to the Codrops article</a>
+				</nav>
+			</header>	
+			<div class="main">
+				<ul id="cbp-bislideshow" class="cbp-bislideshow">
+					<li><img src="images/1.jpg" alt="image01"/></li>
+					<li><img src="images/2.jpg" alt="image02"/></li>
+					<li><img src="images/3.jpg" alt="image03"/></li>
+					<li><img src="images/4.jpg" alt="image04"/></li>
+					<li><img src="images/5.jpg" alt="image05"/></li>
+					<li><img src="images/6.jpg" alt="image06"/></li>
+				</ul>
+				<div id="cbp-bicontrols" class="cbp-bicontrols">
+					<span class="cbp-biprev"></span>
+					<span class="cbp-bipause"></span>
+					<span class="cbp-binext"></span>
+				</div>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<!-- imagesLoaded jQuery plugin by @desandro : https://github.com/desandro/imagesloaded -->
+		<script src="js/jquery.imagesloaded.min.js"></script>
+		<script src="js/cbpBGSlideshow.min.js"></script>
+		<script>
+			$(function() {
+				cbpBGSlideshow.init();
+			});
+		</script>
+	</body>
+</html>

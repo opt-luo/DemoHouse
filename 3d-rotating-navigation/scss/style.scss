@@ -1,0 +1,376 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	background-color: $body-bg;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-header {
+	height: 80px;
+	width: 90%;
+	margin: 0 auto;
+	@include transition(transform $animation-duration);
+	@include clearfix;
+	/* Force Hardware Acceleration in WebKit */
+	@include transform(translateZ(0));
+	@include backface-visibility(hidden);
+
+	&.nav-is-visible {
+		@include transform(translateY($nav-height-S));
+	}
+
+	@include MQ(M) {
+
+		&.nav-is-visible {
+			@include transform(translateY($nav-height-M));
+		}
+	}
+}
+
+.cd-logo {
+	float: left;
+	margin-top: 28px; 
+}
+
+.cd-3d-nav-trigger {
+	position: relative;
+	float: right;
+	height: 45px;
+	width: 45px;
+	margin-top: 18px;
+
+	/* replace text with background image */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	color: transparent;
+
+	span, 
+	span::before, 
+	span::after {
+		/* hamburger icon in CSS */
+		position: absolute;
+		width: 28px;
+		height: 3px;
+		background-color: #FFF;
+		@include backface-visibility(hidden);
+	}
+
+	span {
+		/* this is the central line */
+		top: 21px;
+		left: 8px;
+		@include transition(background 0.2s $animation-duration);
+
+		&::before, 
+		&:after {
+			/* these are the upper and lower lines */
+			content: '';
+			left: 0;
+			@include transition(transform 0.2s $animation-duration);
+		}
+		
+		&::before {
+			bottom: 8px;
+		}
+
+		&::after {
+			top: 8px;
+		}
+	}
+	
+	.nav-is-visible & {
+
+		span {
+			/* hide line in the center */
+			background-color: rgba(#FFF, 0);
+
+			&::before, 
+			&::after {
+				/* keep visible other 2 lines */
+				background-color: rgba(#FFF, 1);
+			}
+
+			&::before {
+				@include transform(translateY(8px) rotate(-45deg));
+			}
+
+			&::after {
+				@include transform(translateY(-8px) rotate(45deg));
+			}
+		}
+	}
+}
+
+.cd-3d-nav-container {
+	/* this is the 3D navigation container */
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: $nav-height-S;
+	width: 100%;
+	background-color: $nav-container-bg;
+	visibility: hidden;
+	/* enable a 3D-space for children elements */
+	@include perspective(1000px);
+
+	@include transform(translateY(-100%));
+
+	-webkit-transition: -webkit-transform $animation-duration 0s, visibility 0s $animation-duration;
+  	-moz-transition: -moz-transform $animation-duration 0s, visibility 0s $animation-duration;
+  	transition: transform $animation-duration 0s, visibility 0s $animation-duration;
+
+	&.nav-is-visible {
+		visibility: visible;
+		@include transform(translateY(0));
+
+		-webkit-transition: -webkit-transform $animation-duration 0s, visibility $animation-duration 0s;
+	  	-moz-transition: -moz-transform $animation-duration 0s, visibility $animation-duration 0s;
+	  	transition: transform $animation-duration 0s, visibility $animation-duration 0s;
+	}
+
+	@include MQ(M) {
+		height: $nav-height-M; 
+	}
+}
+
+.cd-3d-nav {
+	/* this is the 3D rotating navigation */
+	position: relative;
+	height: 100%;
+	background-color: $nav-bg;
+
+	/* Force Hardware Acceleration */
+	@include transform(translateZ(0));
+	@include backface-visibility(hidden);
+
+	@include transform-origin(center bottom);
+	@include transform(rotateX(90deg));
+	@include transition(transform $animation-duration);
+
+	&::after {
+		/* menu dark cover layer - to enhance perspective effect */
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: $nav-container-bg;
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity $animation-duration 0s, visibility $animation-duration 0s);
+	}
+
+	li {
+		height: 100%;
+		@include column(1/$nav-items); // see partials > _layout.scss
+
+		&:first-of-type a::before {
+			background-image: url(../img/icon-1.svg);
+		}
+
+		&:nth-of-type(2) a::before {
+			background-image: url(../img/icon-2.svg);
+		}
+
+		&:nth-of-type(3) a::before {
+			background-image: url(../img/icon-3.svg);
+		}
+
+		&:nth-of-type(4) a::before {
+			background-image: url(../img/icon-4.svg);
+		}
+
+		&:nth-of-type(5) a::before {
+			background-image: url(../img/icon-5.svg);
+		}
+	}
+
+	a {
+		position: relative;
+		display: block;
+		height: 100%;
+		color: transparent;
+		@include transition(background-color 0.2s);
+
+		&::before {
+			/* navigation icons */
+			content: '';
+			height: 32px;
+			width: 32px;
+			position: absolute;
+			@include center;
+			background-size: 32px 64px;
+			background-repeat: no-repeat;
+			background-position: 0 0;
+		}
+
+		.no-touch &:hover {
+			background-color: darken($body-bg, 15%);
+		}
+	}
+
+	.cd-selected a {
+		background-color: darken($body-bg, 20%);
+
+		.no-touch &:hover {
+			background-color: darken($body-bg, 20%);
+		}
+
+		&::before {
+			background-position: 0 -32px;
+		} 
+	}
+
+	.nav-is-visible & {
+		@include transform(translateZ(0));
+
+		&::after {
+			/* menu cover layer - hide it when navigation is visible */
+			opacity: 0;
+			visibility: hidden;
+			@include transition(opacity $animation-duration 0s, visibility 0s $animation-duration);
+		}
+	}
+
+	@include MQ(M) {
+		
+		a {
+			padding: 7.6em 1em 0;
+			color: $text-color;
+			font: {
+				size: 1.3rem;
+				weight: 600;
+			}
+			text-align: center;
+			@include font-smoothing;
+			
+			/* truncate text with ellipsis if too long */
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+
+			&::before {
+				top: 4.4em;
+				@include center(x);
+			}
+		}
+	}
+}
+
+.cd-marker {
+	/* line at the bottom of nav selected item */
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 3px;
+	width: 100%/$nav-items;
+	background-color: currentColor;
+	@include transform-origin(center bottom);
+	@include transform(translateZ(0) rotateX(90deg));
+	
+	-webkit-transition: -webkit-transform $animation-duration, left 0.5s, color 0.5s, background-color 0.5s;
+	-moz-transition: -moz-transform $animation-duration, left 0.5s, color 0.5s, background-color 0.5s;
+	transition: transform $animation-duration, left 0.5s, color 0.5s, background-color 0.5s;
+
+	&::before {
+		/* triangle at the bottom of nav selected item */
+		content: '';
+		position: absolute;
+		bottom: 3px;
+		@include center(x);
+		height: 0;
+		width: 0;
+		border: 10px solid transparent;
+    	border-bottom-color: inherit;
+	}
+
+	.nav-is-visible & {
+		@include transform(translateZ(0));
+	}
+}
+
+/* these are the colors of the markers - line + arrow */
+
+.color-1 {
+	color: $color-1;
+}
+.color-2 {
+	color: $color-2;
+}
+.color-3 {
+	color: $color-3;
+}
+.color-4 {
+	color: $color-4;
+}
+.color-5 {
+	color: $color-5;
+}
+
+main {
+	@include transition(transform $animation-duration);
+	/* Force Hardware Acceleration in WebKit */
+	@include transform(translateZ(0));
+	@include backface-visibility(hidden);
+
+	h1 {
+		text-align: center;
+		font: {
+			size: 2.4rem;
+			weight: 300;
+		}
+		color: $text-color;
+		margin: 2em auto;
+		@include font-smoothing;
+	}
+
+	&.nav-is-visible {
+		@include transform(translateY($nav-height-S));
+	}
+
+	@include MQ(M) {
+		&.nav-is-visible {
+			@include transform(translateY($nav-height-M));
+		}
+
+		h1 {
+			font-size: 3.6rem;
+			margin: 4em auto;
+		}
+	}
+}

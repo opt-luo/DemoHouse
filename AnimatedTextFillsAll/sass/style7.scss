@@ -1,0 +1,26 @@
+/* Main stuff */
+.text {
+  fill: url("#gr-radial");
+}
+/* Other stuff */
+$bgcolor: #222;
+html,
+body {
+  height: 100%;
+}
+body {
+  background: $bgcolor -webkit-linear-gradient(90deg, $bgcolor 50%, lighten($bgcolor, 2%) 50%);
+  background: $bgcolor linear-gradient(90deg, $bgcolor 50%, lighten($bgcolor, 2%) 50%);
+  background-size: 3em 100%;
+  color: #fff;
+}
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase;
+}

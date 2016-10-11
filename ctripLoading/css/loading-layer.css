@@ -1,0 +1,13 @@
+@charset "utf-8";
+/*sprite*/
+.loading-layer:before,
+.loading-layer:after{background-image: url(../images/loading-layer@2x.png);background-size: 135px auto;}
+
+/* loading layer */
+.loading-layer {background-color: #fff;width: 112px;height: 27px;padding-top: 85px;border-radius: 7px;z-index:10000;position: fixed;left:50%;top:50%;margin-left:-66px;margin-top: -66px;color: #666;font-size: 12px;text-align: center;}
+.loading-layer:before {content: "";width: 64px;height: 57px;background-position: -72px 0;background-repeat: no-repeat;position: absolute;top: 20px;left: 25px;}
+.loading-layer:after {content: "";width: 69px;height: 69px;background-position: 0 0;background-repeat: no-repeat;position: absolute;top: 10px;left: 20px;-webkit-animation:loading 1s linear 0s infinite;animation:loading 1s linear 0s infinite;}
+.loading-layer .close {position: absolute;background-color: #ccc;height: 18px;width: 18px;right: 5px;top: 5px;border-radius: 9px;}
+.loading-layer .close:before, .loading-layer .close:after {content: "";height: 12px;width: 2px;position: absolute;top: 3px;left: 8px;background-color: #fff;-webkit-transform: rotate(45deg);-ms-transform: rotate(45deg);transform: rotate(45deg);}
+.loading-layer .close:after {-webkit-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg);}
+

@@ -1,0 +1,36 @@
+/* Function for creating stroke with text-shadow */
+@function shadows($max: 5, $color: white) {
+  $out: null;
+  @for $i from 0 through $max {
+    $pos:#{$i} px;
+    $pos-n: -$pos;
+    $shadow-t-l: $pos-n $pos-n 0 $color;
+    $out: append( $out, $shadow-t-l, comma );
+    $shadow-t-r: $pos $pos-n 0 $color;
+    $out: append( $out, $shadow-t-r, comma );
+    $shadow-b-r: $pos $pos 0 $color;
+    $out: append( $out, $shadow-b-r, comma );
+    $shadow-b-l: $pos-n $pos 0 $color;
+    $out: append( $out, $shadow-b-l, comma );
+  }
+  $shadow-back: 0 5px 15px rgba(0,0,0,.2);
+  $out: append( $out, $shadow-back, comma );
+  @return $out;
+}
+/* Main stuff */
+.box-with-text {
+  text-shadow: shadows(2, yellowgreen);
+  font: 26vmax/.85 Open Sans, Impact;
+  color: #fff;
+}
+/* Other stuff */
+
+body {
+  background: #fff;
+}
+.box-with-text {
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 100px;
+}

@@ -1,0 +1,1064 @@
+/* Slide animations */
+[class^="from-"], [class*=" from-"] {
+	opacity: 1;
+}
+
+/* "To" animations */
+
+/*******************************************/
+/*******************************************/
+/* To top left */
+/*******************************************/
+/*******************************************/
+.to-topleft {
+	-webkit-animation: toTopLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopLeft {
+	to {
+		-webkit-transform: translate3d(-100%, -100%, 0);
+		transform: translate3d(-100%, -100%, 0);
+	}
+}
+
+@keyframes toTopLeft {
+	to {
+		-webkit-transform: translate3d(-100%, -100%, 0);
+		transform: translate3d(-100%, -100%, 0);
+	}
+}
+
+.to-topleft .scene {
+	-webkit-animation: toTopLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopLeftScene {
+	to {
+		-webkit-transform: rotate3d(1, 1, 0.5, 30deg);
+		transform: rotate3d(1, 1, 0.5, 30deg);
+	}
+}
+
+@keyframes toTopLeftScene {
+	to {
+		-webkit-transform: rotate3d(1, 1, 0.5, 30deg);
+		transform: rotate3d(1, 1, 0.5, 30deg);
+	}
+}
+
+.to-topleft .view--rotate {
+	-webkit-animation: toTopLeftViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopLeftViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopLeftViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+@keyframes toTopLeftViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To top */
+/*******************************************/
+/*******************************************/
+.to-top {
+	-webkit-animation: toTop 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTop 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTop {
+	to {
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+}
+
+@keyframes toTop {
+	to {
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+}
+
+.to-top .scene {
+	-webkit-animation: toTopScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopScene {
+	to {
+		-webkit-transform: rotate3d(1, 0.5, 0.2, 30deg);
+		transform: rotate3d(1, 0.5, 0.2, 30deg);
+	}
+}
+
+@keyframes toTopScene {
+	to {
+		-webkit-transform: rotate3d(1, 0.5, 0.2, 30deg);
+		transform: rotate3d(1, 0.5, 0.2, 30deg);
+	}
+}
+
+.to-top .view--rotate {
+	-webkit-animation: toTopViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+@keyframes toTopViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To topright */
+/*******************************************/
+/*******************************************/
+.to-topright {
+	-webkit-animation: toTopRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopRight {
+	to {
+		-webkit-transform: translate3d(100%, -100%, 0);
+		transform: translate3d(100%, -100%, 0);
+	}
+}
+
+@keyframes toTopRight {
+	to {
+		-webkit-transform: translate3d(100%, -100%, 0);
+		transform: translate3d(100%, -100%, 0);
+	}
+}
+
+.to-topright .scene {
+	-webkit-animation: toTopRightScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopRightScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopRightScene {
+	to {
+		-webkit-transform: rotate3d(1, 1, 0.5, -30deg);
+		transform: rotate3d(1, 1, 0.5, -30deg);
+	}
+}
+
+@keyframes toTopRightScene {
+	to {
+		-webkit-transform: rotate3d(1, 1, 0.5, -30deg);
+		transform: rotate3d(1, 1, 0.5, -30deg);
+	}
+}
+
+.to-topright .view--rotate {
+	-webkit-animation: toTopRightViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toTopRightViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toTopRightViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+@keyframes toTopRightViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To right */
+/*******************************************/
+/*******************************************/
+.to-right {
+	-webkit-animation: toRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toRight {
+	to {
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+}
+
+@keyframes toRight {
+	to {
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+}
+
+.to-right .scene {
+	-webkit-animation: toRightScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toRightScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toRightScene {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -60deg);
+		transform: rotate3d(0, 1, 0, -60deg);
+	}
+}
+
+@keyframes toRightScene {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -60deg);
+		transform: rotate3d(0, 1, 0, -60deg);
+	}
+}
+
+.to-right .view--rotate {
+	-webkit-animation: toRightViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toRightViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toRightViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+@keyframes toRightViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To bottom right */
+/*******************************************/
+/*******************************************/
+.to-bottomright {
+	-webkit-animation: toBottomRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomRight {
+	to {
+		-webkit-transform: translate3d(100%, 100%, 0);
+		transform: translate3d(100%, 100%, 0);
+	}
+}
+
+@keyframes toBottomRight {
+	to {
+		-webkit-transform: translate3d(100%, 100%, 0);
+		transform: translate3d(100%, 100%, 0);
+	}
+}
+
+.to-bottomright .scene {
+	-webkit-animation: toBottomRightScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomRightScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomRightScene {
+	to {
+		-webkit-transform: rotate3d(-1, 1, 0.5, -30deg);
+		transform: rotate3d(-1, 1, 0.5, -30deg);
+	}
+}
+
+@keyframes toBottomRightScene {
+	to {
+		-webkit-transform: rotate3d(-1, 1, 0.5, -30deg);
+		transform: rotate3d(-1, 1, 0.5, -30deg);
+	}
+}
+
+.to-bottomright .view--rotate {
+	-webkit-animation: toBottomRightViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomRightViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomRightViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+@keyframes toBottomRightViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To bottom */
+/*******************************************/
+/*******************************************/
+.to-bottom {
+	-webkit-animation: toBottom 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottom 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottom {
+	to {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+}
+
+@keyframes toBottom {
+	to {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+}
+
+.to-bottom .scene {
+	-webkit-animation: toBottomScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomScene {
+	to {
+		-webkit-transform: rotate3d(-1, -0.5, 0.2, 30deg);
+		transform: rotate3d(-1, -0.5, 0.2, 30deg);
+	}
+}
+
+@keyframes toBottomScene {
+	to {
+		-webkit-transform: rotate3d(-1, -0.5, 0.2, 30deg);
+		transform: rotate3d(-1, -0.5, 0.2, 30deg);
+	}
+}
+
+.to-bottom .view--rotate {
+	-webkit-animation: toBottomViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+@keyframes toBottomViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To bottom left */
+/*******************************************/
+/*******************************************/
+.to-bottomleft {
+	-webkit-animation: toBottomLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomLeft {
+	to {
+		-webkit-transform: translate3d(-100%, 100%, 0);
+		transform: translate3d(-100%, 100%, 0);
+	}
+}
+
+@keyframes toBottomLeft {
+	to {
+		-webkit-transform: translate3d(-100%, 100%, 0);
+		transform: translate3d(-100%, 100%, 0);
+	}
+}
+
+.to-bottomleft .scene {
+	-webkit-animation: toBottomLeftScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomLeftScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomLeftScene {
+	to {
+		-webkit-transform: rotate3d(-1, 1, 0.5, 30deg);
+		transform: rotate3d(-1, 1, 0.5, 30deg);
+	}
+}
+
+@keyframes toBottomLeftScene {
+	to {
+		-webkit-transform: rotate3d(-1, 1, 0.5, 30deg);
+		transform: rotate3d(-1, 1, 0.5, 30deg);
+	}
+}
+
+.to-bottomleft .view--rotate {
+	-webkit-animation: toBottomLeftViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toBottomLeftViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toBottomLeftViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+@keyframes toBottomLeftViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* To left */
+/*******************************************/
+/*******************************************/
+.to-left {
+	-webkit-animation: toLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toLeft {
+	to {
+		-webkit-transform: translate3d(-100%, 0, 0);
+		transform: translate3d(-100%, 0, 0);
+	}
+}
+
+@keyframes toLeft {
+	to {
+		-webkit-transform: translate3d(-100%, 0, 0);
+		transform: translate3d(-100%, 0, 0);
+	}
+}
+
+.to-left .scene {
+	-webkit-animation: toLeftScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toLeftScene .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toLeftScene {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 60deg);
+		transform: rotate3d(0, 1, 0, 60deg);
+	}
+}
+
+@keyframes toLeftScene {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 60deg);
+		transform: rotate3d(0, 1, 0, 60deg);
+	}
+}
+
+.to-left .view--rotate {
+	-webkit-animation: toLeftViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: toLeftViewRotate .8s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes toLeftViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+@keyframes toLeftViewRotate {
+	to {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+/* "From" animations */
+
+/*******************************************/
+/*******************************************/
+/* From top left */
+/*******************************************/
+/*******************************************/
+.from-topleft {
+	-webkit-animation: fromTopLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopLeft {
+	from {
+		-webkit-transform: translate3d(-100%, -100%, 0);
+		transform: translate3d(-100%, -100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromTopLeft {
+	from {
+		-webkit-transform: translate3d(-100%, -100%, 0);
+		transform: translate3d(-100%, -100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-topleft .scene {
+	-webkit-animation: fromTopLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopLeftScene {
+	from {
+		-webkit-transform: rotate3d(1, 1, -1, -50deg);
+		transform: rotate3d(1, 1, -1, -50deg);
+	}
+}
+
+@keyframes fromTopLeftScene {
+	from {
+		-webkit-transform: rotate3d(1, 1, -1, -50deg);
+		transform: rotate3d(1, 1, -1, -50deg);
+	}
+}
+
+.from-topleft .view--rotate {
+	-webkit-animation: fromTopLeftViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopLeftViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopLeftViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+@keyframes fromTopLeftViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From top */
+/*******************************************/
+/*******************************************/
+.from-top {
+	-webkit-animation: fromTop 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTop 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTop {
+	from {
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromTop {
+	from {
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-top .scene {
+	-webkit-animation: fromTopScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopScene {
+	from {
+		-webkit-transform: rotate3d(1, -0.5, -0.2, 30deg);
+		transform: rotate3d(1, -0.5, -0.2, 30deg);
+	}
+}
+
+@keyframes fromTopScene {
+	from {
+		-webkit-transform: rotate3d(1, -0.5, -0.2, 30deg);
+		transform: rotate3d(1, -0.5, -0.2, 30deg);
+	}
+}
+
+.from-top .view--rotate {
+	-webkit-animation: fromTopViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+@keyframes fromTopViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 30deg);
+		transform: rotate3d(0, 1, 0, 30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From top right */
+/*******************************************/
+/*******************************************/
+.from-topright {
+	-webkit-animation: fromTopRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopRight {
+	from {
+		-webkit-transform: translate3d(100%, -100%, 0);
+		transform: translate3d(100%, -100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromTopRight {
+	from {
+		-webkit-transform: translate3d(100%, -100%, 0);
+		transform: translate3d(100%, -100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-topright .scene {
+	-webkit-animation: fromTopRightScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopRightScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopRightScene {
+	from {
+		-webkit-transform: rotate3d(-1, 1, -1, 50deg);
+		transform: rotate3d(-1, 1, -1, 50deg);
+	}
+}
+
+@keyframes fromTopRightScene {
+	from {
+		-webkit-transform: rotate3d(-1, 1, -1, 50deg);
+		transform: rotate3d(-1, 1, -1, 50deg);
+	}
+}
+
+.from-topright .view--rotate {
+	-webkit-animation: fromTopRightViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromTopRightViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromTopRightViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+@keyframes fromTopRightViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From right */
+/*******************************************/
+/*******************************************/
+.from-right {
+	-webkit-animation: fromRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromRight {
+	from {
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromRight {
+	from {
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-right .scene {
+	-webkit-animation: fromRightScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromRightScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromRightScene {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -60deg);
+		transform: rotate3d(0, 1, 0, -60deg);
+	}
+}
+
+@keyframes fromRightScene {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -60deg);
+		transform: rotate3d(0, 1, 0, -60deg);
+	}
+}
+
+.from-right .view--rotate {
+	-webkit-animation: fromRightViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromRightViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromRightViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+@keyframes fromRightViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From bottom right */
+/*******************************************/
+/*******************************************/
+.from-bottomright {
+	-webkit-animation: fromBottomRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomRight 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomRight {
+	from {
+		-webkit-transform: translate3d(100%, 100%, 0);
+		transform: translate3d(100%, 100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromBottomRight {
+	from {
+		-webkit-transform: translate3d(100%, 100%, 0);
+		transform: translate3d(100%, 100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-bottomright .scene {
+	-webkit-animation: fromBottomRightScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomRightScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomRightScene {
+	from {
+		-webkit-transform: rotate3d(1, 1, 1, 50deg);
+		transform: rotate3d(1, 1, 1, 50deg);
+	}
+}
+
+@keyframes fromBottomRightScene {
+	from {
+		-webkit-transform: rotate3d(1, 1, 1, 50deg);
+		transform: rotate3d(1, 1, 1, 50deg);
+	}
+}
+
+.from-bottomright .view--rotate {
+	-webkit-animation: fromBottomRightViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomRightViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomRightViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+@keyframes fromBottomRightViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -50deg);
+		transform: rotate3d(0, 1, 0, -50deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From bottom */
+/*******************************************/
+/*******************************************/
+.from-bottom {
+	-webkit-animation: fromBottom 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottom 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottom {
+	from {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromBottom {
+	from {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-bottom .scene {
+	-webkit-animation: fromBottomScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomScene {
+	from {
+		-webkit-transform: rotate3d(1, 0.5, 0.2, 30deg);
+		transform: rotate3d(1, 0.5, 0.2, 30deg);
+	}
+}
+
+@keyframes fromBottomScene {
+	from {
+		-webkit-transform: rotate3d(1, 0.5, 0.2, 30deg);
+		transform: rotate3d(1, 0.5, 0.2, 30deg);
+	}
+}
+
+.from-bottom .view--rotate {
+	-webkit-animation: fromBottomViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+@keyframes fromBottomViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, -30deg);
+		transform: rotate3d(0, 1, 0, -30deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From bottom left */
+/*******************************************/
+/*******************************************/
+.from-bottomleft {
+	-webkit-animation: fromBottomLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomLeft {
+	from {
+		-webkit-transform: translate3d(-100%, 100%, 0);
+		transform: translate3d(-100%, 100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromBottomLeft {
+	from {
+		-webkit-transform: translate3d(-100%, 100%, 0);
+		transform: translate3d(-100%, 100%, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-bottomleft .scene {
+	-webkit-animation: fromBottomLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomLeftScene {
+	from {
+		-webkit-transform: rotate3d(-1, 1, 1, -50deg);
+		transform: rotate3d(-1, 1, 1, -50deg);
+	}
+}
+
+@keyframes fromBottomLeftScene {
+	from {
+		-webkit-transform: rotate3d(-1, 1, 1, -50deg);
+		transform: rotate3d(-1, 1, 1, -50deg);
+	}
+}
+
+.from-bottomleft .view--rotate {
+	-webkit-animation: fromBottomLeftViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromBottomLeftViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromBottomLeftViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+@keyframes fromBottomLeftViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+/*******************************************/
+/*******************************************/
+/* From left */
+/*******************************************/
+/*******************************************/
+.from-left {
+	-webkit-animation: fromLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromLeft 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromLeft {
+	from {
+		-webkit-transform: translate3d(-100%, 0, 0);
+		transform: translate3d(-100%, 0, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fromLeft {
+	from {
+		-webkit-transform: translate3d(-100%, 0, 0);
+		transform: translate3d(-100%, 0, 0);
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.from-left .scene {
+	-webkit-animation: fromLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromLeftScene 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromLeftScene {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 60deg);
+		transform: rotate3d(0, 1, 0, 60deg);
+	}
+}
+
+@keyframes fromLeftScene {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 60deg);
+		transform: rotate3d(0, 1, 0, 60deg);
+	}
+}
+
+.from-left .view--rotate {
+	-webkit-animation: fromLeftViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: fromLeftViewRotate 1s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes fromLeftViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}
+
+@keyframes fromLeftViewRotate {
+	from {
+		-webkit-transform: rotate3d(0, 1, 0, 50deg);
+		transform: rotate3d(0, 1, 0, 50deg);
+	}
+}

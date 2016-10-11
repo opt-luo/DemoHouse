@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+  	
+	<title>Animated SVG Image Slider | CodyHouse</title>
+</head>
+<body>
+	<header>
+		<h1>Animated SVG Image Slider</h1>
+
+		<ul class="cd-filter">
+			<li><a href="index.html">Line 1</a></li>
+			<li><a href="line-2.html">Line 2</a></li>
+			<li><a class="selected" href="curve.html">Curve</a></li>
+		</ul>
+	</header>
+
+	<div class="cd-slider-wrapper">
+		<ul class="cd-slider" data-step1="M1402,800h-2c0,0,0-213,0-423s0-377,0-377h1c0.6,0,1,0.4,1,1V800z" data-step2="M1400,800H724c0,0-297-155-297-423C427,139,728,0,728,0h671c0.6,0,1,0.4,1,1V800z" data-step3="M1400,800H0c0,0,1-213,1-423S1,0,1,0h1398c0.6,0,1,0.4,1,1V800z" data-step4="M-2,800h2c0,0,0-213,0-423S0,0,0,0h-1c-0.6,0-1,0.4-1,1V800z" data-step5="M0,800h676c0,0,297-155,297-423C973,139,672,0,672,0L1,0C0.4,0,0,0.4,0,1L0,800z" data-step6="M0,800h1400c0,0-1-213-1-423s0-377,0-377L1,0C0.4,0,0,0.4,0,1L0,800z">
+			<li class="visible">
+				<div class="cd-svg-wrapper">
+					<svg viewBox="0 0 1400 800">
+						<title>Aimated SVG</title>
+						<defs>
+							<clipPath id="cd-image-1">
+								<path id="cd-changing-path-1" d="M1400,800H0c0,0,1-213,1-423S1,0,1,0h1398c0.6,0,1,0.4,1,1V800z"/>
+							</clipPath>
+						</defs>
+						
+						<image height='800px' width="1400px" clip-path="url(#cd-image-1)" xlink:href="img/img-1.jpg"></image>
+					</svg>
+				</div> <!-- .cd-svg-wrapper -->
+			</li>
+
+			<li>
+				<div class="cd-svg-wrapper">
+					<svg viewBox="0 0 1400 800">
+						<title>Aimated SVG</title>
+						<defs>
+							<clipPath id="cd-image-2">
+								<path id="cd-changing-path-2" d="M1400,800H0c0,0,1-213,1-423S1,0,1,0h1398c0.6,0,1,0.4,1,1V800z"/>
+							</clipPath>
+						</defs>
+						
+						<image height='800px' width="1400px" clip-path="url(#cd-image-2)" xlink:href="img/img-2.jpg"></image>
+					</svg>
+				</div> <!-- .cd-svg-wrapper -->
+			</li>
+
+			<li>
+				<div class="cd-svg-wrapper">
+					<svg viewBox="0 0 1400 800">
+						<title>Aimated SVG</title>
+						<defs>
+							<clipPath id="cd-image-3">
+								<path id="cd-changing-path-3" d="M1400,800H0c0,0,1-213,1-423S1,0,1,0h1398c0.6,0,1,0.4,1,1V800z"/>
+							</clipPath>
+						</defs>
+						
+						<image height='800px' width="1400px" clip-path="url(#cd-image-3)" xlink:href="img/img-3.jpg"></image>
+					</svg>
+				</div> <!-- .cd-svg-wrapper -->
+			</li>
+
+			<li>
+				<div class="cd-svg-wrapper">
+					<svg viewBox="0 0 1400 800">
+						<title>Aimated SVG</title>
+						<defs>
+							<clipPath id="cd-image-4">
+								<path id="cd-changing-path-4" d="M1400,800H0c0,0,1-213,1-423S1,0,1,0h1398c0.6,0,1,0.4,1,1V800z"/>
+							</clipPath>
+						</defs>
+						
+						<image height='800px' width="1400px" clip-path="url(#cd-image-4)" xlink:href="img/img-4.jpg"></image>
+					</svg>
+				</div> <!-- .cd-svg-wrapper -->
+			</li>
+			
+		</ul> <!-- .cd-slider -->
+
+		<ul class="cd-slider-navigation">
+			<li><a href="#0" class="next-slide">Next</a></li>
+			<li><a href="#0" class="prev-slide">Prev</a></li>
+		</ul> <!-- .cd-slider-navigation -->
+
+		<ol class="cd-slider-controls">
+			<li class="selected"><a href="#0"><em>Item 1</em></a></li>
+			<li><a href="#0"><em>Item 2</em></a></li>
+			<li><a href="#0"><em>Item 3</em></a></li>
+			<li><a href="#0"><em>Item 4</em></a></li>
+		</ol> <!-- .cd-slider-controls -->
+	</div> <!-- .cd-slider-wrapper -->
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/jquery.mobile.custom.min.js"></script>
+<script src="js/snap.svg-min.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+</body>
+</html>

@@ -1,0 +1,239 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+html * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 100%;
+  font-family: "Merriweather", serif;
+  color: #71495b;
+  background-color: #3e253c;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+.cd-container {
+  /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+  width: 90%;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+.cd-container::after {
+  /* clearfix */
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+html, body {
+  height: 100%;
+}
+
+@media only screen and (min-width: 1170px) {
+  body.new-color-1::before {
+    background-color: #c06c69;
+  }
+
+  body.new-color-2::before {
+    background-color: #bf69c0;
+  }
+
+  body.new-color-3::before {
+    background-color: #699ec0;
+  }
+}
+body::before, body::after {
+  /* the 2 underneath colored sections */
+  content: '';
+  position: fixed;
+  /* trick to remove some annoying flickering on webkit browsers */
+  width: 89.8%;
+  max-width: 1170px;
+  left: 50%;
+  right: auto;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  height: 50%;
+  z-index: -1;
+}
+
+body::before {
+  top: 0;
+  background-color: #f4bd89;
+  -webkit-transition: all 0.8s;
+  -moz-transition: all 0.8s;
+  transition: all 0.8s;
+}
+
+body::after {
+  top: 50%;
+  background-color: #71495b;
+}
+
+header {
+  position: relative;
+  height: 50%;
+  background-color: #3e253c;
+  z-index: 2;
+}
+header h1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 90%;
+  max-width: 1170px;
+  text-align: center;
+  color: #699ec0;
+  font-size: 26px;
+  font-size: 1.625rem;
+}
+
+.cd-service {
+  position: relative;
+  z-index: 2;
+  min-height: 50px;
+  margin-left: 56px;
+  background-color: #3e253c;
+  padding: 1em 1em 4em;
+}
+.cd-service::before, .cd-service::after {
+  content: '';
+  position: absolute;
+  width: 56px;
+  right: 100%;
+  z-index: 2;
+}
+.cd-service::before {
+  top: 0;
+  height: 50px;
+  background-repeat: no-repeat;
+}
+.cd-service::after {
+  top: 50px;
+  bottom: 0;
+  background-image: url("../img/cd-pattern-small.svg");
+  background-repeat: repeat-y;
+}
+.cd-service.cd-service-divider::after {
+  top: 0;
+}
+.cd-service.cd-service-divider:last-child {
+  display: none;
+}
+.cd-service.cd-service-1::before {
+  background-image: url("../img/cd-icon-1-small.svg");
+}
+.cd-service.cd-service-2::before {
+  background-image: url("../img/cd-icon-2-small.svg");
+}
+.cd-service.cd-service-3::before {
+  background-image: url("../img/cd-icon-3-small.svg");
+}
+.cd-service.cd-service-4::before {
+  background-image: url("../img/cd-icon-4-small.svg");
+}
+.cd-service h2 {
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 1em;
+  font-family: "Merriweather Sans", sans-serif;
+}
+.cd-service p {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.5);
+}
+@media only screen and (min-width: 1170px) {
+  .cd-service {
+    min-height: 525px;
+    margin-left: 420px;
+    padding: 6em 2em;
+  }
+  .cd-service::before, .cd-service::after {
+    width: 420px;
+  }
+  .cd-service::before {
+    height: 325px;
+  }
+  .cd-service::after {
+    top: 325px;
+    background-image: url("../img/cd-pattern-large.svg");
+  }
+  .cd-service.cd-service-divider:first-child, .cd-service.cd-service-divider:last-child {
+    min-height: 50px;
+    padding: 0;
+  }
+  .cd-service.cd-service-divider:last-child {
+    display: block;
+  }
+  .cd-service.cd-service-1::before {
+    background-image: url("../img/cd-icon-1-large.svg");
+  }
+  .cd-service.cd-service-2::before {
+    background-image: url("../img/cd-icon-2-large.svg");
+  }
+  .cd-service.cd-service-3::before {
+    background-image: url("../img/cd-icon-3-large.svg");
+  }
+  .cd-service.cd-service-4::before {
+    background-image: url("../img/cd-icon-4-large.svg");
+  }
+  .cd-service h2, .cd-service p {
+    color: #71495b;
+    -webkit-transition: color, 0.5s;
+    -moz-transition: color, 0.5s;
+    transition: color, 0.5s;
+  }
+  .cd-service h2 {
+    font-size: 30px;
+    font-size: 1.875rem;
+  }
+  .cd-service p {
+    font-size: 18px;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  .cd-service.focus h2 {
+    color: white;
+  }
+  .cd-service.focus p {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+footer {
+  position: relative;
+  height: 50%;
+  background: #3e253c;
+  z-index: 2;
+}

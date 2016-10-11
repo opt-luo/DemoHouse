@@ -1,0 +1,406 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+.cd-testimonials-wrapper {
+	position: relative;
+	width: 90%;
+	max-width: $M;
+	background-color: $color-1;
+	margin: 2em auto;
+	@include font-smoothing;
+	padding: 20px 40px 70px;
+	z-index: 1;
+
+	&::after {
+		/* quotation mark */
+		content: '\201C';
+		position: absolute;
+		top: 10px;
+		left: 0;
+		width: 50px;
+		height: 50px;
+		padding-top: 8px;
+		margin-left: -25px;
+		background: rgba(darken($color-1, 10%), .9);
+		font-family: $secondary-font;
+		color: $color-4;
+		@include font-size(70px);
+		text-align: center;
+		/* visible on big devices only */
+		display: none;
+	}
+
+	@include MQ(M) {
+		margin: 4em auto;
+		padding: 64px 50px 114px;
+	}
+
+	@include MQ(L) {
+		&::after {
+			/* quotation mark visible */
+			display: block;
+		}
+	}
+}
+
+.cd-testimonials {
+	color: $color-4;
+	text-align: center;
+	@include clearfix;
+
+	> li {
+		position: absolute;
+		opacity: 0;
+
+		&:first-child {
+			position: relative;
+			opacity: 1;
+		}
+	}
+
+	p {
+		font-family: $secondary-font;
+		font-style: italic;
+		line-height: 1.4;
+		margin-bottom: 1em;
+		padding: 0 14px; 
+	}
+
+	@include MQ(M) {
+		p {
+			@include font-size(22px);
+		}
+	}
+
+	@include MQ(L) {
+		p {
+			@include font-size(26px);
+			line-height: 1.6;
+		}
+	}
+}
+
+.cd-author {
+
+	img, .cd-author-info {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	img {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		margin-right: 5px;
+		box-shadow: 0 0 6px rgba(#000, .3);
+	}
+
+	.cd-author-info {
+		text-align: left;
+		line-height: 1.2;
+
+		li:first-child {
+			@include font-size(14px);
+		}
+
+		li:last-child {
+			@include font-size(12px);
+			color: lighten($color-1, 20%);
+		}
+	}
+
+	@include MQ(M) {
+		img {
+			width: 50px;
+			height: 50px;
+		}
+
+		.cd-author-info {
+			line-height: 1.4;
+
+			li:first-child {
+				@include font-size(16px);
+			}
+
+			li:last-child {
+				@include font-size(14px);
+			}
+		}
+	}
+}
+
+.flex-direction-nav li {
+	position: absolute;
+	height: 100%;
+	width: 40px;
+	top: 0;
+
+	&:first-child {
+		left: 0;
+	}
+
+	&:last-child {
+		right: 0;
+	}
+
+	a {
+		display: block;
+		height: 100%;
+		width: 100%;
+
+		/* image replacement */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		@include transition(background-color .2s);
+
+		.no-touch &:hover {
+			background-color: darken($color-1, 3%);
+		}
+
+		&::before, &::after {
+			/* left and right arrows in css only */
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 2px;
+			height: 13px;
+			background-color: $color-4;
+		}
+
+		&::before {
+			@include transform(translateY(-35px) rotate(45deg));
+		}
+
+		&::after {
+			@include transform(translateY(-27px) rotate(-45deg));
+		}
+	}
+
+	&:last-child a::before {
+		@include transform(translateY(-35px) rotate(-45deg));
+	}
+
+	&:last-child a::after {
+		@include transform(translateY(-27px) rotate(45deg));
+	}
+
+	@include MQ(M) {
+		width: 50px;
+	}
+
+	@include MQ(L) {
+		a::before, a::after {
+			background-color: lighten($color-1, 15%);
+			@include transition(background-color .2s);
+		}
+
+		a:hover::before, a:hover::after {
+			background-color: $color-4;
+		}
+	}
+}
+
+.cd-see-all {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	background-color: darken($color-1, 8%);
+	text-align: center;
+	text-transform: uppercase;
+	color: lighten($color-1, 20%);
+	font-weight: 700;
+	@include font-size(12px);
+	@include transition(color, .2s);
+
+	.no-touch &:hover {
+		color: $color-2;
+	}
+}
+
+.cd-testimonials-all {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: $color-4;
+	z-index: 2;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity .3s 0s, visibility 0s .3s;
+	-moz-transition: opacity .3s 0s, visibility 0s .3s;
+	transition: opacity .3s 0s, visibility 0s .3s;
+
+	.cd-testimonials-all-wrapper {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+
+		> ul {
+			width: 90%;
+			max-width: $L;
+			margin: 4em auto;
+			@include clearfix;
+		}
+	}
+
+	.cd-testimonials-item {
+		margin-bottom: 2em;
+		opacity: 0;
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translate3d(0, 0, 0) scale(.4));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+
+		-webkit-transition: -webkit-transform .3s, opacity .3s;
+		-moz-transition: -moz-transform .3s, opacity .3s;
+		transition: transform .3s, opacity .3s;
+	}
+
+	p {
+		position: relative;
+		background: $color-2;
+		color: $color-4;
+		padding: 2em;
+		@include font-smoothing;
+		line-height: 1.4;
+		@include border-radius;
+		margin-bottom: 1em;
+
+		&::after {
+			/* creating the triangle in css */
+			content: '';
+			position: absolute;
+			top: 100%;
+			left: 2em;
+			height: 0;
+			width: 0;
+			border: 8px solid transparent;
+			border-top-color: $color-2;
+		}
+	}
+
+	.cd-author {
+		text-align: left;
+		margin-left: 1.5em;
+
+		img {
+			box-shadow: 0 0 0 rgba(#000, 0);
+		}
+	}
+
+	&.is-visible {
+		visibility: visible;
+		opacity: 1;
+		-webkit-transition: opacity .3s 0s, visibility 0s 0s;
+		-moz-transition: opacity .3s 0s, visibility 0s 0s;
+		transition: opacity .3s 0s, visibility 0s 0s;
+
+		.cd-testimonials-item {
+			// @include animation(cd-slide-in .3s);
+			opacity: 1;
+			@include transform(translate3d(0, 0, 0) scale(1));
+		}
+	}
+
+	@include MQ(M) {
+		.cd-testimonials-item {
+			width: 46%;
+			margin: 0 2% 3em;
+		}
+
+		.cd-author {
+			margin-left: 1em;
+		}
+	}
+
+	@include MQ(L) {
+		.cd-testimonials-item {
+			width: 30%;
+			margin: 0 1.6666% 3em;
+		}
+	}
+}
+
+.close-btn {
+	position: fixed;
+	display: block;
+	width: 40px;
+	height: 40px;
+	top: 10px;
+	right: 5%;
+
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	&::before, &::after {
+		/* close icon in css */
+		content: '';
+		position: absolute;
+		display: inline-block;
+		width: 2px;
+		height: 24px;
+		top: 8px;
+		left: 19px;
+		background-color: $color-1;
+	}
+
+	&::before {
+		@include transform(rotate(45deg));
+	}
+
+	&::after {
+		@include transform(rotate(-45deg));
+	}
+}

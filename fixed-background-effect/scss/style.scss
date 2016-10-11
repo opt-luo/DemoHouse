@@ -1,0 +1,239 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+html, body {
+	height: 100%;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+
+	@include MQ(L) {
+		/* hide horizontal scroll bar in IE */
+		overflow-x: hidden;
+	}
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-header {
+	position: relative;
+	height: 100%;
+	background-color: $color-2;
+	box-shadow: 0 4px 20px rgba(#000, .3);
+	z-index: 1;
+
+	h1 {
+		width: 90%;
+		color: $color-3;
+		text-align: center;
+		font-size: 2.2rem;
+		@include font-smoothing;
+		position: absolute;
+		@include center; // see partials > _mixins.scss
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 3.6rem;
+			font-weight: 300;
+		}
+	}
+}
+
+.cd-fixed-background {
+	position: relative;
+	padding: 3em 5% 0;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+
+	h2, p {
+		color: $color-3;
+		@include font-smoothing;
+	}
+
+	h2 {
+		font-size: 2.4rem;
+		margin-bottom: 1em;
+	}
+
+	p {
+		line-height: 1.6;
+		font-family: $secondary-font;
+	}
+
+	.light-background h2, .light-background p {
+		color: $color-1;
+	}
+
+	.cd-content::after {
+		/* phone image on small devices */
+		content: '';
+		display: block;
+		width: 100%;
+		padding: 60% 0;
+		margin: 2em auto 0;
+	}
+
+	&.img-1 {
+		background-color: $color-5;
+
+		.cd-content::after {
+			background: url('../img/img-mobile-1.jpg') no-repeat;
+			background-size: 100% auto;
+		}
+	}
+
+	&.img-2 {
+		background-color: $color-3;
+
+		.cd-content::after {
+			background: url('../img/img-mobile-2.jpg') no-repeat;
+			background-size: 100% auto;
+		}
+	}
+
+	&.img-3 {
+		background-color: $color-1;
+
+		.cd-content::after {
+			background: url('../img/img-mobile-3.jpg') no-repeat;
+			background-size: 100% auto;
+		}
+	}
+
+	&.img-4 {
+		background-color: $color-4;
+
+		.cd-content::after {
+			background: url('../img/img-mobile-4.jpg') no-repeat;
+			background-size: 100% auto;
+		}
+	}
+
+	@include MQ(M) {
+		height: 100%;
+		padding: 0;
+
+		h2 {
+			font-size: 3.6rem;
+			font-weight: 300;
+		}
+
+		p {
+			font-size: 1.8rem;
+			line-height: 1.8;
+		}
+
+		.cd-content {
+			width: 50%;
+			position: absolute;
+			left: 5%;
+			@include center(y);
+		}
+
+		.cd-content::after {
+			display: none !important;
+		}
+
+		&.img-1 {
+			background-image: url('../img/img-1.jpg');
+		}
+
+		&.img-2 {
+			background-image: url('../img/img-2.jpg');
+		}
+
+		&.img-3 {
+			background-image: url('../img/img-3.jpg');
+		}
+
+		&.img-4 {
+			background-image: url('../img/img-4.jpg');
+		}
+	}
+
+	@include MQ(L) {
+		background-attachment: fixed;
+
+		.cd-content {
+			width: 40%;
+			left: 10%;
+		}
+	}
+}
+
+.cd-vertical-nav {
+	position: fixed;
+	z-index: 2;
+	right: 3%;
+	@include center(y);
+	display: none;
+
+	a {
+		display: block;
+		height: 40px;
+		width: 40px;
+
+		/* image replace */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+
+		background: transparent url(../img/cd-icon-arrow.svg) no-repeat center center;
+		@include transition(opacity 0.2s 0s, visibility 0.2s 0s);
+
+		&.cd-prev {
+			@include transform(rotate(180deg));
+			margin-bottom: 10px;
+		}
+
+		&.inactive {
+			visibility: hidden;
+			opacity: 0;
+			@include transition(opacity 0.2s 0s, visibility 0s 0.2s);
+		}
+	}
+
+	@include MQ(XL) {
+		display: block;
+	}
+}
+
+.no-js .cd-vertical-nav {
+	display: none;
+}

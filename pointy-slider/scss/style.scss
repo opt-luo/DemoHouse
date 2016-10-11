@@ -1,0 +1,303 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-5;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Slider
+
+-------------------------------- */
+
+.cd-slider-wrapper {
+	position: relative;
+	height: 100vh;
+	padding: 10px;
+
+	@include MQ(M) {
+		padding: 30px;
+	}
+}
+
+.cd-slider {
+	position: relative;
+	z-index: 1;
+	height: 100%;
+	overflow: hidden;
+
+	li {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		@include transform(translateX(100%));
+		@include transition(transform $animation-duration);
+
+		&.is-visible {
+			@include transform(translateX(0));
+		}
+	}
+
+	.cd-half-block {
+		height: 50%;
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+
+	li:first-of-type .image {
+		background-image: url(../img/img-1.jpg);
+	}
+
+	li:nth-of-type(2) .image {
+		background-image: url(../img/img-2.jpg);
+	}
+
+	li:nth-of-type(3) .image {
+		background-image: url(../img/img-3.jpg);
+	}
+
+	li:nth-of-type(4) .image {
+		background-image: url(../img/img-4.jpg);
+	}
+
+	.image {
+		background-size: cover;
+	}
+
+	.content {
+		padding: 30px;
+		color: $color-5;
+		background-color: $color-1;
+		@include font-smoothing;
+	}
+
+	.light-bg {
+		color: rgba(#000, .6);	
+	}
+
+	.btn {
+		display: inline-block;
+		background: rgba(#000, .2);
+		padding: 1em 1.6em;
+		margin-top: 1em;
+		font-size: 1.3rem;
+		color: $color-5;
+		border-radius: 50em;
+		@include transition(background .3s);
+
+		.no-touch &:hover {
+			background: rgba(#000, .6);
+		}
+	}
+
+	li:nth-of-type(2) .content {
+		background-color: $color-2;
+	}
+
+	li:nth-of-type(3) .content {
+		background-color: $color-3;
+	}
+
+	li:nth-of-type(4) .content {
+		background-color: $color-4;
+	}
+
+	h2 {
+		font-size: 2.2rem;
+		margin-bottom: .4em;
+	}
+
+	p {
+		font-size: 1.4rem;
+	}
+
+	h2, p {
+		line-height: 1.4;
+	}
+
+
+	@include MQ(M) {
+
+		li {
+			pointer-events: none;
+			z-index: 1;
+			@include transform(translateX(0));
+			@include transition(z-index 0s $animation-duration);
+
+			&.is-visible {
+				pointer-events: auto;
+				z-index: 3;
+				@include transition(z-index 0s 0s);
+
+				&.covered {
+					/* list item still there, but covered by the list item entering the viewport (.is-visible) */
+					z-index: 2;
+				}
+			}
+		}
+
+		.cd-half-block {
+			height: 100%;
+			@include column(.5, right);
+
+			&.content {
+				@include transform(translateX(200%));
+				@include transition(transform $animation-duration 0s ease-in-out);
+			}
+
+			&.image {
+				@include transform(translateX(100%));
+				@include transition(transform 0s  $animation-duration/2);
+			}
+		}
+
+		li.is-visible .cd-half-block.content,
+		li.is-visible .cd-half-block.image {
+			@include transform(translateX(0%));
+		}
+			 
+		li.is-visible .cd-half-block.content {
+			@include transition(transform $animation-duration 0s ease-in-out);
+		}
+
+		.content {
+			/* vertically align its content */
+			display: table;
+			padding: 0 40px;
+
+			> div {
+				/* vertically align <div> inside div.content */
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+
+		.btn {
+			padding: 1.4em 2em;
+			font-size: 1.4rem;
+		}
+
+		p {
+			font-size: 1.6rem;
+		}
+
+		h2 {
+			font-size: 3.5rem;
+			margin-bottom: 0;
+		}
+
+		h2, p {
+			line-height: 2;
+		}
+	}
+
+	@include MQ(L) {
+
+		.content {
+			padding: 0 90px;
+		}
+
+		h2 {
+			font-weight: 300;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Slider Navigation
+
+-------------------------------- */
+
+.cd-slider-navigation {
+	/* you won't see this element in the html but it will be created using jQuery */
+	position: absolute;
+	z-index: 3;
+	@include center(x);
+	bottom: 30px;
+
+	li {
+		display: inline-block;
+		margin: 0 .25em;
+
+		&.selected a {
+			background-color: $color-5;
+		}
+	}
+
+	a {
+		display: block;
+		height: 8px;
+		width: 8px;
+		border-radius: 50%;
+		color: transparent;
+		/* image replacement */
+		white-space: nowrap;
+		text-indent: 100%;
+		overflow: hidden;
+		border: 1px solid $color-5;
+	}
+
+	@include MQ(M) {
+		padding: 0.5em 1em;
+		background-color: rgba(#000, .8);
+		/* fixes a bug on Firefox with ul.cd-slider-navigation z-index */
+		@include transform(translateZ(2px) translateX(-50%));
+		@include transition(transform .3s);
+
+		&.slider-animating {
+			/* fixes a bug on Firefox with ul.cd-slider-navigation z-index */
+			@include transform(translateX(-50%) scale(1));
+		}
+
+		a {
+			height: 40px;
+			width: 40px;
+			line-height: 40px;
+			text-align: center;
+			/* reset style */
+			text-indent: 0;
+			border: none;
+			border-radius: 0;
+			color: $color-5;
+			@include font-smoothing;
+		}
+
+		li.selected a {
+			background-color: transparent;
+			color: $color-3;
+		}
+	}
+}

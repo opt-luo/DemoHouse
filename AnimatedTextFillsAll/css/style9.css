@@ -1,0 +1,26 @@
+/* Main stuff */
+.text {
+  fill: url("#p-fire");
+  stroke: #330000;
+  stroke-width: 8;
+  stroke-opacity: 0.5; }
+
+/* Other stuff */
+html,
+body {
+  height: 100%; }
+
+body {
+  background: #000;
+  color: #fff; }
+
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact; }
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=style9.css.map */

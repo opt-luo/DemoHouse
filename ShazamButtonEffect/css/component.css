@@ -1,0 +1,282 @@
+/* Main component wrapper */
+
+.component {
+	position: relative;
+	z-index: 1;
+	width: 300px;
+	height: 500px;
+	margin: 0 auto;
+}
+
+
+/* Visible path of the morphing shapes */
+
+.morph__button {
+	fill: #fff;
+}
+
+
+/* Actual buttons (laid over shapes) */
+
+.button {
+	font-weight: bold;
+	position: absolute;
+	bottom: 4px;
+	left: 20px;
+	width: calc(100% - 40px);
+	height: 60px;
+	padding: 0;
+	text-align: center;
+	color: #00a7e7;
+	border: none;
+	background: none;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.button:hover,
+.button:focus {
+	outline: none;
+	color: #048abd;
+}
+
+.button--listen {
+	pointer-events: none;
+}
+
+.button--close {
+	z-index: 10;
+	top: 0px;
+	right: 0px;
+	left: auto;
+	width: 40px;
+	height: 40px;
+	padding: 10px;
+	color: #fff;
+}
+
+.button--close:hover,
+.button--close:focus {
+	color: #ddd;
+}
+
+.button--hidden {
+	pointer-events: none;
+	opacity: 0;
+}
+
+
+/* Inner content of the start/*/
+
+.button__content {
+	position: absolute;
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+	transition: transform 0.4s, opacity 0.4s;
+}
+
+.button__content--start {
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 1.2em;
+	text-indent: 1px;
+	letter-spacing: 1px;
+	-webkit-transform: translate3d(0, -25px, 0);
+	transform: translate3d(0, -25px, 0);
+	-webkit-transition-timing-function: cubic-bezier(0.8, -0.6, 0.2, 1);
+	transition-timing-function: cubic-bezier(0.8, -0.6, 0.2, 1);
+}
+
+.button__content--listen {
+	font-size: 1.75em;
+	line-height: 64px;
+	bottom: 0;
+	left: 50%;
+	width: 60px;
+	height: 60px;
+	margin: 0 0 0 -30px;
+	border-radius: 50%;
+	-webkit-transform: translate3d(0, 25px, 0);
+	transform: translate3d(0, 25px, 0);
+	-webkit-transition-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+	transition-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+.button__content--listen::before,
+.button__content--listen::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	opacity: 0;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
+}
+
+.button--animate .button__content--listen::before,
+.button--animate .button__content--listen::after {
+	-webkit-animation: anim-ripple 1.2s ease-out infinite forwards;
+	animation: anim-ripple 1.2s ease-out infinite forwards;
+}
+
+.button--animate .button__content--listen::after {
+	-webkit-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+}
+
+@-webkit-keyframes anim-ripple {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale3d(3, 3, 1);
+		transform: scale3d(3, 3, 1);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		-webkit-transform: scale3d(1, 1, 1);
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes anim-ripple {
+	0% {
+		opacity: 0;
+		-webkit-transform: scale3d(3, 3, 1);
+		transform: scale3d(3, 3, 1);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		-webkit-transform: scale3d(1, 1, 1);
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+.button--start .button__content--start,
+.button--listen .button__content--listen {
+	opacity: 1;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+.player {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	-webkit-transition: opacity 0.5s;
+	transition: opacity 0.5s;
+}
+
+.player::after {
+	content: '';
+	position: absolute;
+	top: -1px;
+	/* for mobile Safari bug (white line of SVG visible) */
+	left: 0;
+	width: 100%;
+	height: 280px;
+	pointer-events: none;
+	border-radius: 5px 5px 0 0;
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.player--hidden {
+	pointer-events: none;
+	opacity: 0;
+	-webkit-transition: opacity 0.2s;
+	transition: opacity 0.2s;
+}
+
+.player__cover {
+	margin-top: -1px;
+	/* for mobile Safari bug (white line of SVG visible) */
+	border-radius: 5px 5px 0 0;
+}
+
+.player__meta {
+	padding: 0 1em 1em;
+	text-align: center;
+}
+
+.player__track {
+	font-size: 1.15em;
+	margin: 1.25em 0 0.05em 0;
+	color: #55656c;
+}
+
+.player__album {
+	font-size: 0.825em;
+	margin: 0;
+	color: #bbc1c3;
+}
+
+.player__album-name,
+.player__artist {
+	color: #adb5b8;
+}
+
+.player__controls {
+	font-size: 1.15em;
+	margin: 1.15em 0 0 0;
+}
+
+.player__control {
+	margin: 0 0.85em;
+	padding: 0;
+	vertical-align: middle;
+	color: #adb5b8;
+	border: 0;
+	background: none;
+}
+
+.player__control:hover,
+.player__control:focus {
+	color: #00a7e7;
+	outline: none;
+}
+
+.player__control--play {
+	font-size: 1.75em;
+}
+
+.notes {
+	position: absolute;
+	z-index: -1;
+	bottom: 0;
+	left: 50%;
+	width: 100px;
+	height: 60px;
+	margin: 0 0 0 -50px;
+}
+
+.note {
+	font-size: 2.8em;
+	position: absolute;
+	left: 50%;
+	width: 1em;
+	margin: 0 0 0 -0.5em;
+	opacity: 0;
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.note:nth-child(odd) {
+	color: rgba(0, 0, 0, 0.1);
+}
+
+.note:nth-child(4n) {
+	font-size: 2em;
+}
+
+.note:nth-child(6n) {
+	color: rgba(255, 255, 255, 0.3);
+}

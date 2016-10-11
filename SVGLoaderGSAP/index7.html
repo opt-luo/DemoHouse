@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SVG Loader with GSAP | Goo Loader</title>
+	<meta name="description" content="Some loaders made with SVG and GSAP" />
+	<meta name="keywords" content="svg, animation, GSAP, loader, inspiration, web design" />
+	<meta name="author" content="Codrops" />
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<script type="text/javascript" src="js/greensock/minified/TweenMax.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body class="demo-5">
+	<div class="container">
+		<header class="codrops-header">
+			<h1>SVG Loader <span>with <a href="http://greensock.com/gsap">GSAP</a> by <a href="https://twitter.com/chrisgannon">Chris Gannon</a></span></h1>
+			<div class="codrops-links">
+				<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/CreativeGooeyEffects/" title="Previous Demo"><span>Previous Demo</span></a>
+				<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=23648" title="Back to the article"><span>Back to the Codrops article</span></a>
+			</div>
+			<nav class="codrops-demos">
+				<a href="index.html">Jump Loader</a>
+				<span>More ideas:</span>
+				<a href="index2.html">Flip Box Loader</a>
+				<a href="index3.html">Creeper</a>
+				<a href="index4.html">Squash Box Loader</a>
+				<a href="index5.html">Veggie Loader</a>
+				<a href="index6.html">Infinity Loader</a>
+				<a class="current-demo" href="index7.html">Goo Loader</a>
+			</nav>
+		</header>
+		<div class="content">
+			<div id="container">
+				<svg width="400" height="200" viewBox="0 0 400 200">
+					<defs>
+						<filter id="goo">
+							<feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+							<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />
+							<feComposite in="SourceGraphic" in2="cm">
+						</filter>
+						<filter id="f2" x="-200%" y="-40%" width="400%" height="200%">
+							<feOffset in="SourceAlpha" dx="9" dy="3" />
+							<feGaussianBlur result="blurOut" in="offOut" stdDeviation="0.51" />
+							<feComponentTransfer>
+								<feFuncA type="linear" slope="0.05" />
+							</feComponentTransfer>
+							<feMerge>
+								<feMergeNode/>
+								<feMergeNode in="SourceGraphic" />
+							</feMerge>
+						</filter>
+					</defs>
+					<g filter="url(#goo)" style="fill:#FFFFFF">
+						<ellipse id="drop" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#ededed"/>
+						<ellipse id="drop2"cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#ededed"/>
+					</g>
+				</svg>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<script>
+	(function() {
+		var container = document.getElementById('container');
+		var drop = document.getElementById('drop');
+		var drop2 = document.getElementById('drop2');
+		var outline = document.getElementById('outline');
+
+		TweenMax.set(['svg'], {
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: -50
+		})
+
+		TweenMax.set([container], {
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: -50
+		})
+
+		TweenMax.set(drop, {
+			transformOrigin: '50% 50%'
+		})
+
+		var tl = new TimelineMax({
+			repeat: -1,
+			paused: false,
+			repeatDelay: 0,
+			immediateRender: false
+		});
+
+		tl.timeScale(3);
+
+		tl.to(drop, 4, {
+			attr: {
+				cx: 250,
+				rx: '+=10',
+				ry: '+=10'
+			},
+			ease: Back.easeInOut.config(3)
+		})
+		.to(drop2, 4, {
+			attr: {
+				cx: 250
+			},
+			ease: Power1.easeInOut
+		}, '-=4')
+		.to(drop, 4, {
+			attr: {
+				cx: 125,
+				rx: '-=10',
+				ry: '-=10'
+			},
+			ease: Back.easeInOut.config(3)
+		})
+		.to(drop2, 4, {
+			attr: {
+				cx: 125,
+				rx: '-=10',
+				ry: '-=10'
+			},
+			ease: Power1.easeInOut
+		}, '-=4')
+	})()
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+/* Main stuff */
+
+.box-with-text {
+  background-image: url("../img/image1.jpg");
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; }
+
+/* Other stuff */
+body {
+  background: #000;
+  color: #fff; }
+
+.box-with-text {
+  overflow: hidden;
+  background-position: 50% 50%;
+  background-size: cover;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  font: 26vmax/.85 Open Sans, Impact;
+  margin: 0 0 100px; }
+
+/*# sourceMappingURL=style1.css.map */

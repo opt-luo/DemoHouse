@@ -1,0 +1,474 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+*::after, *::before {
+	content: '';
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+
+	&::after {
+		/* dark overlay layer - visible when we fire .cd-quick-view */
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba($color-3, .8);
+		visibility: hidden;
+		opacity: 0;
+		-webkit-transition: opacity .3s 0s, visibility 0s .3s;
+		-moz-transition: opacity .3s 0s, visibility 0s .3s;
+		transition: opacity .3s 0s, visibility 0s .3s;
+	}
+
+	@include MQ(L) {
+		&.overlay-layer::after {
+			visibility: visible;
+			opacity: 1;
+			-webkit-transition: opacity .3s 0s, visibility 0s 0s;
+			-moz-transition: opacity .3s 0s, visibility 0s 0s;
+			transition: opacity .3s 0s, visibility 0s 0s;
+		}
+	}
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $XL; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+	@include clearfix;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+html, body {
+	height: 100%;
+}
+
+header {
+	position: relative;
+	height: 160px;
+	line-height: 170px;
+	text-align: center;
+	@include font-smoothing;
+
+	h1 {
+		color: $color-4;
+		@include font-size(20px);
+	}
+
+	@include MQ(M) {
+		line-height: 180px;
+
+		h1 {
+			@include font-size(26px);
+		}
+	}
+
+	@include MQ(L) {
+		line-height: 220px;
+	}
+}
+
+.cd-items {
+	padding: 1em 0;
+
+	@include MQ(M) {
+		padding: 2em 0 0;
+	}
+
+	@include MQ(L) {
+		padding: 4em 0 0;
+	}
+}
+
+.cd-item {
+	position: relative;
+	margin: 0 0 1em;
+
+	> img {
+		display: block;
+		width: 100%;
+	}
+
+	@include MQ(M) {
+		@include column(.48);
+		margin: 0 4% 2em 0;
+
+		&:nth-child(2n) {
+			margin-right: 0;
+		}
+	}
+
+	@include MQ(L) {
+		@include column(.22);
+		margin: 0 4% 2.8em 0;
+
+		&:nth-child(2n) {
+			margin-right: 4%;
+		}
+
+		&:nth-child(4n) {
+			margin-right: 0;
+		}
+
+		&.empty-box::after {
+			/* box visible as placeholder when the .cd-quick-view zooms in */
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: darken($color-3, 5%);
+		}
+	}
+}
+
+.cd-trigger {
+	position: absolute;
+	height: 50px;
+	line-height: 50px;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: rgba(#000, .1);
+	text-align: center;
+	@include font-smoothing;
+	color: $color-4;
+	opacity: 0;
+	visibility: hidden;
+	@include transition(opacity .2s, background-color .2s);
+
+	.no-touch &:hover {
+		background: rgba(#000, .2);
+	}
+
+	@include MQ(L) {
+		/* always visible on small devices */
+		visibility: visible;
+		opacity: 1;
+	}
+
+	@include MQ(XL) {
+		/* only visible on hover on big devices */
+		opacity: 0;
+	}
+}
+
+@include MQ(XL) {
+	.no-touch .cd-item:hover .cd-trigger {
+		opacity: 1;
+	}
+
+	.touch .cd-item .cd-trigger {
+		opacity: 1;
+	}
+}
+
+.cd-quick-view {
+	/* quick view non available on small devices */
+	display: none;
+
+	@include MQ(L) {
+		display: block;
+		position: fixed;
+		max-width: 900px;
+		visibility: hidden;
+
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		will-change: left, top, width;
+
+		@include clearfix;
+		z-index: 1;
+
+		&.is-visible {
+			/* class added when user clicks on .cd-trigger */
+			visibility: visible;
+		}
+
+		&.animate-width {
+			/* class added at the end of the first zoom-in animation */
+			background-color: $color-4;
+			box-shadow: 0 0 30px rgba(#000, .2);
+			@include transition(box-shadow .3s);
+		}
+	}
+}
+
+.cd-slider-wrapper {
+	position: relative;
+	display: inline-block;
+	float: left;
+	@include clearfix;
+}
+
+.cd-slider {
+	float: left;
+
+	li {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+
+		img {
+			display: block;
+			width: 100%;
+			max-width: 400px;
+		}
+
+		&.selected {
+			position: relative;
+			z-index: 3;
+		}
+	}
+
+	.add-content & {
+		margin-right: 3em;
+	}
+}
+
+.cd-slider-navigation {
+	opacity: 0;
+
+	.add-content & {
+		opacity: 1;
+	}
+}
+
+.cd-slider-navigation li {
+	position: absolute;
+	@include center(y); // mixins inside partials > _mixins.scss
+	z-index: 3;
+
+	&:first-child {
+		left: 0;
+	}
+
+	&:last-child {
+		/* equal to the .cd-slider-wrapper margin-right */
+		right: 3em;
+	}
+
+	a {
+		display: block;
+		width: 40px;
+		height: 50px;
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		opacity: 0;
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		@include transition(opacity .2s, background .2s);
+
+		&::before, &::after {
+			/* create arrows in CSS */
+			position: absolute;
+			top: 18px;
+			left: 14px;
+			display: inline-block;
+			background: $color-4;
+			height: 3px;
+			width: 12px;
+		}
+
+		&::before {
+			@include transform(rotate(45deg));
+		}
+
+		&::after {
+			@include transform(translateY(7px) rotate(-45deg));
+		}
+
+		.add-content & {
+			opacity: .2;
+		}
+
+		.no-touch &:hover {
+			background: rgba($color-3, .8);
+			opacity: 1;
+		}
+
+		.touch & {
+			opacity: 1;
+		}
+	}
+
+	&:first-child a::before {
+		@include transform(rotate(-45deg));
+	}
+
+	&:first-child a::after {
+		@include transform(translateY(7px) rotate(45deg));
+	}
+}
+
+.cd-item-info {
+	position: absolute;
+	padding: 3em 3em 3em 0;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity .3s, visibility 0s;
+	-moz-transition: opacity .3s, visibility 0s;
+	transition: opacity .3s, visibility 0s;
+
+	h2 {
+		@include font-size(28px);
+	}
+
+	p {
+		line-height: 1.6;
+		margin: 1em 0;
+		color: lighten($color-1, 20%);
+	}
+
+	.cd-item-action li {
+		display: inline-block;
+		margin-right: 1em;
+
+		&:first-child {
+			margin-left: -4px;
+		}
+	}
+
+	.add-to-cart {
+		@include appearance(none);
+		@include border-radius;
+		border: none;
+		padding: .6em 1.2em;
+		background-color: $color-2;
+		color: $color-4;
+		@include font-smoothing;
+		font-family: $primary-font;
+		@include font-size(16px);
+		cursor: pointer;
+	}
+
+	.add-content & {
+		/* class added at the end of the width animation, used to show the content */
+		position: relative;
+		visibility: visible;
+		opacity: 1;
+
+		h2 {
+			@include animation(cd-slide-in .3s);
+		}
+
+		p {
+			@include animation(cd-slide-in .4s);
+		}
+
+		.cd-item-action {
+			@include animation(cd-slide-in .5s);
+		}
+	}
+}
+
+@include keyframes(cd-slide-in) {
+	0% {
+		@include transform(translate3d(-40px, 0, 0));
+	}
+
+	100% {
+		@include transform(translate3d(0, 0, 0));
+	}
+}
+
+.cd-close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	visibility: hidden;
+	@include transform(scale(0));
+	-webkit-transition: -webkit-transform .3s 0s, visibility 0s .3s;
+	-moz-transition: -moz-transform .3s 0s, visibility 0s .3s;
+	transition: transform .3s 0s, visibility 0s .3s;
+
+	&::before, &::after {
+		/* close icon in css */
+		position: absolute;
+		top: 12px;
+		left: 5px;
+		display: inline-block;
+		height: 4px;
+		width: 20px;
+		background: $color-3;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+
+	&::before {
+		@include transform(rotate(45deg));
+	}
+
+	&::after {
+		@include transform(rotate(135deg));
+	}
+
+	.no-touch &:hover {
+		@include transform(scale(1.2));
+	}
+
+	.add-content & {
+		visibility: visible;
+		@include transform(scale(1));
+		-webkit-transition: -webkit-transform .3s 0s, visibility 0s 0s;
+		-moz-transition: -moz-transform .3s 0s, visibility 0s 0s;
+		transition: transform .3s 0s, visibility 0s 0s;
+	}
+}

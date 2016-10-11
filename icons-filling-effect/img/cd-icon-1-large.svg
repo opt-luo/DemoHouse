@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="420px"
+	 height="325px" viewBox="0 0 420 325" style="enable-background:new 0 0 420 325;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#3E253C;}
+</style>
+<g id="WEB_DESIGN">
+	<g>
+		<path class="st0" d="M116,96h232V71H116V96z M278,76h55v14h-55V76z M133,81h23v4h-23V81z"/>
+		<rect x="136" y="161" class="st0" width="21" height="23"/>
+		<path class="st0" d="M161,142h168v-23H161V142z M315,124c3.3,0,6,2.7,6,6s-2.7,6-6,6s-6-2.7-6-6S311.7,124,315,124z M225,128h16v4
+			h-16V128z M179,128h38v4h-38V128z"/>
+		<circle class="st0" cx="315" cy="172" r="2"/>
+		<path class="st0" d="M348,59H72v8h276V59z M77,65c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2s2,0.9,2,2C79,64.1,78.1,65,77,65z M85,65
+			c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2s2,0.9,2,2C87,64.1,86.1,65,85,65z M93,65c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2s2,0.9,2,2
+			C95,64.1,94.1,65,93,65z"/>
+		<path class="st0" d="M161,184h168v-23H161V184z M315,166c3.3,0,6,2.7,6,6s-2.7,6-6,6s-6-2.7-6-6S311.7,166,315,166z M225,170h16v4
+			h-16V170z M179,170h38v4h-38V170z"/>
+		<rect x="282" y="80" class="st0" width="47" height="6"/>
+		<path class="st0" d="M116,203h232V100H116V203z M132,115h201v31H132V115z M132,157h201v31H132V157z"/>
+		<path class="st0" d="M255,285v-39h-90v39h37v4h-62v-4h21v-39H57c-3.3,0-6-2.7-6-6V43c0-3.3,2.7-6,6-6h151V0H0v325h208v-40H255z"/>
+		<path class="st0" d="M112,71H72v132h40V71z M103,168H81v-4h22V168z M103,153H81v-4h22V153z M103,138H81v-4h22V138z M103,123H81v-4
+			h22V123z M92,102c-6.6,0-12-5.4-12-12s5.4-12,12-12s12,5.4,12,12S98.6,102,92,102z"/>
+		<circle class="st0" cx="315" cy="130" r="2"/>
+		<path class="st0" d="M92,82c-4.4,0-8,3.6-8,8s3.6,8,8,8s8-3.6,8-8S96.4,82,92,82z"/>
+		<path class="st0" d="M212,0v41H57c-1.1,0-2,0.9-2,2v197c0,1.1,0.9,2,2,2h306c1.1,0,2-0.9,2-2V43c0-1.1-0.9-2-2-2H221v-4h142
+			c3.3,0,6,2.7,6,6v197c0,3.3-2.7,6-6,6H259v39h21v4h-68v36h208V0H212z M352,55v152H68V55H352z"/>
+		<rect x="136" y="119" class="st0" width="21" height="23"/>
+	</g>
+</g>
+<g id="APP_DESIGN">
+</g>
+<g id="ECOMMERCE">
+</g>
+<g id="WORDPRESS">
+</g>
+</svg>

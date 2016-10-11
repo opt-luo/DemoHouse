@@ -1,0 +1,1103 @@
+// Note: we use Autoprefixer to add vendor prefixes to our CSS -> https://github.com/postcss/autoprefixer
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: sans-serif;
+	}
+	background-color: #ffffff;
+	@include font-smoothing;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Shared style
+
+-------------------------------- */
+
+.cd-btn {
+	display: inline-block;
+	padding: 1.6em 2.4em;
+	font-size: 1.4rem;
+	letter-spacing: .15em;	
+	font-weight: 700;
+	text-transform: uppercase;
+	box-shadow: 0 2px 10px rgba(#000, .08);
+	transition: box-shadow .3s;
+
+	&:hover {
+		box-shadow: 0 6px 20px rgba(#000, .2);
+	}
+}
+
+h1 {
+	line-height: 1;
+}
+
+/* Main Content */
+
+.cd-main-content {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 100vh;
+	/* vertically align its content */
+	display: table;
+
+	.center {
+		/* vertically align inside parent element */
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	}
+}
+
+/* Modal Window */
+
+.cd-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity .3s 0s, visibility 0s .3s;
+
+	.modal-content {
+		height: 100%;
+		overflow-y: auto;
+		padding: 3em 5%;
+	}
+
+	h1, h2 {
+		text-align: center;
+	}
+
+	p {
+		line-height: 1.6;
+		margin: 2em auto;
+		max-width: 800px;
+	}
+
+	.modal-close {
+		/* 'X' icon */
+		position: absolute;
+		z-index: 1;
+		top: 20px;
+		right: 5%;
+		height: 45px;
+		width: 45px;
+		border-radius: 50%;
+
+		overflow: hidden;
+		white-space: nowrap;
+		text-indent: 100%;
+		color: transparent;
+		
+		visibility: hidden;
+		opacity: 0;
+		transform: scale(0);
+		transition: transform .3s 0s, visibility 0s .3s, opacity .3s 0s;
+
+		&::before, &::after {
+			content: '';
+			display: inline-block;
+			position: absolute;
+			height: 2px;
+			width: 20px;
+			top: calc(50% - 1px);
+			left: calc(50% - 10px);
+		}
+
+		&::before {
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			transform: rotate(-45deg);
+		}
+	}
+
+	&.visible {
+		opacity: 1;
+		visibility: visible;
+		transition: opacity .7s, visibility 0s;
+
+		.modal-content {
+			/* this fixes the buggy scrolling on webkit browsers - mobile devices only - when overflow property is applied */
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.modal-close {
+			visibility: visible;
+			opacity: 1;
+			transition: transform .3s 0s, visibility 0s 0s, opacity .3s 0s;
+			transform: scale(1);
+		}
+	}
+
+	@include MQ(L) {
+		.modal-content {
+			padding: 6em 5%;
+		}
+
+		.modal-close { 
+			height: 60px;
+			width: 60px;
+
+			&::before, &::after {
+				height: 2px;
+				width: 26px;
+				top: calc(50% - 1px);
+				left: calc(50% - 13px);
+			}
+		}
+
+		p {
+			font-size: 2rem;
+		}
+	}
+}
+
+/* Transition Layer */
+
+.cd-transition-layer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	visibility: hidden;
+	overflow: hidden;
+
+	.bg-layer {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translateY(-50%) translateX(-2%);
+		/* its dimentions will be overwritten using jQuery to proportionally fit the viewport */
+		height: 100%;
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		background-position: 0 0;
+	}
+
+	&.visible {
+		opacity: 1;
+		visibility: visible;
+
+		.bg-layer {
+			transform: translateY(-50%) translateX(-98%);
+		}
+	}
+
+	&.opening .bg-layer,
+	&.closing .bg-layer {
+		animation-duration: .8s;
+		animation-fill-mode: forwards;
+	}
+
+	.no-cssanimations & {
+		display: none;
+	}
+}
+
+/* -------------------------------- 
+
+Scrub Effect
+
+-------------------------------- */
+
+.scrub-transition {
+	font-family: $scrub-primary-font;
+	color: $scrub-color-4;
+
+	h1, h2 {
+		font-family: $scrub-secondary-font;
+		margin-bottom: .4em;
+		font-size: 4rem;
+	}
+
+	.cd-btn {
+		background: $scrub-color-2;
+		color: $scrub-color-5;
+		border-radius: 50em;
+	}
+
+	.cd-main-content {
+		background: $scrub-color-1;
+	}
+
+	.cd-modal {
+		background: $scrub-color-3;
+
+		.modal-content {
+			color: $scrub-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $scrub-color-5;
+		}
+
+		.modal-close {
+			background: shade($scrub-color-3, 15%);
+
+			&:hover {
+				background: shade($scrub-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/scrub.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 8rem;
+		}
+
+		h2 {
+			font-size: 6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Fire Extinguisher Effect
+
+-------------------------------- */
+
+.extinguisher-transition {
+	font-family: $extinguisher-primary-font;
+	color: $extinguisher-color-4;
+
+	h1, h2 {
+		font-family: $extinguisher-secondary-font;
+		margin-bottom: .4em;
+		font-size: 3.2rem;
+	}
+
+	.cd-btn {
+		background: $extinguisher-color-2;
+		color: $extinguisher-color-3;
+		border-radius: 50em;
+	}
+
+	.cd-main-content {
+		background: $extinguisher-color-1;
+	}
+
+	.cd-modal {
+		background: $extinguisher-color-3;
+
+		.modal-content {
+			color: $extinguisher-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $extinguisher-color-3;
+		}
+
+		.modal-close {
+			background: shade($extinguisher-color-3, 15%);
+
+			&:hover {
+				background: shade($extinguisher-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/extinguisher.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 6rem;
+		}
+
+		h2 {
+			font-size: 5.4rem;
+			font-weight: 700;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Glitch Effect
+
+-------------------------------- */
+
+.glitch-transition {
+	font-family: $glitch-font;
+	color: $glitch-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $glitch-color-2;
+		color: $glitch-color-3;
+	}
+
+	.cd-main-content {
+		background: $glitch-color-1;
+	}
+
+	.cd-modal {
+		background: $glitch-color-3;
+
+		.modal-content {
+			color: $glitch-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $glitch-color-3;
+		}
+
+		.modal-close {
+			background: shade($glitch-color-3, 15%);
+
+			&:hover {
+				background: shade($glitch-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/glitch.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 8rem;
+		}
+
+		h2 {
+			font-size: 6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Scribble Effect
+
+-------------------------------- */
+
+.scribble-transition {
+	font-family: $scribble-primary-font;
+	color: $scribble-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-family: $scribble-secondary-font;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $scribble-color-2;
+		color: $scribble-color-4;
+		border-radius: 50em;
+	}
+
+	.cd-main-content {
+		background: $scribble-color-1;
+	}
+
+	.cd-modal {
+		background: $scribble-color-3;
+
+		.modal-content {
+			color: $scribble-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $scribble-color-4;
+		}
+
+		.modal-close {
+			background: shade($scribble-color-3, 15%);
+
+			&:hover {
+				background: shade($scribble-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			transform: translateY(-50%) translateX(-1.3158%);
+			/* sprite composed of 38 frames */ 
+			width: 3800%;
+			background-image: url(../img/scribble.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence-2 .8s steps(37) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence-2 .8s steps(37) forwards reverse;
+		}
+
+		&.visible .bg-layer {
+			transform: translateY(-50%) translateX(-98.6842%);
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 7.2rem;
+		}
+
+		h2 {
+			font-size: 5.8rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Gummy Effect
+
+-------------------------------- */
+
+.gummy-transition {
+	font-family: $gummy-font;
+	color: $gummy-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $gummy-color-2;
+		color: $gummy-color-4;
+		border-radius: 50em;
+	}
+
+	.cd-main-content {
+		background: $gummy-color-1;
+	}
+
+	.cd-modal {
+		background: $gummy-color-3;
+
+		.modal-content {
+			color: $gummy-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $gummy-color-4;
+		}
+
+		.modal-close {
+			background: shade($gummy-color-3, 15%);
+
+			&:hover {
+				background: shade($gummy-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/gummy.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 7.2rem;
+		}
+
+		h2 {
+			font-size: 5.8rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Gooey Effect
+
+-------------------------------- */
+
+.gooey-transition {
+	font-family: $gooey-primary-font;
+	color: $gooey-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+		font-family: $gooey-secondary-font;
+	}
+
+	.cd-btn {
+		background: $gooey-color-2;
+		color: $gooey-color-1;
+		border-radius: 50em;
+	}
+
+	.cd-main-content {
+		background: $gooey-color-1;
+	}
+
+	.cd-modal {
+		background: $gooey-color-3;
+
+		.modal-content {
+			color: $gooey-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $gooey-color-4;
+		}
+
+		.modal-close {
+			background: shade($gooey-color-3, 15%);
+
+			&:hover {
+				background: shade($gooey-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/gooey.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 8rem;
+		}
+
+		h2 {
+			font-size: 6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Mirror Effect
+
+-------------------------------- */
+
+.mirror-transition {
+	font-family: $mirror-font;
+	color: $mirror-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $mirror-color-2;
+		color: $mirror-color-4;
+	}
+
+	.cd-main-content {
+		background: $mirror-color-1;
+	}
+
+	.cd-modal {
+		background: $mirror-color-3;
+
+		.modal-content {
+			color: $mirror-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $mirror-color-4;
+		}
+
+		.modal-close {
+			background: shade($mirror-color-3, 15%);
+
+			&:hover {
+				background: shade($mirror-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/mirror.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 8rem;
+		}
+
+		h2 {
+			font-size: 6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Diamond Effect
+
+-------------------------------- */
+
+.diamond-transition {
+	font-family: $diamond-font;
+	color: $diamond-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $diamond-color-2;
+		color: $diamond-color-5;
+	}
+
+	.cd-main-content {
+		background: $diamond-color-1;
+	}
+
+	.cd-modal {
+		background: $diamond-color-3;
+
+		.modal-content {
+			color: $diamond-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $diamond-color-5;
+		}
+
+		.modal-close {
+			background: shade($diamond-color-3, 15%);
+
+			&:hover {
+				background: shade($diamond-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			transform: translateY(-50%) translateX(-2.5%);
+			/* sprite composed of 20 frames */ 
+			width: 2000%;
+			background-image: url(../img/diamond.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence-3 .8s steps(19) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence-3 .8s steps(19) forwards reverse;
+		}
+
+		&.visible .bg-layer {
+			transform: translateY(-50%) translateX(-97.5%);
+		}
+	}
+
+	@include MQ(M) {
+		h1, h2 {
+			font-weight: 300;
+		}
+		
+		h1 {
+			font-size: 8rem;
+		}
+
+		h2 {
+			font-size: 6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Cartoon Effect
+
+-------------------------------- */
+
+.cartoon-transition {
+	font-family: $cartoon-primary-font;
+	color: $cartoon-color-4;
+	
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+		font-family: $cartoon-secondary-font;
+	}
+
+	.cd-btn {
+		background: $cartoon-color-2;
+		color: darken($cartoon-color-1, 20%);
+		border-radius: 8px;
+	}
+
+	.cd-main-content {
+		background: $cartoon-color-1;
+	}
+
+	.cd-modal {
+		background: $cartoon-color-3;
+
+		.modal-content {
+			color: $cartoon-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $cartoon-color-5;
+		}
+
+		.modal-close {
+			background: shade($cartoon-color-3, 15%);
+
+			&:hover {
+				background: shade($cartoon-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/cartoon.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1, h2 {
+			font-weight: 300;
+		}
+		
+		h1 {
+			font-size: 8rem;
+		}
+
+		h2 {
+			font-size: 6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Clones Effect
+
+-------------------------------- */
+
+.clones-transition {
+	font-family: $clones-font;
+	color: $clones-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $clones-color-2;
+		color: $clones-color-4;
+	}
+
+	.cd-main-content {
+		background: $clones-color-1;
+	}
+
+	.cd-modal {
+		background: $clones-color-3;
+
+		.modal-content {
+			color: $clones-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $clones-color-5;
+		}
+
+		.modal-close {
+			background: shade($clones-color-3, 15%);
+
+			&:hover {
+				background: shade($clones-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/clones.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		h1, h2 {
+			font-weight: 300;
+		}
+		
+		h1 {
+			font-size: 7.2rem;
+		}
+
+		h2 {
+			font-size: 5.6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Kaleidoscope Effect
+
+-------------------------------- */
+
+.kaleidoscope-transition {
+	font-family: $kaleidoscope-font;
+	color: $kaleidoscope-color-4;
+
+	h1, h2 {
+		margin-bottom: .4em;
+		font-size: 4rem;
+		font-weight: 700;
+	}
+
+	.cd-btn {
+		background: $kaleidoscope-color-2;
+		color: $kaleidoscope-color-4;
+	}
+
+	.cd-main-content {
+		background: $kaleidoscope-color-1;
+	}
+
+	.cd-modal {
+		background: $kaleidoscope-color-3;
+
+		.modal-content {
+			color: $kaleidoscope-color-5;
+		}
+
+		.modal-close::before,
+		.modal-close::after {
+			background: $kaleidoscope-color-5;
+		}
+
+		.modal-close {
+			background: shade($kaleidoscope-color-3, 15%);
+
+			&:hover {
+				background: shade($kaleidoscope-color-3, 30%);
+			}
+		}
+	}
+
+	.cd-transition-layer {
+		.bg-layer {
+			/* sprite composed of 25 frames */ 
+			width: 2500%;
+			background-image: url(../img/kaleidoscope.png);
+		}
+
+		&.opening .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards;
+		}
+
+		&.closing .bg-layer {
+			animation: cd-sequence .8s steps(24) forwards reverse;
+		}
+	}
+
+	@include MQ(M) {
+		
+		h1 {
+			font-size: 7.2rem;
+		}
+
+		h2 {
+			font-size: 5.6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Animations
+
+-------------------------------- */
+
+@keyframes cd-sequence {
+	0% {
+		/* translateX(-2%) is used to horizontally center the first frame inside the viewport */
+		transform: translateY(-50%) translateX(-2%);
+	}
+	100% {
+		/* translateX(-98%) (2% + 96) is used to horizontally center the last frame inside the viewport  */
+   		transform: translateY(-50%) translateX(-98%);
+	}
+}
+
+@keyframes cd-sequence-2 {
+	0% {
+		transform: translateY(-50%) translateX(-1.3158%);
+	}
+	100% {
+   		transform: translateY(-50%) translateX(-98.6842%);
+	}
+}
+
+@keyframes cd-sequence-3 {
+	0% {
+		transform: translateY(-50%) translateX(-2.5%);
+	}
+	100% {
+   		transform: translateY(-50%) translateX(-97.5%);
+	}
+}

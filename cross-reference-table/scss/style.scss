@@ -1,0 +1,269 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $main-text;
+	background-color: $background;
+}
+
+a {
+	color: $link;
+	text-decoration: none;
+}
+
+img, svg {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+%img-replace { // placeholder to replace text with an image 
+	display: block;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+
+#cd-table {
+	position: relative;
+	width: 90%;
+	max-width: $L; // breakpoints inside partials > _layout.scss
+	margin: 1em auto;
+	@include font-size(14px);
+
+	/* you may remove this border in case of dark backgrounds if it's annoying */
+	border-right: 1px solid $cell-border;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+
+	&::before {  /* White color gradient on the right */
+		content: '';
+		position: absolute;
+		top: 0;
+		right: -1px;
+		height: 100%;
+		width: 35px;
+		@include background(linear-gradient(to left, #FFF 10%, rgba(#FFF, 0)));
+		z-index: 5;
+		pointer-events: none;
+
+		.no-cssgradients & {
+			/* remove the gradient using modernizr if css gradients are not supported */
+			display: none;
+		}
+	}
+
+	&.table-end::before { /* the gradient disappears when user is at the end of the table */
+		display: none;
+	}
+
+	.cd-table-container {
+		position: relative;
+		width: 100%;
+		overflow-x: auto;
+		/* smooth scrolling on touch devices */
+		-webkit-overflow-scrolling: touch; 
+	}
+
+	.cd-table-wrapper {
+		width: $cd-column-width * ($cd-column-number - 1) + $cd-header-width; // set all variables inside partials > _variables.scss
+		padding-left: $cd-header-width;
+	}
+
+	.cd-table-column {
+		width: $cd-column-width;
+		float: left;
+		border: 1px solid $cell-border;
+		margin-left: -1px;
+
+		&:last-child {
+			border-right: none;
+		}
+	}
+
+	h2, ul > li {
+		position: relative;
+		text-align: center;
+		padding: 0 1em;
+		border-bottom: 1px solid $cell-border;
+		height: $cd-row-height;
+		line-height: $cd-row-height;
+		background-color: $cell-bg;
+	}
+
+	h2 {
+		@include font-size(14px);
+		text-transform: uppercase;
+		font-weight: bold;
+		color: $column-title;
+	}
+
+	ul > li {
+		color: $cell-text;
+	}
+
+	ul > li:nth-child(odd) {
+		background-color: $cell-odd-bg;
+	}
+
+	ul > li:last-child {
+		border-bottom: none;
+	}
+
+	.cd-unchecked span, .cd-checked span {
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		@extend %img-replace;
+		background-image: url('../img/yes-no.svg');
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		background-size: 32px 16px;
+		@include center;
+		@include backface-visibility(hidden);
+	}
+
+	.cd-unchecked span {
+		background-position: -16px 0;
+	}
+
+	.cd-select {
+		display: block;
+		height: 100%;
+		width: 100%;
+		font-weight: bold;
+	}
+
+	header.cd-table-column {
+		position: absolute;
+		width: $cd-header-width;
+		height: 100%;
+		left: 0;
+		top: 0;
+		z-index: 10;
+		background: rgba($header-bg, .95);
+		margin-left: 0;
+		border-color: $header-border;
+		box-shadow: 2px 0 0 rgba(#000, .1);
+		pointer-events: none;
+
+		h2, li {
+			background-color: transparent;
+			text-align: left;
+			color: $header-text;
+			text-shadow: 0 1px 1px rgba(#000, .1);
+			border-bottom-color: $header-border;
+		}
+
+		h2 {
+			color: $header-title;
+		}
+
+		li:nth-child(odd) {
+			background-color: rgba(darken($header-bg, 5%), .95);
+		}
+
+		li:last-child {
+			border-bottom: 1px solid $header-border;
+		}
+	}
+
+	.cd-scroll-right { /* small right arrow that indicates it's possible to scroll right */
+		display: block;
+		width: 16px;
+		height: 16px;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		margin-top: -8px;
+		background: url('../img/small-arrow.svg') no-repeat center center;
+		z-index: 6;
+		@include animation(cd-scroll-right 1.5s infinite);
+	}
+
+	@include MQ(M) {
+		margin: 2em auto;
+		border-right: none;
+
+		&::before {
+			display: none;
+		}
+
+		.cd-table-wrapper {
+			width: 100%;
+			padding-left: 100% / $cd-column-number;
+		}
+
+		.cd-table-column {
+			@include column(1 / ($cd-column-number - 1));
+
+			&:last-child {
+				border-right: 1px solid $cell-border;
+			}
+		}
+
+		header.cd-table-column {
+			@include column(1 / $cd-column-number);
+			background: $header-bg;
+			box-shadow: none;
+			pointer-events: auto;
+		}
+
+		.cd-scroll-right {
+			display: none;
+		}
+	}
+
+	@include MQ(L) {
+		margin: 4em auto;
+	}
+}
+
+@include keyframes(cd-scroll-right) {
+	0%, 100% {
+		@include transform(translateX(0));
+	}
+
+	50% {
+		@include transform(translateX(3px));
+	}
+}

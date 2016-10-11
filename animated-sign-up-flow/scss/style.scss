@@ -1,0 +1,648 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-1;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+input {
+	font-family: $primary-font;
+	font-size: 1.6rem;
+}
+
+/* -------------------------------- 
+
+Header - not needed in production
+
+-------------------------------- */
+
+.cd-main-header {
+	height: 170px;
+	line-height: 170px;
+	text-align: center;
+
+	h1 {
+		color: $color-3;
+		font-weight: 300;
+		font-size: 2rem;
+	}
+
+	@include MQ(L) {
+		height: 220px;
+		line-height: 220px;
+
+		h1 {
+			font-size: 2.6rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Pricing tables 
+
+-------------------------------- */
+
+.cd-pricing {
+	width: 90%;
+	max-width: 280px;
+	margin: 0 auto;
+	text-align: center;
+
+	> li {
+		position: relative;
+		margin: 0 auto 2.5em;
+		background-color: $color-3;
+		border-radius: .3em .3em .25em .25em;
+		box-shadow: 0 2px 8px rgba(darken($color-1, 10%), .5);
+
+		&.empty-box {
+			box-shadow: none;
+		}
+
+		&.empty-box::after {
+			/* placeholder visible when .cd-form is open - in this case same color of the background */
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: $color-1;
+		}
+	}
+
+	@include MQ(M) {
+		max-width: 1000px;
+
+		> li {
+			@include column(.32);
+			margin-right: 2%;
+			margin-bottom: 0;
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
+	}
+
+	@include MQ(L) {
+
+		> li {
+			@include column(.28);
+			margin-right: 8%;
+		}
+	}
+}
+
+.cd-pricing-header {
+	padding: 1.3em 1em;
+	background-color: $color-2;
+	border-radius: .25em .25em 0 0;
+	box-shadow: inset 0 1px 0 lighten($color-2, 20%);
+
+	color: $color-3;
+	@include font-smoothing;
+
+	h2, .cd-price {
+		line-height: 1.2;
+	}
+
+	h2 {
+		font-size: 2rem;
+		margin-bottom: 0.15em;
+	}
+
+	.cd-price {
+		display: inline-block;
+		font-weight: bold;
+		@include clearfix;
+	}
+
+	span {
+		float: left;
+	}
+
+	span:nth-of-type(2) {
+		color: lighten($color-2, 20%);
+	}
+
+	span:nth-of-type(2)::before {
+		content: '/';
+	}
+
+	@include MQ(M) {
+
+		h2 {
+			font-size: 2.6rem;
+		}
+	}
+}
+
+.cd-pricing-features {
+	padding: 2.8em 1em 2.5em;
+
+	li {
+		line-height: 1.5;
+		margin-bottom: .4em;	
+
+		&:last-of-type {
+			margin-bottom: 0;
+		}	
+	}
+
+	em {
+		position: relative;
+		padding-left: 28px;
+
+		&::before {
+			/* this is the icon (check or cross) next to the plan feature */
+			position: absolute;
+			content: '';
+			left: 0;
+			@include center(y);
+			height: 24px;
+			width: 24px;
+			background: url(../img/cd-icons-plan.svg) no-repeat -24px 0;
+		}
+	}
+
+	.available em::before {
+		background-position: 0 0;
+	}
+}
+
+.cd-pricing-footer {
+	padding-bottom: 1.7em;
+
+	a {
+		@include transition(transform .3s);
+	}
+
+	.empty-box & a {
+		/* scale down to 0 the action button when sign up form is visible */
+		@include transform(scale(0));
+	}
+}
+
+/* -------------------------------- 
+
+Form 
+
+-------------------------------- */
+
+.cd-form {
+	position: fixed;
+	z-index: 2;
+	background-color: $color-3;
+	border-radius: .25em;
+
+	visibility: hidden;
+	@include transition(visibility 0s $animation-duration);
+
+	/* Force Hardware Acceleration in WebKit */
+	@include transform(translateZ(0));
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+	&::before {
+		/* never visible - this is used in jQuery to check the current MQ */ 
+		display: none;
+		content: 'mobile';
+	}
+
+	&::after {
+		/* gradient visible at the bottom of the form - to indicate it's possible to scroll */
+		content: '';
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		height: 30px;
+		width: 100%;
+		border-radius: 0 0 .25em .25em;
+		@include linear-gradient(to top, rgba($color-3, 1), rgba($color-3, 0), $fallback: rgba($color-3, 0));
+		pointer-events: none;
+	}
+
+	.cd-plan-info {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		text-align: center;
+
+		> * {
+			width: 100%;
+		}
+	}
+
+	.cd-pricing-features {
+		position: relative;
+		@include transition(opacity .3s 0s, visibility 0s 0s);
+
+		&::before {
+			/* this is the layer which covers the .cd-pricing-features when the form is open - visible only on desktop */
+			content: '';
+			position: absolute;
+			/* fix a bug while animating - 1px white space visible */
+			top: -5px;
+			left: 0;
+			height: calc(100% + 5px);
+			width: 100%;
+			background-color: $color-2;
+			will-change: transform;
+
+			@include transform(scaleY(0));
+			@include transform-origin(center top);
+
+			@include transition(transform $animation-duration - $animation-delay $animation-delay);
+		}
+	}
+
+	.cd-pricing-footer {
+		display: none;
+	}
+
+	.cd-more-info {
+		position: absolute;
+		z-index: 1;
+		height: 100%;
+		width: 210px;
+		bottom: 0;
+		left: 0;
+
+		padding: 285px 1.8em 2em;
+		background-color: shade($color-3, 5%);
+		border-radius: .25em 0 0 .25em;
+
+		/* hidden on mobile */
+		display: none;
+
+		@include transition(opacity $animation-duration - $animation-delay);
+
+		h3 {
+			line-height: 2;
+		}
+
+		p {
+			font-size: 1.3rem;
+			color: shade($color-3, 40%);
+			line-height: 1.6;
+		}
+	}
+
+	form {
+		padding-top: 90px;
+		height: 100%;
+		overflow: hidden;
+
+		&.is-scrollable {
+			overflow-y: auto;
+		}
+	}
+
+	fieldset {
+		opacity: 0;
+		margin: 1.5em 2em;
+
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		will-change: transform;
+
+		@include transform(translateY(50px));
+		@include transition(opacity $animation-delay, transform $animation-delay);
+
+		> div,
+		.cd-credit-card > div {
+			padding-top: 1.2em;
+		}
+
+		> .cd-credit-card {
+			padding-top: 0;
+		}
+
+		div {
+			@include clearfix;
+		}
+
+		&:last-of-type > div {
+			padding-top: 0;
+		}
+	}
+
+	legend {
+		width: 100%;
+		font-size: 2.3rem;
+		line-height: 1.2;
+		padding-bottom: 0.3em;
+		border-bottom: 1px solid shade($color-3, 10%);
+	}
+
+	input[type="radio"],
+	label {
+		cursor: pointer;
+	}
+
+	label {
+		font-size: 1rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: shade($color-3, 30%);
+	}
+
+	input[type="radio"] + label {
+		color: $color-1;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="password"],
+	select {
+		@include appearance(none);
+		height: 45px;
+		border: 2px solid shade($color-3, 10%);
+		border-radius: 0;
+		background: transparent;
+
+		&:focus {
+			outline: none;
+			border-color: $color-2;
+		}
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="password"], {
+		width: 100%;
+		display: block;
+		margin-top: 6px;
+		padding: 0 16px;
+	}
+
+	select {
+		padding: 0 25px 0 15px;
+		font-size: 1.4rem;
+	}
+
+	select::-ms-expand {
+		/* remove default arrows in IE */
+	  	display: none;
+	}
+
+	.cd-credit-card {
+
+		b {
+			display: block;
+		}
+
+		p {
+			padding-bottom: 0.5em;
+		}
+
+		p:last-of-type {
+			width: 100px;
+		}
+	}
+
+	.cd-select {
+		display: inline-block;
+		position: relative;
+		margin-top: 6px;
+
+		&::after {
+			/* arrow icons */
+			content: '';
+			position: absolute;
+			@include center(y);
+			right: 10px;
+			height: 6px;
+			width: 10px;
+			background: url(../img/cd-icon-arrow.svg) no-repeat center center;
+			pointer-events: none;
+		}
+	}
+
+	.cd-close {
+		/* 'X' close icon */
+		position: absolute;
+		z-index: 2;
+		right: 0;
+		top: 0;
+		height: 40px;
+		width: 40px;
+		background: url(../img/cd-icon-close.svg) no-repeat center center;
+		@include transform(scale(0));
+		@include transition(transform $animation-delay);
+
+		/* image replacement */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+		color: transparent;
+	}
+
+	&.is-visible {
+		/* form is visible */
+		visibility: visible;
+		@include transition(visibility 0s 0s);
+
+		.cd-pricing-features {
+			/* desktop only */
+			opacity: 0;
+			visibility: hidden;
+			@include transition(opacity $animation-duration - .2s 0s, visibility 0s $animation-duration);
+		}
+
+		form {
+			-webkit-overflow-scrolling: touch;
+		}
+
+		fieldset {
+			opacity: 1;
+			@include transform(translateY(0));
+			@include transition(transform .3s $animation-duration - .2s , opacity .3s $animation-duration - .2s);
+
+			&:nth-of-type(2) {
+				/* delay second fieldset animation */ 
+				@include transition(transform .3s $animation-duration - .1s , opacity .3s $animation-duration - .1s);
+			}
+
+			&:nth-of-type(3) {
+				/* delay second fieldset animation */ 
+				@include transition(transform .3s $animation-duration, opacity .3s $animation-duration);
+			}
+		}
+
+		.cd-close {
+			@include transform(scale(1));
+			@include transition(transform .3s $animation-duration);
+		}
+	}
+
+	@include MQ(M) {
+
+		&::before {
+			/* never visible - this is used in jQuery to check the current MQ */ 
+			content: 'desktop';
+		}
+
+		.cd-pricing-header {
+			border-radius: .25em 0 0 0;
+		}
+
+		.cd-pricing-features {
+			@include transition(padding .3s $animation-delay);
+		}
+
+		.cd-more-info {
+			display: block;
+			opacity: 0;
+		}
+
+		form {
+			padding: 0 0 0 210px;
+		}
+
+		.half-width {
+			@include column(.48);
+			margin-right: 4%;
+
+			&:nth-of-type(2n) {
+				margin-right: 0;
+			}
+		}
+
+		input[type="submit"] {
+			float: right;
+		}
+
+		.cd-close {
+			/* move close icon outside the form container */
+			top: -40px;
+			right: -5px;
+		}
+
+		&.is-visible .cd-pricing-features {
+			padding-top: 0;
+			opacity: 1;
+			visibility: visible;
+
+			@include transition(padding .3s);
+				
+				&::before {
+					@include transform(scaleY(1));
+					@include transition(transform $animation-duration - .4s 0s);
+				}
+		}
+
+		&.is-visible .cd-more-info {
+			opacity: 1;
+		}
+
+	}
+
+	@include MQ(L) {
+		
+		.cd-credit-card p:nth-of-type(2) {
+			width: 25%;
+			margin-right: 4%;
+		}
+
+		.no-csstransitions & .cd-credit-card p:nth-of-type(2) {
+			width: 48%;
+			margin-right: 0;
+		}
+
+		.cd-credit-card p:nth-of-type(3) {
+			width: 19%;
+			margin-right: 0;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Buttons 
+
+-------------------------------- */
+
+.cd-pricing-footer a, .cd-form input[type="submit"] {
+	display: inline-block;
+	padding: 1em 1.8em;
+	border-radius: 50em;
+
+	text-transform: uppercase;
+	font-size: 1.3rem;
+	font-weight: bold;
+}
+
+.cd-pricing-footer a {
+	border: 1px solid rgba($color-4, .4);
+	color: $color-4;
+}
+
+.cd-form input[type="submit"] {
+	@include appearance(none);
+	background-color: $color-4;
+	color: $color-3;
+	border: none;
+	cursor: pointer;
+}
+
+/* -------------------------------- 
+
+Shadow layer 
+
+-------------------------------- */
+
+.cd-overlay {
+	/* shadow layer visible when navigation is open */
+	position: fixed;
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: rgba($color-1, .8);
+	visibility: hidden;
+	opacity: 0;
+	@include transition(opacity $animation-duration - $animation-delay $animation-delay, visibility 0s $animation-duration - $animation-delay + $animation-delay);
+	
+	&.is-visible {
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity $animation-duration 0s, visibility 0s 0s);
+	}
+}

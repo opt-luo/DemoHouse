@@ -1,0 +1,371 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+html, body {
+	/* important for the full-width image to work */
+	height: 100%;
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	background-color: $background;
+}
+
+a {
+	color: $color-4;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $M; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+#cd-main-content {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+	background-color: $color-1;
+
+	/* slightly visible only when we resize this element */
+	box-shadow: 0 0 40px rgba(#000, .8);
+
+	z-index: $main-zindex;
+
+	/* Force Hardware Acceleration in WebKit */
+	-webkit-transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+
+	@include transition-property (transform);
+	@include transition-duration(.5s);
+
+	&.move-out {
+		@include transform(scale(.6));
+	}
+
+	.no-js & {
+		height: auto;
+		overflow-x: auto;
+		overflow-y: auto;
+	}
+}
+
+#cd-intro {
+	position: relative;
+	height: 100%;
+	background: url('../img/bg-img.jpg') no-repeat center center;
+	background-size: cover;
+
+	h1 {
+		position: absolute;
+		width: 90%;
+		@include center; // see partials > _mixins.scss
+		text-align: center;
+		@include font-size(18px);
+		font-weight: bold;
+		color: $color-4;
+	}
+
+	@include MQ(M) {
+		h1 {
+			@include font-size(26px);
+		}
+	}
+
+	.no-js & {
+		height: 640px;
+	}
+}
+
+.cd-header {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	z-index: 2;
+	background: rgba($color-1, .6);
+	@include transition(background .2s);
+
+	@include MQ(M) {
+		height: 80px;
+	}
+}
+
+.cd-blurred-bg {
+	/* we use jQuery to apply a mask to this element - CSS clip property */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url('../img/bg-img.jpg') no-repeat center center;
+	background-size: cover;
+	@include filter(blur(4px));
+
+	.no-js & {
+		display: none;
+	}
+}
+
+#cd-logo {
+	position: absolute;
+	left: 10px;
+	top: 8px;
+
+	width: 100px;
+	height: 32px;
+
+	img {
+		display: block;
+	}
+
+	@include MQ(M) {
+		left: 20px;
+		top: 24px;
+	}
+
+	@include MQ(L) {
+		left: 60px;
+	}
+}
+
+.cd-menu-trigger {
+	display: inline-block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 .8em;
+	text-transform: uppercase;
+	font-weight: bold;
+	@include font-size(14px);
+
+	span {
+		/* hamburger icon */
+		position: relative;
+		display: inline-block;
+		width: 18px;
+		height: 2px;
+		background-color: $color-4;
+		vertical-align: middle;
+		margin-left: 10px;
+		@include transform(translateY(-2px));
+
+		&::before, &::after {
+			content: '';
+			display: inline-block;
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: inherit;
+
+			@include transition(all .2s);
+		}
+
+		&::before {
+			top: -6px;
+		}
+
+		&::after {
+			bottom: -6px;
+		}
+	}
+
+	.no-touch &:hover span::before {
+		top: -8px;
+	}
+
+	.no-touch &:hover span::after {
+		bottom: -8px;
+	}
+
+	@include MQ(M) {
+		top: 16px;
+		right: 10px;
+		@include font-size(16px);
+	}
+
+	@include MQ(L) {
+		right: 60px;
+	}
+}
+
+#main-nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: $color-2;
+
+	/* Force Hardware Acceleration in WebKit */
+	-webkit-transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+
+	/* we move this element off the canvas */
+	@include transform(translateY(-100%));	
+
+	@include transition-property (transform);
+	@include transition-duration(.5s);
+
+	z-index: $nav-zindex;
+
+	ul {
+		height: 100%;
+	}
+
+	li {
+		height: 100% / $menu-items-number; // see partials > _variables.scss
+
+		a {
+			position: relative;
+			display: block;
+			padding: 0 10%;
+			height: 100%;
+			border-bottom: 1px solid darken($color-2, 5%);
+			color: $color-1;
+			@include font-size(20px);
+			font-weight: bold;
+
+			span {
+				position: absolute;
+				@include center; // see partials > _mixins.scss
+			}
+
+			.no-touch &:hover {
+				background-color: #FFF;
+			}
+		}
+
+		&:last-child a {
+			border-bottom: none;
+		}
+	}
+
+	.cd-close-menu {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		background-color: $color-3;
+
+		/* image replacement */
+		overflow: hidden;
+		text-indent: 100%;
+		white-space: nowrap;
+
+		&::before, &::after {
+			content: '';
+			display: inline-block;
+			position: absolute;
+			top: 18px;
+			left: 10px;
+			width: 20px;
+			height: 3px;
+			background-color: #FFF;
+
+			@include transition-property (transform);
+			@include transition-duration(.3s);
+		}
+
+		&::before {
+			@include transform(rotate(45deg));
+		}
+
+		&::after {
+			@include transform(rotate(135deg));
+		}
+
+		.no-touch &:hover {
+			&::before {
+				@include transform(rotate(225deg));
+			}
+
+			&::after {
+				@include transform(rotate(315deg));
+			}
+		}
+	}
+
+	&.is-visible {
+		box-shadow: 0 0 20px rgba(#000, .4);
+		@include transform(translateY(0));
+	}
+
+	.no-js & {
+		position: static;
+		@include transform(translateY(0));
+
+		.cd-close-menu {
+			display: none;
+		}
+	}
+}
+
+.cd-shadow-layer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(#000, .4);
+	z-index: $shadow-zindex;
+	opacity: 0;
+	visibility: hidden;
+
+	@include transition(visibility 0s .5s, opacity .5s 0s);
+
+	&.is-visible {
+		opacity: 1;
+		visibility: visible;
+
+		@include transition-delay(0s);
+	}
+}

@@ -1,0 +1,35 @@
+/* Main stuff */
+.text-copy--stroke {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 4;
+}
+.text-copy--shadow {
+  fill: rgba(0, 0, 0, .25);
+  -webkit-transform: translate(.06em, .06em);
+  transform: translate(.06em, .06em);
+}
+.shape-fill {
+  fill: url("#p-circles");
+}
+.c-ring {
+  fill: none;
+  stroke-width: 2;
+  stroke: white;
+}
+/* Other stuff */
+body {
+  background: royalblue -webkit-radial-gradient( royalblue, darken(royalblue, 40%));
+  background: royalblue radial-gradient( royalblue, darken(royalblue, 40%));
+  color: #fff;
+}
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase;
+}

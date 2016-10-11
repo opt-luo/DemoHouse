@@ -1,0 +1,345 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-6;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Slider
+
+-------------------------------- */
+
+.cd-slider-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	
+	/* hide horizontal scrollbar on IE11 */
+	overflow: hidden;
+
+	.cd-slider , .cd-slider > li {
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.cd-slider > li {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	/* used to vertically center its content */
+	display: table;
+
+	background-position: center center;
+	background-repeat: no-repeat;
+
+	@include font-smoothing;
+
+	&.visible {
+		/* selected slide */
+		position: relative;
+		z-index: 2;
+		opacity: 1;
+	}
+
+	&:first-of-type {
+		background-color: $color-1;
+		background-image: url(../img/img-1.jpg);
+	}
+
+	&:nth-of-type(2) {
+		background-color: $color-2;
+		background-image: url(../img/img-2.jpg);
+	}
+
+	&:nth-of-type(3) {
+		background-color: $color-3;
+		background-image: url(../img/img-3.jpg);
+	}
+
+	&:nth-of-type(4) {
+		background-color: $color-4;
+		background-image: url(../img/img-4.jpg);
+	}
+
+	&:first-of-type, &:nth-of-type(2), &:nth-of-type(3), &:nth-of-type(4) {
+		background-size: cover; 
+	}
+
+	> div {
+		/* vertically center the slider content */
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	h2, p {
+		text-shadow: 0 1px 3px rgba(#000, .1);
+		line-height: 1.2;
+		margin: 0 auto 14px;
+		color: $color-6;
+		width: 90%;
+		max-width: 320px;
+	}
+
+	h2 {
+		font-size: 2.4rem;
+	}
+
+	p {
+		font-size: 1.4rem;
+		line-height: 1.4;
+	}
+
+	.cd-btn {
+		display: inline-block;
+		padding: 1.2em 1.4em;
+		margin-top: .8em;
+		background-color: rgba(#000, .6);
+		border-radius: .25em;
+		font-size: 1.3rem;
+		font-weight: 700;
+		letter-spacing: 1px;
+		color: $color-6;
+		text-transform: uppercase;
+		@include transition(background-color .2s);
+
+		.no-touch &:hover {
+			background-color: rgba(#000, .8);
+		}
+	}
+
+	@include MQ(M) {
+
+		h2, p {
+			max-width: 520px;
+		}
+
+		h2 {
+			font-size: 2.4em;
+			font-weight: 300;
+		}
+
+		.cd-btn {
+			font-size: 1.4rem;
+		}
+	}
+
+	@include MQ(L) {
+
+		h2, p {
+			margin-bottom: 20px;
+		}
+
+		h2 {
+			font-size: 3.2em;
+		}
+
+		p {
+			font-size: 1.8rem;
+		}
+	}
+}
+
+
+/* -------------------------------- 
+
+Slider navigation
+
+-------------------------------- */
+
+.cd-slider-navigation {
+	position: absolute;
+	bottom: 50px;
+	@include center(x);
+	z-index: 3;
+	@include clearfix;
+	text-align: center;
+	width: 90%;
+
+	li {
+		display: inline-block;
+		margin-right: 20px;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
+
+	a {
+		display: block;
+		position: relative;
+		height: 40px;
+		width: 40px;
+		background: url(../img/cd-icon-navigation.svg) no-repeat -10px -10px;
+		border-radius: 50%;
+		background-color: $color-6;
+
+		.no-touch &:hover {
+
+			em {
+				opacity: 1;
+				visibility: visible;
+				@include transform(translateX(-50%));
+				@include transition(opacity .2s 0s, visibility 0s 0s, transform .2s 0s);
+			}
+		}
+	}
+
+	li.selected:first-of-type a {
+		/* change custom icon using image sprites */
+		background-position: -10px -70px;
+	}
+
+	li:nth-of-type(2) a {
+		background-position: -70px -10px;
+	}
+
+	li.selected:nth-of-type(2) a {
+		background-position: -70px -70px;
+	}
+
+	li:nth-of-type(3) a {
+		background-position: -130px -10px;
+	}
+
+	li.selected:nth-of-type(3) a {
+		background-position: -130px -70px;
+	}
+
+	li:nth-of-type(4) a {
+		background-position: -190px -10px;
+	}
+
+	li.selected:nth-of-type(4) a {
+		background-position: -190px -70px;
+	}
+
+	em {
+		/* tooltip visible on hover */
+		position: absolute;
+		bottom: calc(100% + 10px);
+		left: 50%;
+		padding: 8px 10px;
+		color: $color-6;
+		background-color: rgba(#000, .7);
+		white-space: nowrap;
+		font-size: 1.3rem;
+		border-radius: 2px;
+		
+		opacity: 0;
+		visibility: hidden;
+		@include transform(translateX(-50%) translateY(3px));
+		@include transition(opacity .2s 0s, visibility 0s .2s, transform .2s 0s);
+
+		&::after {
+			/* tooltip arrow */
+			content: '';
+			position: absolute;
+			@include center(x);
+			bottom: -10px;
+			height: 0;
+			width: 0;
+			border: 5px solid transparent;
+			border-top-color: rgba(#000, .7);  
+		}
+	}
+
+	@include MQ(L) {
+		a {
+			height: 60px;
+			width: 60px;
+		}
+
+		li:first-of-type a {
+			/* change custom icon using image sprites */
+			background-position: 0 0px;
+		}
+
+		li.selected:first-of-type a {
+			/* change custom icon using image sprites */
+			background-position: 0 -60px;
+		}
+
+		li:nth-of-type(2) a {
+			background-position: -60px 0;
+		}
+
+		li.selected:nth-of-type(2) a {
+			background-position: -60px -60px;
+		}
+
+		li:nth-of-type(3) a {
+			background-position: -120px 0;
+		}
+
+		li.selected:nth-of-type(3) a {
+			background-position: -120px -60px;
+		}
+
+		li:nth-of-type(4) a {
+			background-position: -180px 0;
+		}
+
+		li.selected:nth-of-type(4) a {
+			background-position: -180px -60px;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+svg cover layer
+
+-------------------------------- */
+.cd-svg-cover {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+
+	path {
+		fill: $color-5;
+	}
+
+	&.is-animating {
+		z-index: 4;
+		opacity: 1;
+		@include transition(opacity .6s);
+	}
+}

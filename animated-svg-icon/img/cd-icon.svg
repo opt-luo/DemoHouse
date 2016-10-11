@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="cd-buildings" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="200px" height="200px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F8F8F8;stroke:#223443;stroke-width:4;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#223443;stroke-width:4;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#D7DCE0;stroke-width:4;stroke-miterlimit:10;}
+</style>
+<g id="cd-home-3">
+	<rect id="cd-home-3-base" x="66" y="55" class="st0" width="58" height="123"/>
+	<polygon id="cd-home-3-roof" class="st0" points="59.4,55 95,14 130.6,55 	"/>
+	<circle id="cd-home-3-window" class="st0" cx="95" cy="77" r="11"/>
+</g>
+<g id="cd-home-2">
+	<rect id="cd-home-2-base" x="98" y="132" class="st0" width="69" height="46"/>
+	<rect id="cd-home-2-roof" x="98" y="122" class="st0" width="69" height="10"/>
+	<rect id="cd-home-2-door" x="141" y="155" class="st0" width="15" height="22"/>
+	<rect id="cd-home-2-window" x="106" y="143" class="st0" width="25" height="9"/>
+</g>
+<g id="cd-home-1">
+	<rect id="cd-home-1-base" x="29" y="109" class="st0" width="69" height="69"/>
+	<rect id="cd-home-1-roof" x="23" y="100" class="st0" width="80" height="9"/>
+	<rect id="cd-home-1-door" x="53" y="151" class="st0" width="20" height="27"/>
+	<rect id="cd-home-1-window" x="53" y="121" class="st0" width="20" height="18"/>
+	<rect id="cd-home-1-chimney" x="34" y="89" class="st0" width="11" height="11"/>
+</g>
+<line id="cd-floor" class="st1" x1="2" y1="178" x2="198" y2="178"/>
+<g id="cd-cloud-1">
+	<line class="st2" x1="5" y1="13" x2="29" y2="13"/>
+	<line class="st2" x1="35" y1="13" x2="44" y2="13"/>
+	<line class="st2" x1="72" y1="27" x2="14" y2="27"/>
+</g>
+<g id="cd-cloud-2">
+	<line class="st2" x1="191" y1="68" x2="159" y2="68"/>
+	<line class="st2" x1="153" y1="68" x2="144" y2="68"/>
+	<line class="st2" x1="179" y1="83" x2="133" y2="83"/>
+</g>
+</svg>

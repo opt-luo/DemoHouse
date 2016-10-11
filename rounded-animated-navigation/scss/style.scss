@@ -1,0 +1,322 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	@include box-sizing(border-box);
+}
+
+*::after, *::before {
+	content: '';
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+html, body {
+	height: 100%;
+}
+
+header {
+	z-index: $nav-zindex;
+}
+
+.cd-logo, .cd-nav-trigger {
+	position: fixed;
+	display: inline-block;
+}
+
+.cd-logo {
+	top: 28px;
+	left: 5%;
+
+	img {
+		display: block;
+	}
+}
+
+.cd-nav-trigger {
+	top: 18px;
+	right: 5%;
+	height: 44px;
+	width: 44px;
+	z-index: $trigger-zindex;
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	.cd-icon {
+		/* icon created in CSS */
+		position: absolute;
+		@include center; // mixin inside partials > _mixins.scss
+		display: inline-block;
+		width: 18px;
+		height: 3px;
+		background-color: $color-4;
+		z-index: 10;
+
+		&::before, &:after {
+			/* upper and lower lines of the menu icon */
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%; 
+			background-color: $color-4;
+
+			/* Force Hardware Acceleration in WebKit */
+			@include transform(translateZ(0));
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+
+			/* apply transition to transform property */
+			-webkit-transition: -webkit-transform .3s;
+			-moz-transition: -moz-transform .3s;
+			transition: transform .3s;
+		}
+
+		&::before {
+			@include transform(translateY(-6px) rotate(0deg));
+		}
+
+		&::after {
+			@include transform(translateY(6px) rotate(0deg));
+		}
+	}
+
+	&::before, &::after {
+		/* 2 rounded colored backgrounds for the menu icon */
+		position: absolute;
+		top: 0;
+		left: 0;
+		border-radius: 50%;
+		height: 100%;
+		width: 100%;
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		@include transition-property(transform);
+	}
+
+	&::before {
+		background-color: $color-1;
+		@include transform(scale(1));
+		@include transition-duration(.3s);
+		@include transition-delay(.4s);
+	}
+
+	&::after {
+		background-color: $color-3;
+		@include transform(scale(0));
+		@include transition-duration(0s);
+		@include transition-delay(0s);
+	}
+
+	&.close-nav::before {
+		/* user clicks on the .cd-nav-trigger element - 1st rounded background disappears */
+		@include transform(scale(0));
+	}
+
+	&.close-nav::after {
+		/* user clicks on the .cd-nav-trigger element - 2nd rounded background appears */
+		@include transform(scale(1));
+		@include transition-duration(.3s);
+		@include transition-delay(.4s);
+	}
+
+	&.close-nav .cd-icon {
+		/* user clicks on the .cd-nav-trigger element - transform the icon */
+		background-color: rgba($color-4, 0);
+
+		&::before, &::after {
+			background-color: rgba($color-4, 1);
+		}
+		
+		&::before {
+			@include transform(translateY(0) rotate(45deg));
+		}
+
+		&::after {
+			@include transform(translateY(0) rotate(-45deg));
+		}
+	}
+}
+
+.cd-primary-nav {
+	/* by default it's hidden */
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	padding: 80px 5%;
+	z-index: $nav-zindex;
+	background-color: $color-1;
+	overflow: auto;
+	/* this fixes the buggy scrolling on webkit browsers - mobile devices only - when overflow property is applied */
+	-webkit-overflow-scrolling: touch;
+	visibility: hidden;
+	opacity: 0;
+	@include transition(visibility 0s, opacity .3s);
+
+	li {
+		margin: 1.6em 0;
+		text-align: center;
+		text-transform: capitalize;
+	}
+
+	a {
+		@include font-size(20px);
+		@include font-smoothing;
+		@include transition(color .2s);
+
+		.no-touch &:hover {
+			color: $color-4;
+		}
+	}
+
+	&.fade-in {
+		/* navigation visible at the end of the circle animation */
+		visibility: visible;
+		opacity: 1;
+	}
+
+	@include MQ(M) {
+		li {
+			margin: 2em 0;
+		}
+
+		a {
+			@include font-size(28px);
+		}
+	}
+
+	@include MQ(L) {
+		li {
+			margin: 2.6em 0;
+		}
+
+		a {
+			@include font-size(32px);
+		}
+	}
+}
+
+.cd-overlay-nav, .cd-overlay-content {
+	/* containers of the 2 main rounded backgrounds - these containers are used to position the rounded bgs behind the menu icon */
+	position: fixed;
+	top: 18px;
+	right: 5%;
+	height: 4px;
+	width: 4px;
+	@include transform(translateX(-20px) translateY(20px));
+
+	span {
+		display: inline-block;
+		position: absolute;
+		border-radius: 50%;
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		will-change: transform;
+		@include transform-origin(50% 50%);
+		@include transform(scale(0));
+	}
+
+	&.is-hidden {
+		/* background fades out at the end of the animation */
+		opacity: 0;
+		visibility: hidden;
+		-webkit-transition: opacity .3s 0s, visibility 0s .3s;
+		-moz-transition: opacity .3s 0s, visibility 0s .3s;
+		transition: opacity .3s 0s, visibility 0s .3s;
+	}
+}
+
+.cd-overlay-nav {
+	/* main rounded colored bg 1 */
+	z-index: $layer-nav-zindex;
+
+	span {
+		background-color: $color-1;
+	}
+}
+
+.cd-overlay-content {
+	/* main rounded colored bg 2 */
+	z-index: $layer-content-zindex;
+
+	span {
+		background-color: $color-3;
+	}
+}
+
+.cd-content {
+	/* just some dummy content */
+	padding: 80px 0;
+	width: 90%;
+	max-width: $M;
+	margin: 0 auto;
+	z-index: $content-zindex;
+
+	.cd-intro {
+		height: 200px;
+		padding-top: 4.6em;
+	}
+
+	h1 {
+		text-align: center;
+		@include font-size(20px);
+	}
+
+	p {
+		line-height: 1.5;
+		color: darken($color-3, 30%);
+	}
+
+	@include MQ(M) {
+		.cd-intro {
+			height: 250px;
+			padding-top: 6em;
+		}
+
+		h1 {
+			@include font-size(28px);
+		}
+
+		p {
+			@include font-size(18px);
+			line-height: 1.8;
+		}
+	}
+}

@@ -1,0 +1,19 @@
+/* Function for creating stroke with text-shadow */
+/* Main stuff */
+
+.box-with-text {
+  text-shadow: -0 px -0 px 0 yellowgreen, 0 px -0 px 0 yellowgreen, 0 px 0 px 0 yellowgreen, -0 px 0 px 0 yellowgreen, -1 px -1 px 0 yellowgreen, 1 px -1 px 0 yellowgreen, 1 px 1 px 0 yellowgreen, -1 px 1 px 0 yellowgreen, -2 px -2 px 0 yellowgreen, 2 px -2 px 0 yellowgreen, 2 px 2 px 0 yellowgreen, -2 px 2 px 0 yellowgreen, 0 5px 15px rgba(0, 0, 0, 0.2);
+  font: 26vmax/.85 Open Sans, Impact;
+  color: #fff; }
+
+/* Other stuff */
+body {
+  background: #fff; }
+
+.box-with-text {
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 100px; }
+
+/*# sourceMappingURL=style10.css.map */

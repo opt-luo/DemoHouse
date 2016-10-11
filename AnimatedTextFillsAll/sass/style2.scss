@@ -1,0 +1,21 @@
+/* Main stuff */
+.box-with-text {
+  background-image: -webkit-linear-gradient(transparent, transparent), url("../img/image1.jpg");
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Other stuff */
+body {
+  background: #000;
+  color: #fff;
+}
+.box-with-text {
+  overflow: hidden;
+  background-position: 50% 50%;
+  background-size: cover;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font: 26vmax/.85 Open Sans, Impact;
+  margin: 0 0 100px;
+}

@@ -1,0 +1,70 @@
+/* Main stuff */
+.text-copy--stroke {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 4;
+}
+.text-copy--shadow {
+  fill: rgba(0, 0, 0, .25);
+  -webkit-transform: translate(.06em, .06em);
+  transform: translate(.06em, .06em);
+}
+.r-fill {
+  fill: url("#p-circles");
+  -webkit-transform-origin: 300px 150px;
+  transform-origin: 300px 150px;
+  -webkit-animation: rotate 30s infinite linear;
+  animation: rotate 30s infinite linear;
+}
+.c-ring {
+  fill: none;
+  stroke-width: 2;
+  stroke: white;
+}
+.c-ring--fill {
+  fill: white;
+  stroke-width: 0;
+  stroke: white;
+  -webkit-animation: stroke 5s infinite;
+  animation: stroke 5s infinite;
+}
+@-webkit-keyframes stroke {
+  50% {
+    stroke-width: 15;
+  }
+}
+@keyframes stroke {
+  50% {
+    stroke-width: 15;
+  }
+}
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* Other stuff */
+
+$bgcolor: #9b70b6;
+body {
+  background: $bgcolor -webkit-radial-gradient( $bgcolor, darken($bgcolor, 40%));
+  background: $bgcolor radial-gradient( $bgcolor, darken($bgcolor, 40%));
+  color: #fff;
+}
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase;
+}

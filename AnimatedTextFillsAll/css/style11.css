@@ -1,0 +1,67 @@
+/* Main stuff */
+.text {
+  fill: none;
+  stroke: url("#p-spots");
+  stroke-width: 8;
+  stroke-linejoin: round; }
+
+/* Colorize & animate pattern */
+.g-spots ellipse {
+  stroke-width: 0;
+  stroke-opacity: 1;
+  -webkit-animation: stroke 1.5s infinite;
+  animation: stroke 1.5s infinite; }
+  .g-spots ellipse:nth-child(5n + 1) {
+    fill: #3F0B1B;
+    stroke: #3F0B1B;
+    -webkit-animation-delay: -0.3s;
+    animation-delay: -0.3s; }
+  .g-spots ellipse:nth-child(5n + 2) {
+    fill: #7A1631;
+    stroke: #7A1631;
+    -webkit-animation-delay: -0.6s;
+    animation-delay: -0.6s; }
+  .g-spots ellipse:nth-child(5n + 3) {
+    fill: #CF423C;
+    stroke: #CF423C;
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s; }
+  .g-spots ellipse:nth-child(5n + 4) {
+    fill: #FC7D49;
+    stroke: #FC7D49;
+    -webkit-animation-delay: -1.2s;
+    animation-delay: -1.2s; }
+  .g-spots ellipse:nth-child(5n + 5) {
+    fill: #ffd462;
+    stroke: #ffd462;
+    -webkit-animation-delay: -1.5s;
+    animation-delay: -1.5s; }
+
+/* Change stroke-width inside animation */
+@-webkit-keyframes stroke {
+  50% {
+    stroke-width: 27;
+    stroke-opacity: 0.5; } }
+@keyframes stroke {
+  50% {
+    stroke-width: 27;
+    stroke-opacity: 0.5; } }
+/* Other stuff */
+html,
+body {
+  height: 100%; }
+
+body {
+  background: #550f24;
+  color: #fff; }
+
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact; }
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase; }
+
+/*# sourceMappingURL=style11.css.map */

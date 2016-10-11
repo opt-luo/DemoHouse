@@ -1,0 +1,96 @@
+/* Main stuff */
+.svg-inverted-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; }
+
+.mask__shape {
+  fill: white; }
+
+.box-with-text {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  padding-top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  /* Hide the line */ }
+  .box-with-text:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid lightgoldenrodyellow; }
+
+.text-fill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: hidden; }
+
+.shape--fill {
+  fill: lightgoldenrodyellow; }
+
+/* Transparent copy of text to keep patterned text selectable */
+.text--transparent {
+  fill: transparent; }
+
+/* Function for getting colors from list if we need quantity of colors more than colors in array  */
+/* Function for creating multiple box-shadow */
+/* Element with animated shadows */
+.shadows {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1vmax;
+  height: 1vmax;
+  background: gold;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2vmax purple, 0 0 0 4vmax crimson, 0 0 0 6vmax red, 0 0 0 8vmax orangered, 0 0 0 10vmax tomato, 0 0 0 12vmax gold, 0 0 0 14vmax yellow, 0 0 0 16vmax yellowgreen, 0 0 0 18vmax turquoise, 0 0 0 20vmax royalblue, 0 0 0 22vmax mediumslateblue, 0 0 0 24vmax mediumorchid, 0 0 0 26vmax purple, 0 0 0 28vmax crimson, 0 0 0 30vmax red, 0 0 0 32vmax orangered, 0 0 0 34vmax tomato, 0 0 0 36vmax gold, 0 0 0 38vmax yellow, 0 0 0 40vmax yellowgreen, 0 0 0 42vmax turquoise, 0 0 0 44vmax royalblue, 0 0 0 46vmax mediumslateblue, 0 0 0 48vmax mediumorchid, 0 0 0 50vmax darkviolet, 0 0 0 52vmax purple, 0 0 0 54vmax crimson, 0 0 0 56vmax red, 0 0 0 58vmax orangered, 0 0 0 60vmax tomato, 0 0 0 62vmax gold, 0 0 0 64vmax yellow, 0 0 0 66vmax yellowgreen, 0 0 0 68vmax turquoise, 0 0 0 70vmax royalblue, 0 0 0 72vmax mediumslateblue, 0 0 0 74vmax mediumorchid, 0 0 0 76vmax darkviolet, 0 0 0 78vmax purple, 0 0 0 80vmax crimson, 0 0 0 82vmax red, 0 0 0 84vmax orangered, 0 0 0 86vmax tomato, 0 0 0 88vmax gold, 0 0 0 90vmax yellow;
+  -webkit-animation: shadows-move 4s linear infinite;
+  animation: shadows-move 4s linear infinite; }
+
+@-webkit-keyframes shadows-move {
+  25% {
+    box-shadow: 0 0 0 2vmax royalblue, 0 0 0 4vmax mediumslateblue, 0 0 0 6vmax mediumorchid, 0 0 0 8vmax purple, 0 0 0 10vmax crimson, 0 0 0 12vmax red, 0 0 0 14vmax orangered, 0 0 0 16vmax tomato, 0 0 0 18vmax gold, 0 0 0 20vmax yellow, 0 0 0 22vmax yellowgreen, 0 0 0 24vmax turquoise, 0 0 0 26vmax royalblue, 0 0 0 28vmax mediumslateblue, 0 0 0 30vmax mediumorchid, 0 0 0 32vmax darkviolet, 0 0 0 34vmax purple, 0 0 0 36vmax crimson, 0 0 0 38vmax red, 0 0 0 40vmax orangered, 0 0 0 42vmax tomato, 0 0 0 44vmax gold, 0 0 0 46vmax yellow, 0 0 0 48vmax yellowgreen, 0 0 0 50vmax turquoise, 0 0 0 52vmax royalblue, 0 0 0 54vmax mediumslateblue, 0 0 0 56vmax mediumorchid, 0 0 0 58vmax darkviolet, 0 0 0 60vmax purple, 0 0 0 62vmax crimson, 0 0 0 64vmax red, 0 0 0 66vmax orangered, 0 0 0 68vmax tomato, 0 0 0 70vmax gold, 0 0 0 72vmax yellow, 0 0 0 74vmax yellowgreen, 0 0 0 76vmax turquoise, 0 0 0 78vmax royalblue, 0 0 0 80vmax mediumslateblue, 0 0 0 82vmax mediumorchid, 0 0 0 84vmax darkviolet, 0 0 0 86vmax purple, 0 0 0 88vmax crimson, 0 0 0 90vmax red; }
+  45% {
+    box-shadow: 0 0 0 2vmax yellow, 0 0 0 4vmax yellowgreen, 0 0 0 6vmax turquoise, 0 0 0 8vmax royalblue, 0 0 0 10vmax mediumslateblue, 0 0 0 12vmax mediumorchid, 0 0 0 14vmax purple, 0 0 0 16vmax crimson, 0 0 0 18vmax red, 0 0 0 20vmax orangered, 0 0 0 22vmax tomato, 0 0 0 24vmax gold, 0 0 0 26vmax yellow, 0 0 0 28vmax yellowgreen, 0 0 0 30vmax turquoise, 0 0 0 32vmax royalblue, 0 0 0 34vmax mediumslateblue, 0 0 0 36vmax mediumorchid, 0 0 0 38vmax darkviolet, 0 0 0 40vmax purple, 0 0 0 42vmax crimson, 0 0 0 44vmax red, 0 0 0 46vmax orangered, 0 0 0 48vmax tomato, 0 0 0 50vmax gold, 0 0 0 52vmax yellow, 0 0 0 54vmax yellowgreen, 0 0 0 56vmax turquoise, 0 0 0 58vmax royalblue, 0 0 0 60vmax mediumslateblue, 0 0 0 62vmax mediumorchid, 0 0 0 64vmax darkviolet, 0 0 0 66vmax purple, 0 0 0 68vmax crimson, 0 0 0 70vmax red, 0 0 0 72vmax orangered, 0 0 0 74vmax tomato, 0 0 0 76vmax gold, 0 0 0 78vmax yellow, 0 0 0 80vmax yellowgreen, 0 0 0 82vmax turquoise, 0 0 0 84vmax royalblue, 0 0 0 86vmax mediumslateblue, 0 0 0 88vmax mediumorchid, 0 0 0 90vmax darkviolet; }
+  75% {
+    box-shadow: 0 0 0 2vmax orangered, 0 0 0 4vmax tomato, 0 0 0 6vmax gold, 0 0 0 8vmax yellow, 0 0 0 10vmax yellowgreen, 0 0 0 12vmax turquoise, 0 0 0 14vmax royalblue, 0 0 0 16vmax mediumslateblue, 0 0 0 18vmax mediumorchid, 0 0 0 20vmax purple, 0 0 0 22vmax crimson, 0 0 0 24vmax red, 0 0 0 26vmax orangered, 0 0 0 28vmax tomato, 0 0 0 30vmax gold, 0 0 0 32vmax yellow, 0 0 0 34vmax yellowgreen, 0 0 0 36vmax turquoise, 0 0 0 38vmax royalblue, 0 0 0 40vmax mediumslateblue, 0 0 0 42vmax mediumorchid, 0 0 0 44vmax darkviolet, 0 0 0 46vmax purple, 0 0 0 48vmax crimson, 0 0 0 50vmax red, 0 0 0 52vmax orangered, 0 0 0 54vmax tomato, 0 0 0 56vmax gold, 0 0 0 58vmax yellow, 0 0 0 60vmax yellowgreen, 0 0 0 62vmax turquoise, 0 0 0 64vmax royalblue, 0 0 0 66vmax mediumslateblue, 0 0 0 68vmax mediumorchid, 0 0 0 70vmax darkviolet, 0 0 0 72vmax purple, 0 0 0 74vmax crimson, 0 0 0 76vmax red, 0 0 0 78vmax orangered, 0 0 0 80vmax tomato, 0 0 0 82vmax gold, 0 0 0 84vmax yellow, 0 0 0 86vmax yellowgreen, 0 0 0 88vmax turquoise, 0 0 0 90vmax royalblue; } }
+@keyframes shadows-move {
+  25% {
+    box-shadow: 0 0 0 2vmax royalblue, 0 0 0 4vmax mediumslateblue, 0 0 0 6vmax mediumorchid, 0 0 0 8vmax purple, 0 0 0 10vmax crimson, 0 0 0 12vmax red, 0 0 0 14vmax orangered, 0 0 0 16vmax tomato, 0 0 0 18vmax gold, 0 0 0 20vmax yellow, 0 0 0 22vmax yellowgreen, 0 0 0 24vmax turquoise, 0 0 0 26vmax royalblue, 0 0 0 28vmax mediumslateblue, 0 0 0 30vmax mediumorchid, 0 0 0 32vmax darkviolet, 0 0 0 34vmax purple, 0 0 0 36vmax crimson, 0 0 0 38vmax red, 0 0 0 40vmax orangered, 0 0 0 42vmax tomato, 0 0 0 44vmax gold, 0 0 0 46vmax yellow, 0 0 0 48vmax yellowgreen, 0 0 0 50vmax turquoise, 0 0 0 52vmax royalblue, 0 0 0 54vmax mediumslateblue, 0 0 0 56vmax mediumorchid, 0 0 0 58vmax darkviolet, 0 0 0 60vmax purple, 0 0 0 62vmax crimson, 0 0 0 64vmax red, 0 0 0 66vmax orangered, 0 0 0 68vmax tomato, 0 0 0 70vmax gold, 0 0 0 72vmax yellow, 0 0 0 74vmax yellowgreen, 0 0 0 76vmax turquoise, 0 0 0 78vmax royalblue, 0 0 0 80vmax mediumslateblue, 0 0 0 82vmax mediumorchid, 0 0 0 84vmax darkviolet, 0 0 0 86vmax purple, 0 0 0 88vmax crimson, 0 0 0 90vmax red; }
+  45% {
+    box-shadow: 0 0 0 2vmax yellow, 0 0 0 4vmax yellowgreen, 0 0 0 6vmax turquoise, 0 0 0 8vmax royalblue, 0 0 0 10vmax mediumslateblue, 0 0 0 12vmax mediumorchid, 0 0 0 14vmax purple, 0 0 0 16vmax crimson, 0 0 0 18vmax red, 0 0 0 20vmax orangered, 0 0 0 22vmax tomato, 0 0 0 24vmax gold, 0 0 0 26vmax yellow, 0 0 0 28vmax yellowgreen, 0 0 0 30vmax turquoise, 0 0 0 32vmax royalblue, 0 0 0 34vmax mediumslateblue, 0 0 0 36vmax mediumorchid, 0 0 0 38vmax darkviolet, 0 0 0 40vmax purple, 0 0 0 42vmax crimson, 0 0 0 44vmax red, 0 0 0 46vmax orangered, 0 0 0 48vmax tomato, 0 0 0 50vmax gold, 0 0 0 52vmax yellow, 0 0 0 54vmax yellowgreen, 0 0 0 56vmax turquoise, 0 0 0 58vmax royalblue, 0 0 0 60vmax mediumslateblue, 0 0 0 62vmax mediumorchid, 0 0 0 64vmax darkviolet, 0 0 0 66vmax purple, 0 0 0 68vmax crimson, 0 0 0 70vmax red, 0 0 0 72vmax orangered, 0 0 0 74vmax tomato, 0 0 0 76vmax gold, 0 0 0 78vmax yellow, 0 0 0 80vmax yellowgreen, 0 0 0 82vmax turquoise, 0 0 0 84vmax royalblue, 0 0 0 86vmax mediumslateblue, 0 0 0 88vmax mediumorchid, 0 0 0 90vmax darkviolet; }
+  75% {
+    box-shadow: 0 0 0 2vmax orangered, 0 0 0 4vmax tomato, 0 0 0 6vmax gold, 0 0 0 8vmax yellow, 0 0 0 10vmax yellowgreen, 0 0 0 12vmax turquoise, 0 0 0 14vmax royalblue, 0 0 0 16vmax mediumslateblue, 0 0 0 18vmax mediumorchid, 0 0 0 20vmax purple, 0 0 0 22vmax crimson, 0 0 0 24vmax red, 0 0 0 26vmax orangered, 0 0 0 28vmax tomato, 0 0 0 30vmax gold, 0 0 0 32vmax yellow, 0 0 0 34vmax yellowgreen, 0 0 0 36vmax turquoise, 0 0 0 38vmax royalblue, 0 0 0 40vmax mediumslateblue, 0 0 0 42vmax mediumorchid, 0 0 0 44vmax darkviolet, 0 0 0 46vmax purple, 0 0 0 48vmax crimson, 0 0 0 50vmax red, 0 0 0 52vmax orangered, 0 0 0 54vmax tomato, 0 0 0 56vmax gold, 0 0 0 58vmax yellow, 0 0 0 60vmax yellowgreen, 0 0 0 62vmax turquoise, 0 0 0 64vmax royalblue, 0 0 0 66vmax mediumslateblue, 0 0 0 68vmax mediumorchid, 0 0 0 70vmax darkviolet, 0 0 0 72vmax purple, 0 0 0 74vmax crimson, 0 0 0 76vmax red, 0 0 0 78vmax orangered, 0 0 0 80vmax tomato, 0 0 0 82vmax gold, 0 0 0 84vmax yellow, 0 0 0 86vmax yellowgreen, 0 0 0 88vmax turquoise, 0 0 0 90vmax royalblue; } }
+/* Other stuff */
+html,
+body {
+  height: 100%; }
+
+body {
+  background: lightgoldenrodyellow; }
+
+.svg-defs {
+  width: 0;
+  height: 0; }
+
+.wrap {
+  width: 50%;
+  position: relative;
+  font: 800 14.5em/1 Open Sans, Impact;
+  text-transform: uppercase;
+  margin: 0 auto;
+  text-align: left;
+  overflow: hidden;
+  padding: 80px 0; }
+
+/*# sourceMappingURL=style21.css.map */

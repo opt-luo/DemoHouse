@@ -1,0 +1,23 @@
+/* Main stuff */
+.text-mask {
+  fill: white;
+  stroke: white;
+  stroke-opacity: 0.2;
+  stroke-width: 10;
+}
+/* Other stuff */
+
+body {
+  background: #111;
+  color: #fff;
+}
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase;
+}

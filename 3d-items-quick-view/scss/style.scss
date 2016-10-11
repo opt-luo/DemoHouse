@@ -1,0 +1,322 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-2;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-1;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $L; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+
+	&::after { /* clearfix */
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+.cd-img-replace {
+	/* replace text with background images */
+	display: inline-block;
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+header {
+	position: relative;
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+
+	h1 {
+		color: lighten($color-2, 30%);
+		@include font-size(26px);
+		font-weight: 300;
+	}
+
+	@include MQ(M) {
+		height: 250px;
+		line-height: 250px;
+
+		h1 {
+			@include font-size(30px);
+		}
+	}
+}
+
+#cd-gallery-items {
+	margin-top: 1.5em;
+
+	> li {
+		position: relative;
+		margin-bottom: 6em;
+
+		img {
+			width: 100%;
+			display: block;
+		}
+	}
+
+	@include MQ(M) {
+		margin-top: 2em;
+
+		> li {
+			@include column(.48); // see how this mixin works inside partials > _layout.scss
+			margin-right: 4%;
+			margin-bottom: 6.5em;
+
+			&:nth-child(2n) {
+				margin-right: 0;
+			}
+		}
+	}
+
+	@include MQ(L) {
+		margin-top: 2.5em;
+
+		> li {
+			@include column(.31);
+			margin-bottom: 7em;
+			margin-right: 3.5%;
+
+			&:nth-child(2n) {
+				margin-right: 3.5%;
+			}
+
+			&:nth-child(3n) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.cd-item-wrapper {
+	@include perspective(500px);
+	@include perspective-origin(50% -30%);
+
+	li {
+		position: absolute;
+		top: 0;
+		left: 0;
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translate3d(0,0,0));
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		@include transition(all .4s);
+
+		&.cd-item-front {
+			position: relative;
+			z-index: 3;
+			@include box-shadow;
+		}
+
+		&.cd-item-middle {
+			z-index: 2;
+
+			.active & {
+				/* 3D effect on touch devices */
+				@include transform(translate3d(0,0,-20px));
+				opacity: .8;
+				@include box-shadow;
+			}
+		}
+
+		&.cd-item-back {
+			z-index: 1;
+
+			.active & {
+				/* 3D effect on touch devices */
+				@include transform(translate3d(0,0,-40px));
+				opacity: .4;
+				@include box-shadow;
+			}
+		}
+
+		&.cd-item-out {
+			/* picture not visible - use this class in case you have more than 3 pictures per item */
+			z-index: 0;
+			opacity: 0;
+			@include transform(translate3d(0,0,-60px));
+		}
+
+		&.move-right {
+			@include transform(translate3d(200px,0,0));
+			opacity: 0;
+			z-index: 4 !important;
+		}
+
+		&.hidden {
+			/* used to hide the picture once it's pushed out - to the right */
+			display: none !important;
+		}
+
+		.no-csstransitions &.cd-item-middle, .no-csstransitions &.cd-item-back {
+			/* 3D effect not visible on browsers that don't support transitions */
+			display: none;
+		}
+	}
+}
+
+.cd-item-info {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 70px;
+	line-height: 70px;
+	background-color: lighten($color-3, 10%);
+	padding: 0 1em;	
+	@include clearfix;
+	box-shadow: 0 2px 3px rgba(#000, .2);
+	z-index: 5;
+
+	b {
+		float: left;
+		font-weight: bold;
+
+		a {
+			color: $color-2;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	em {
+		float: right;
+		color: lighten($color-2, 30%);
+	}
+}
+
+.cd-item-navigation {
+
+	a {
+		position: absolute;
+		top: 50%;
+		@include transform(translateY(-50%));
+		width: 36px;
+		height: 66px;
+		background-color: rgba($color-3, .4);
+		background-image: url('../img/cd-icon-arrow.svg');
+		background-repeat: no-repeat;
+		background-position: center center;
+		z-index: 4;
+		display: none;
+		@include border-radius;
+
+		.no-touch &:hover {
+			background-color: rgba($color-3, .6);
+		}
+
+		&.visible {
+			display: block;
+			@include animation(cd-fade-in .4s);
+		}
+	}
+
+	li:nth-child(1) a {
+		left: 14px;
+		@include transform(translateY(-50%) rotate(180deg));
+	}
+
+	li:nth-child(2) a {
+		right: 14px;
+	}
+
+	.no-csstransitions & {
+		display: none;
+	}
+}
+
+@include keyframes(cd-fade-in) {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.cd-3d-trigger {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 44px;
+	height: 44px;
+	background: url('../img/cd-icon-3d.svg') no-repeat center center;
+	z-index: 4;
+
+	.no-touch & {
+		display: none;
+	}
+}
+
+.no-touch #cd-gallery-items > li:hover {
+	.cd-item-middle, .cd-item-back {
+		@include box-shadow;
+	}
+
+	.cd-item-middle {
+		/* 3D effect on no-touch devices */
+		@include transform(translate3d(0,0,-20px));
+		opacity: .8;
+	}
+
+	.cd-item-back {
+		/* 3D effect on no-touch devices */
+		@include transform(translate3d(0,0,-40px));
+		opacity: .4;
+	}
+}

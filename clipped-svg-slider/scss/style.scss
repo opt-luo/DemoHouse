@@ -1,0 +1,260 @@
+// Note: we use Autoprefixer to add vendor prefixes to our CSS -> https://github.com/postcss/autoprefixer
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+svg, image {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-svg-clipped-slider {
+	position: relative;
+	width: 100%;
+	max-width: $XL;
+	margin: 4em auto;
+
+	.gallery-wrapper,
+	.gallery,
+	.caption {
+		position: relative;
+	}
+
+	.gallery li {
+		/* slider images */
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 25%; /* (100% - width)/2 */
+		width: 50%;
+		height: 100%;
+		opacity: 0;
+		transform: translateX(75%) scale(.4);
+		cursor: pointer;
+		transition: opacity .3s, transform .3s ease-in-out;
+	}
+
+	.gallery li.selected {
+		/* slide in the center */
+		position: relative;
+		z-index: 3;
+		height: 0;
+		padding-bottom: 50%; /* width(50%) * image aspect ratio (800/800) */
+		opacity: 1;
+		transform: translateX(0) scale(1);
+		cursor: auto;
+	}
+
+	.gallery li.left, .gallery li.left-hide {
+		/* slides on the left */
+		/* .left -> slide visible on the left; .left-hide -> slides hidden on the left */
+		transform: translateX(-75%) scale(.4);
+	}
+
+	.gallery li.left, .gallery li.right {
+		/* .right -> slide visible on the right */
+		z-index: 2;
+		opacity: 1;
+	}
+
+	.svg-wrapper {
+		/* using padding Hack to fix bug on IE - svg height not properly calculated */
+		height: 0;
+		padding-bottom: 100%; /* image aspect ratio (800/800) * 100 */
+	}
+
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	use.cover-layer {
+		/* dark layer visible on lateral slides */
+		fill: $color-1;
+		transition: opacity .3s;
+		opacity: .2;
+
+		&:hover {
+			opacity: 0;
+		}
+	}
+
+	.gallery li.selected use.cover-layer {
+		opacity: 0;
+	}
+
+	.caption {
+		margin: 1em 0;
+		overflow: hidden;
+	}
+
+	.caption li {
+		/* slide titles */
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		text-align: center;
+		width: 100%;
+		transform: translateX(100px);
+		opacity: 0;
+		padding: 1em 0;
+		transition: opacity .3s, transform .3s ease-in-out;
+	}
+
+	.caption li.selected {
+		/* slide visible in the center */
+		z-index: 2;
+		position: relative;
+		transform: translateX(0);
+		opacity: 1;
+	}
+
+	.caption li.left {
+		/* slide hidden on the left */
+		transform: translateX(-100px);
+	}
+
+	@include MQ(M) {
+		.caption li {
+			font-size: 2.4rem;
+		}
+	}
+
+	@include MQ(L) {
+		width: 90%;
+
+		.gallery li {
+			left: 30%; /* (100% - width)/2 */
+			width: 40%;
+			transform: translateX(80%) scale(.4);
+		}
+
+		.gallery li.selected {
+			padding-bottom: 40%; /* width(40%) * image aspect ratio (800/800) */
+		}
+
+		.gallery li.left, .gallery li.left-hide {
+			transform: translateX(-80%) scale(.4);
+		}
+	}
+}
+
+.cd-svg-clipped-slider .navigation a {
+	/* slider arrows */
+	position: absolute;
+	/* center arrow in the lateral preview */
+	/* left = */
+	/* 25% (.left left value) */  
+	/* - 37.5% (.left translateX value converted to container percentage ( 50%(.left width) x 75% (.left translate value) /100) ) */
+	/* + 25% ( .left width (50%)/2 ) */
+	left: 12.5%;
+	transform: translateX(-50%) translateY(-50%) scale(.7);
+	top: 50%;
+	z-index: 4;
+	pointer-events: none;
+	/* replace text with image */
+	height: 48px;
+	width: 48px;
+	color: transparent;
+	overflow: hidden;
+	white-space: nowrap;
+	text-indent: 100%;
+	transition: transform .3s, opacity .3s;
+	background: url(../img/cd-icon-arrows.svg) no-repeat 0 0;
+
+	&.next {
+		left: auto;
+		right: 12.5%;
+		transform: translateX(50%) translateY(-50%) scale(.7);
+		background-position: -48px 0;
+	}
+
+	.no-csspointerevents & {
+		display: none;
+	}
+
+	@include MQ(L) {
+		left: 18%;
+		transform: translateX(-50%) translateY(-50%);
+
+		&.next {
+			left: auto;
+			right: 18%;
+			transform: translateX(50%) translateY(-50%);
+		}
+	}
+}
+
+.cd-svg-clipped-slider.prev-hidden .navigation a.prev,
+.cd-svg-clipped-slider.next-hidden .navigation a.next {
+	/* hide prev/next arrow if first/last slide */
+	opacity: 0;
+}
+
+.cd-svg-clipped-slider .navigation a.prev.active {
+	/* scale up prev arrow on active */
+	animation: cd-click-prev .3s;
+}
+
+.cd-svg-clipped-slider .navigation a.next.active {
+	/* scale up next arrow on active */
+	animation: cd-click-next .3s;
+}
+
+@keyframes cd-click-prev {
+    0% {
+        transform: translateX(-50%) translateY(-50%) scale(0.8);
+    }
+    100% {
+    	transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+}
+
+@keyframes cd-click-next {
+    0% {
+        transform: translateX(50%) translateY(-50%) scale(0.8);
+    }
+    100% {
+        transform: translateX(50%) translateY(-50%) scale(1);
+    }
+}

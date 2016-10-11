@@ -1,0 +1,61 @@
+/* Main stuff */
+.text {
+  fill: none;
+  stroke: url("#p-spots");
+  stroke-width: 8;
+  stroke-linejoin: round;
+}
+/* Colorize & animate pattern */
+$max: 5;
+$colors: #3F0B1B, #7A1631, #CF423C, #FC7D49, #ffd462;
+$time: 1.5s;
+$time-step: $time/$max;
+.g-spots ellipse {
+  stroke-width: 0;
+  stroke-opacity: 1;
+  -webkit-animation: stroke $time infinite;
+  animation: stroke $time infinite;
+  @for $item from 1 through $max {
+    &:nth-child(#{$max}n + #{$item}) {
+      $color: nth($colors, $item);
+      fill: $color;
+      stroke: $color;
+      -webkit-animation-delay: -($time-step*$item);
+      animation-delay: -($time-step*$item);
+    }
+  }
+}
+/* Change stroke-width inside animation */
+@-webkit-keyframes stroke {
+  50% {
+    stroke-width: 27;
+    stroke-opacity: 0.5;
+  }
+}
+@keyframes stroke {
+  50% {
+    stroke-width: 27;
+    stroke-opacity: 0.5;
+  }
+}
+/* Other stuff */
+$bgcolor: darken(#3F0B1B, 7%);
+
+html,
+body {
+  height: 100%;
+}
+body {
+  background: lighten($bgcolor, 12%);
+  color: #fff;
+}
+.content {
+  font: 800 14.5em/1  'Open Sans', Impact;
+}
+
+svg {
+  width: 50%;
+  margin: 0 auto 50px;
+  display: block;
+  text-transform: uppercase;
+}

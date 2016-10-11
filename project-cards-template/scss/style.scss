@@ -1,0 +1,611 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-4;
+}
+
+html, body {
+	height: 100%;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+button {
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+/* -------------------------------- 
+
+ Header
+
+-------------------------------- */
+
+.cd-logo, .cd-nav-trigger {
+	position: absolute;
+	z-index: 3;
+}
+
+.cd-logo {
+	top: 34px;
+	left: 5%;
+	@include transition(opacity .3s, visibility .3s);
+
+	&.project-open {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+.cd-nav-trigger {
+	top: 24px;
+	right: 5%;
+	height: 44px;
+	width: 44px;
+	border-radius: 50%;
+	background-color: rgba(#000, .6);
+	@include transition(background .2s);
+	
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+	color: transparent;
+
+	.cd-icon, 
+	.cd-icon::before, 
+	.cd-icon::after {
+		/* icon created in CSS */
+		position: absolute;
+		background-color: $color-5;
+		border-radius: 2px;
+
+		/* Force Hardware Acceleration in WebKit */
+		@include transform(translateZ(0));
+		@include backface-visibility(hidden);
+	}
+
+	.no-touch &:hover {
+		background-color: rgba(#000, .8);
+	}
+
+	.cd-icon {
+		/* middle line of the menu icon */
+		display: inline-block;
+		width: 18px;
+		height: 2px;
+		@include center; // mixin inside partials > _mixins.scss
+		@include transition(transform .3s, background-color .3s);
+
+		&::before, &::after {
+			/* upper and lower lines of the menu icon */
+			content: '';
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%; 
+			@include transition(transform .3s);
+		}
+
+		&::before {
+			@include transform(translateY(-6px));
+		}
+
+		&::after {
+			@include transform(translateY(6px));
+		}
+	}
+
+	&.project-open .cd-icon {
+		/* user selects a projects - transform the icon into a 'X' */
+		background-color: rgba($color-5, 0);
+
+		&::before, &::after {
+			background-color: rgba($color-5, 1);
+		}
+		
+		&::before {
+			@include transform(translateY(0) rotate(45deg));
+		}
+
+		&::after {
+			@include transform(translateY(0) rotate(-45deg));
+		}
+	}
+
+	&.nav-open .cd-icon {
+		/* user opens the navigation - transform the icon into an arrow */
+		@include transform(translateY(-50%) translateX(-50%) rotate(90deg));
+
+		&::after {
+			@include transform(translateX(-5px) translateY(3px) rotate(45deg) scaleX(.5));
+		}
+
+		&::before {
+			@include transform(translateX(-5px) translateY(-3px) rotate(-45deg) scaleX(.5));
+		}
+	}
+}
+
+/* -------------------------------- 
+
+ Navigation
+
+-------------------------------- */
+
+.cd-primary-nav {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	/* height = (100% - 9%) - 9% is the space taken by the projects when the navigation is open */
+	height: 91%;
+	width: 100%;
+	overflow: auto;
+	text-align: center;
+	opacity: 0;
+	@include transition(opacity 0s .4s);
+
+	/* vertically align its content */
+	display: table;
+
+	ul {
+		/* vertically align inside nav */
+		display: table-cell;
+		vertical-align: middle;
+		@include transform(translateY(50px));
+		@include transition(transform .4s);
+	}
+
+	a {
+		display: inline-block;
+		padding: .4em 1em;
+		border-radius: 4px;
+		@include transition(background .2s);
+
+		color: $color-5;
+		font-family: $secondary-font;
+		font-size: 2.4rem;
+		font-weight: 700;
+		@include font-smoothing;
+
+		.no-touch &:hover {
+			background-color: lighten($color-4, 5%);
+		}
+	}
+
+	.cd-label {
+		position: relative;
+		margin: 2.4em 0 2em;
+
+		color: lighten($color-4, 20%);
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 1.2rem;
+		letter-spacing: 1px;
+
+		&::after {
+			/* line below .cd-label*/
+			content: '';
+			position: absolute;
+			@include center(x);
+			bottom: -16px;
+			height: 1px;
+			width: 40px;
+			background-color: currentColor;
+		}
+	}
+
+	&.nav-open {
+		opacity: 1;
+		@include transition(opacity 0s);
+
+		ul {
+			@include transform(translateY(0));
+		}
+	}
+
+	@include MQ(L) {
+
+		a {
+			font-size: 4rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+ Projects
+
+-------------------------------- */
+
+.cd-projects-container {
+	height: 100%;
+	width: 100vw;
+	position: relative;
+	overflow: hidden;
+
+	.single-project {
+		position: absolute;
+		z-index: 2;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		cursor: pointer;
+		@include transition(transform .4s);
+
+		/* Force hardware acceleration */
+		@include backface-visibility(hidden);
+		@include transform(translateZ(0));
+
+		&:nth-of-type(2) {
+			@include transform(translateY(100%/$items));
+		}
+
+		&:nth-of-type(3) {
+			@include transform(translateY(100%*2/$items));
+		}
+
+		&.selected {
+			/* selected project */
+			cursor: auto;
+			@include transform(translateY(0));
+		}
+
+		&.selected ~ li {
+			/* hide siblings projects */
+			@include transform(translateY(100%));
+		}
+	}
+
+	&.nav-open .single-project {
+		box-shadow: 0 0 30px rgba(#000, .5);
+		@include transform(translateY(91%));
+
+		&:nth-of-type(2) {
+			@include transform(translateY(94%));
+		}
+
+		&:nth-of-type(3) {
+			@include transform(translateY(97%));
+		}
+	}
+
+	&.nav-open:hover .single-project {
+		@include transform(translateY(88%));
+
+		&:nth-of-type(2) {
+			@include transform(translateY(92%));
+		}
+
+		&:nth-of-type(3) {
+			@include transform(translateY(96%));
+		}
+	}
+}
+
+.cd-title {
+	position: relative;
+	z-index: 1;
+    height: 100%/$items;
+    width: 100vw;
+    text-align: center;
+    /* vertical align its content */
+    display: table;
+
+    &::before {
+    	/* background image */
+    	content: '';
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	height: 300%;
+    	width: 100%;
+    	background-position: center center;
+    	background-repeat: no-repeat; 
+    }
+
+    &::after {
+		/* line below title -  visible on hover */
+		content: '';
+		position: absolute;
+		left: 50%;
+	    top: calc(50% + 30px);
+	    @include transform(translateX(-50%) translateY(-50%) scaleX(0));
+	    height: 1px;
+	    width: 60px;
+	    background-color: $color-5;
+	    @include transition(transform .2s);
+	}
+
+    .single-project:nth-of-type(1) & {
+    	background-color: $color-1;
+
+    	&::before {
+    		background-image: url(../img/img-1.jpg);
+    	}
+    }
+
+    .single-project:nth-of-type(2) & {
+    	background-color: $color-2;
+
+    	&::before {
+    		background-image: url(../img/img-2.jpg);
+    	}
+    }
+
+    .single-project:nth-of-type(3) & {
+    	background-color: $color-3;
+
+    	&::before {
+    		background-image: url(../img/img-3.jpg);
+    	}
+    }
+
+    .single-project:nth-of-type(1) &::before, 
+    .single-project:nth-of-type(2) &::before, 
+    .single-project:nth-of-type(3) &::before {
+    	background-size: cover;
+    } 
+
+	h2 {
+		position: relative;
+		z-index: 1;
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: $color-5;
+		font-family: $secondary-font;
+
+		/* vertical align inside .cd-title */
+		display: table-cell;
+		vertical-align: middle;
+		
+		@include transition(transform .4s);
+
+		/* Force hardware acceleration */
+		@include backface-visibility(hidden);
+		@include transform(translateZ(0));
+	}
+
+	.no-touch &:hover::after {
+		@include transform(translateX(-50%) translateY(-50%) scaleX(1));
+	}
+
+	.no-touch .selected &:hover::after {
+		@include transition(transform 0s);
+		@include transform(translateX(-50%) translateY(-50%) scaleX(0));
+	}
+
+	.selected & h2 {
+		/* vertically center h2 in the full-height image*/ 
+		@include transform(translateY( -150%*(1 - $items)/$items ));
+    }
+
+	@include MQ(L) {
+
+		h2 {
+			font-size: 3.6rem;
+		}
+	}
+}
+
+.cd-project-info {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	opacity: 0;
+	visibility: hidden;
+	@include transition(opacity .4s, visibility .4s);
+
+	&::before {
+		/* use to push the .content-wrapper below the intro project image */
+		content: '';
+		display: block;
+		height: 100%;
+		width: 100%;
+		pointer-events: none;
+	}
+
+	.content-wrapper {
+		position: relative;
+		z-index: 2;
+		padding: 2em 0 3em;
+		background-color: $color-5;
+	}
+
+	.content-wrapper > * {
+		width: 90%;
+		max-width: 800px;
+		margin: 0 auto;
+		color: $color-4;
+	}
+
+	.content-wrapper p {
+		margin-bottom: 2em;
+		line-height: 2;
+	}
+
+	.selected & {
+		-webkit-overflow-scrolling: touch;
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity 0s, visibility 0s);
+	}
+
+	&.has-boxshadow .content-wrapper {
+		/* add a box-shadow while scrolling over the background image */
+		box-shadow: 0 -5px 30px rgba(#000, .2);
+	}
+
+	@include MQ(L) {
+		.content-wrapper {
+			padding: 4em 0;
+		}
+
+		.content-wrapper p {
+			font-size: 1.8rem
+		}
+	}
+}
+
+.cd-scroll {
+	/* scroll down arrow */
+	position: fixed;
+	z-index: 1;
+	top: calc(100% - 100px);
+	@include center(x);
+	height: 48px;
+	width: 48px;
+
+	/* replace text with image */
+	text-indent: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	color: transparent;
+	background: transparent url(../img/cd-arrow.svg) no-repeat center center;
+
+	opacity: 0;
+	visibility: hidden;
+	@include transition(opacity .4s, visibility .4s);
+
+	.project-open & {
+		opacity: 1;
+		visibility: visible;
+		@include animation(cd-translate 1.2s 0.4s);
+		@include animation-iteration-count(2);
+	}
+
+	.project-open .has-boxshadow & {
+		opacity: 0;
+		visibility: hidden;
+	} 
+}
+
+@include keyframes(cd-translate) {
+	0% {
+		@include transform(translateX(-50%));
+	}
+
+	50% {
+		@include transform(translateY(10px) translateX(-50%));
+	}
+
+	100% {
+		@include transform(translateX(-50%));
+	}
+}
+
+/* -------------------------------- 
+
+ Support for no js 
+
+-------------------------------- */
+
+.no-js .cd-nav-trigger, .no-js .cd-scroll {
+	display: none;
+}
+
+.no-js .cd-primary-nav {
+	position: relative;
+	height: auto;
+	min-height: 94px;
+	display: block;
+	@include clearfix;
+	opacity: 1;
+
+	ul {
+		display: block;
+		padding-left: calc(5% + 60px);
+		@include clearfix;
+		float: right;
+		@include transform(translateY(0));
+	}
+
+	li {
+		display: inline-block;
+		float: left;
+		margin-top: 1.4em;
+
+		&.cd-label {
+			display: none;
+		}
+	}
+
+	a {
+		font-size: 1.6em;
+	}
+}
+
+.no-js .cd-projects-container {
+	height: auto;
+
+	.single-project {
+		position: relative;
+		@include transform(translateY(0));
+		top: 0;
+		cursor: auto;
+	}
+
+	.cd-title {
+		height: 300px;
+
+		&::before {
+			height: 300px;
+		}
+	}
+
+	h2 {
+		@include transform(translateY(0));
+	}
+
+	h2::after {
+		display: none;
+	}
+}
+
+.no-js .cd-project-info {
+	position: relative;
+	height: auto;
+	top: 0;
+	@include transform(translateY(0));
+	opacity: 1;
+	visibility: visible;
+
+	.content-wrapper {
+		margin-top: 0;
+	}
+}

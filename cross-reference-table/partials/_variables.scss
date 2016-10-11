@@ -1,0 +1,28 @@
+// colors
+
+$main-text: #333; // main text
+$link: #62c169; // anchor tags
+$background: #3f4258; // background color
+
+$cell-bg: #FFF;
+$cell-border: #e6e7f1;
+$cell-odd-bg: lighten(#e6e7f1, 5%);
+$cell-text: #787a8d;
+$column-title: darken($cell-text, 10%);
+
+$header-bg: #798299;
+$header-text: lighten($header-bg, 40%); 
+$header-title: $header-text;
+$header-border: darken($header-bg, 5%);  // lighten($header-bg, 3%)
+
+
+// fonts 
+
+$primary-font: 'Ubuntu', sans-serif;
+
+// table size
+
+$cd-header-width: 120px;
+$cd-column-width: 150px;
+$cd-column-number: 6; // include the header
+$cd-row-height: 42px;

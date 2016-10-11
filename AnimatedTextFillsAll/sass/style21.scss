@@ -1,0 +1,134 @@
+/* Main stuff */
+$shape-color: lightgoldenrodyellow;
+.svg-inverted-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.mask__shape {
+  fill: white;
+}
+.box-with-text {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  padding-top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  /* Hide the line */
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid $shape-color;
+  }
+}
+.text-fill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: hidden;
+}
+.shape--fill {
+  fill: $shape-color;
+}
+/* Transparent copy of text to keep patterned text selectable */
+.text--transparent {
+  fill: transparent;
+}
+$shadow-size: 2vmax;
+$shadow-colors: purple, crimson, red, orangered, tomato, gold, yellow, yellowgreen, turquoise, royalblue, mediumslateblue, mediumorchid, darkviolet;
+$colors-max: length($shadow-colors);
+$matrix-max: 45;
+$shadows-steps: 4;
+$colors-in-step: round($colors-max/$shadows-steps);
+$dur: 4s;
+/* Function for getting colors from list if we need quantity of colors more than colors in array  */
+@function get_color($position) {
+  $color: nth($shadow-colors, 1);
+  @if ($position < $colors-max) {
+    $color: nth($shadow-colors, $position);
+  }
+  @else {
+    $fixed-position: $position % $colors-max + 1;
+    $color: nth($shadow-colors, $fixed-position);
+  }
+  @return $color;
+}
+/* Function for creating multiple box-shadow */
+@function shadow-outlines ($color-offset: 0) {
+  $out: null;
+  $cell-counter: 1;
+  @for $item from 1 through $matrix-max {
+    $color: get_color($cell-counter + $color-offset);
+    $current-size: $shadow-size * $item;
+    $out: append($out, 0 0 0 $current-size $color, comma);
+    $cell-counter: $cell-counter + 1;
+  }
+  @return $out;
+}
+/* Element with animated shadows */
+.shadows {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: $shadow-size/2;
+  height: $shadow-size/2;
+  background: gold;
+  border-radius: 50%;
+  box-shadow: shadow-outlines();
+  -webkit-animation: shadows-move $dur linear infinite;
+	animation: shadows-move $dur linear infinite;
+}
+@-webkit-keyframes shadows-move {
+  25% {
+    box-shadow: shadow-outlines($colors-in-step*3);
+  }
+  45% {
+    box-shadow: shadow-outlines($colors-in-step*2);
+  }
+  75% {
+    box-shadow: shadow-outlines($colors-in-step);
+  }
+}
+@keyframes shadows-move {
+  25% {
+    box-shadow: shadow-outlines($colors-in-step*3);
+  }
+  45% {
+    box-shadow: shadow-outlines($colors-in-step*2);
+  }
+  75% {
+    box-shadow: shadow-outlines($colors-in-step);
+  }
+}
+/* Other stuff */
+html,
+body {
+  height: 100%;
+}
+body {
+  background: $shape-color;
+}
+.svg-defs {
+  width: 0;
+  height: 0;
+}
+.wrap {
+  width: 50%;
+  position: relative;
+  font: 800 14.5em/1 Open Sans, Impact;
+  text-transform: uppercase;
+  margin: 0 auto;
+  text-align: left;
+  overflow: hidden;
+  padding: 80px 0;
+}

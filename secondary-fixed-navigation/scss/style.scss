@@ -1,0 +1,538 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $color-1;
+	background-color: $color-3;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.cd-container { /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+	width: 90%;
+	max-width: $M; // breakpoints inside partials > _layout.scss
+	margin: 0 auto;
+	@include clearfix;
+}
+
+.has-top-margin {
+	/* this class is given - using jQuery - to the .cd-main-content following the .cd-secondary-nav when it becomes fixed */
+	@include MQ(L) {
+		@include animation(animate-margin-top 0.3s);
+		margin-top: $bar-height; // variables inside _variables.scss
+	}
+}
+
+@include keyframes(animate-margin-top) {
+	0% {
+		margin-top: $bar-height-full;
+	}
+
+	100% {
+		margin-top: $bar-height;
+	}
+}
+
+/* -------------------------------- 
+
+Navigation
+
+-------------------------------- */
+
+.cd-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: $header-S;
+	box-shadow: 0 1px 3px rgba(#000, .2);
+	background-color: $color-1;
+	z-index: $header-zindex;
+
+	@include MQ(M) {
+		height: $header-M;
+		background-color: transparent;
+		box-shadow: none;
+	}
+}
+
+#cd-logo {
+	float: left;
+	margin: 13px 0 0 5%;
+
+	img {
+		display: block;
+	}
+
+	@include MQ(M) {
+		margin: 23px 0 0 5%;
+	}
+
+	@include MQ(L) {
+
+		&.is-hidden {
+			/* assign a position fixed and move outside the viewport (on the left) */
+			opacity: 0;
+			position: fixed;
+			left: -20%;
+			margin-left: 0;
+			@include transition(left 0.3s, opacity 0.3s);
+
+			&.slide-in {
+				/* slide in when the secondary navigation gets fixed */
+				left: 5%;
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.cd-primary-nav {
+	/* mobile first - navigation hidden by default, triggered by tap/click on navigation icon */
+	float: right;
+	margin-right: 5%;
+	width: 44px;
+	height: 100%;
+	background: url('../img/cd-icon-menu.svg') no-repeat center center;
+	background-size: 44px 44px;
+
+	ul {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		@include transform(translateY(-100%));
+
+		&.is-visible {
+			@include transform(translateY($header-S));
+		}
+	}
+
+	a {
+		display: block;
+		height: $header-S;
+		line-height: $header-S;
+		padding-left: 5%;
+		background: darken($color-1, 5%);
+		border-top: 1px solid lighten($color-1, 3%);
+		color: $color-3;
+	}
+
+	@include MQ(M) {
+		/* reset navigation values */
+		width: auto;
+		height: auto;
+		background: none;
+
+		ul {
+			position: static;
+			width: auto;
+			@include transform(translateY(0));
+			line-height: $header-M;
+
+			&.is-visible {
+				@include transform(translateY(0));
+			}
+		}
+
+		li {
+			display: inline-block;
+			margin-left: 1em;
+		}
+
+		a {
+			display: inline-block;
+			height: auto;
+			line-height: normal;
+			background: transparent;
+			padding: .6em 1em;
+			border-top: none;
+			color: $color-1;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Intro
+
+-------------------------------- */
+
+#cd-intro {
+	position: relative;
+	height: $intro-height-S; // variables inside _variables.scss
+	background: url(../img/intro-background.jpg) no-repeat center center;
+	background-size: cover;
+	z-index: $intro-zindex;
+
+	#cd-intro-tagline {
+		width: 90%;
+		max-width: $L;
+		margin: 0 auto;
+		text-align: center;
+		padding-top: 120px;
+	}
+
+	h1 {
+		@include font-size(24px);
+		font-weight: 300;
+		color: $color-1;
+		text-shadow: 0 1px 3px rgba(#000, .1);
+	}
+
+	@include MQ(M) {
+		height: $intro-height-M;
+
+		#cd-intro-tagline {
+			padding-top: 160px;
+		}
+
+		h1 {
+			@include font-size(32px);
+		}
+	}
+
+	@include MQ(L) {
+		height: $intro-height-L;
+
+		#cd-intro-tagline {
+			padding-top: 250px;
+		}
+	}
+}
+
+.cd-btn {
+	display: inline-block;
+	padding: 1em 1.8em;
+	background-color: rgba($color-2, .9);
+	margin-top: 1em;
+	border-radius: 20em;
+	@include backface-visibility(hidden);
+	@include font-smoothing;
+	color: $color-4;
+
+	.no-touch &:hover {
+		background-color: rgba($color-2, 1);
+	}
+
+	@include MQ(L) {
+
+		&.is-hidden {
+			/* assign a position fixed and move outside the viewport (on the right) */
+			opacity: 0;
+			position: fixed;
+			right: -20%;
+			top: 0;
+			padding: .8em 1.2em;
+			margin: 14px 0 0;
+			@include transition(right 0.3s, opacity 0.3s);
+
+			&.slide-in {
+				/* slide in when the secondary nav gets fixed */
+				right: 5%;
+				opacity: 1;
+			}
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Secondary Fixed Navigation
+
+-------------------------------- */
+
+.cd-secondary-nav {
+	position: relative;
+	z-index: $header-zindex;
+	@include font-smoothing;
+
+	ul {
+		/* mobile first - secondary navigation hidden by default, triggered by tap/click on .cd-secondary-nav-trigger*/
+		position: fixed;
+		width: 90%;
+		max-width: 400px;
+		right: 5%;
+		bottom: 20px;
+		@include border-radius;
+		background: rgba($color-1, .96);
+		visibility: hidden;
+		z-index: 1;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		@include transform(scale(0));
+		@include transform-origin(100% 100%);
+		-webkit-transition: -webkit-transform 0.3s, visibility 0s 0.3s;
+		-moz-transition: -moz-transform 0.3s, visibility 0s 0.3s;
+		transition: transform 0.3s, visibility 0s 0.3s;
+
+		&.is-visible {
+			visibility: visible;
+			@include transform(scale(1));
+			-webkit-transition: -webkit-transform 0.3s, visibility 0s 0s;
+			-moz-transition: -moz-transform 0.3s, visibility 0s 0s;
+			transition: transform 0.3s, visibility 0s 0s;
+		}
+	}
+
+	li a {
+		display: block;
+		padding: 1.6em;
+		border-bottom: 1px solid lighten($color-1, 10%);
+		color: $color-3;
+	}
+
+	li:last-child a {
+		border-bottom: none;
+	}
+
+	@include MQ(L) {
+		z-index: $secondary-bar-zindex;
+		height: $bar-height-full;
+		background-color: rgba($color-1, .96);
+		@include transition(height 0.3s);
+
+		nav, ul, li, a {
+			height: 100%;
+		}
+
+		ul {
+			/* reset navigation values */
+			position: static;
+			width: auto;
+			max-width: 100%;
+			visibility: visible;
+			@include transform(scale(1));
+			text-align: center;
+			background-color: transparent;
+		}
+
+		li {
+			display: inline-block;
+			margin-left: -4px;
+		}
+
+		li a {
+			position: relative;
+			text-align: center;
+			display: block;
+			padding: 58px 40px 0 40px;
+			border-bottom: none;
+			@include transition(padding 0.2s);
+
+			b {
+				text-transform: uppercase;
+				@include font-size(13px);
+				font-weight: 700;
+				color: rgba($color-3, .3);
+			}
+
+			span {
+				position: absolute;
+				display: inline-block;
+				width: 40px;
+				height: 40px;
+				top: 18px;
+				@include center(x);
+				background-repeat: no-repeat;
+				background-image: url(../img/cd-nav-icons.svg);
+				@include transition(opacity 0.2s);
+			}
+
+			&:hover b, &.active b {
+				color: $color-3;
+			}
+		}
+
+		li:nth-child(1) a span {
+			background-position: 0 0;
+		}
+
+		li:nth-child(2) a span {
+			background-position: -40px 0;
+		}
+
+		li:nth-child(3) a span {
+			background-position: -80px 0;
+		}
+
+		li:nth-child(4) a span {
+			background-position: -120px 0;
+		}
+
+		li:nth-child(5) a span {
+			background-position: -160px 0;
+		}
+
+		&.is-fixed {
+			/* on Firefox CSS transition/animation fails when parent element changes position attribute*/
+			/* so we defined to diffent classes: .is-fixed to change the position value and .is-animated to change childrens' attributes (padding and opacity)*/
+			position: fixed;
+			left: 0;
+			top: 0;
+			height: $bar-height;
+			width: 100%;
+		}
+
+		&.animate-children {
+			/* on Firefox CSS transition/animation fails when parent element changes position attribute*/
+			/* so we defined to diffent classes: .is-fixed to change the position value and .is-animated to change childrens' attributes (padding and opacity)*/
+			box-shadow: 0 1px 2px rgba(#000, .2);
+
+			li a {
+				padding: 26px 30px 0 30px;
+
+				span {
+					opacity: 0;
+				}
+			}
+		}
+	}
+}
+
+.cd-secondary-nav-trigger {
+	position: fixed;
+	bottom: 20px;
+	right: 5%;
+	width: 44px;
+	height: 44px;
+	background: rgba($color-1, .96);
+	@include border-radius;
+
+	/* image replacement */
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	z-index: 2;
+
+	span {
+		/* the span element is used to create the menu icon */
+		position: absolute;
+		display: block;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: $color-3;
+		@include center;
+		-webkit-transition: background 0.3s;
+		-moz-transition: background 0.3s;
+		transition: background 0.3s;
+
+		&::before, &::after {
+			content: '';
+			position: absolute;
+			background: inherit;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+
+		&::before {
+			right: -10px;
+			@include transform(rotate(0));
+		}
+
+		&::after {
+			left: -10px;
+			@include transform(rotate(0));
+		}
+	}
+
+	&.menu-is-open {
+		background: transparent;
+	}
+
+	&.menu-is-open span {
+		background: rgba($color-3, 0);
+		width: 20px;
+		height: 2px;
+
+		&::before, &::after {
+			background: rgba($color-3, 1);
+			width: 100%;
+			height: 100%;
+			border-radius: 0;
+			top: 0;
+			left: 0;
+		}
+
+		&::before {
+			@include transform(rotate(135deg));
+		}
+
+		&::after {
+			@include transform(rotate(225deg));
+		}
+	}
+
+	@include MQ(L) {
+		display: none;
+	}
+}
+
+/* -------------------------------- 
+
+Placeholder Sections
+
+-------------------------------- */
+
+.cd-section {
+	margin: 0 auto;
+	padding: 2em 0;
+
+	h2 {
+		@include font-size(20px);
+		margin-bottom: .6em;
+		font-weight: 700;
+	}
+
+	p {
+		line-height: 1.6;
+	}
+
+	@include MQ(L) {
+		margin: 0 auto;
+		padding: 4em 0;
+
+		h2 {
+			@include font-size(30px);
+		}
+		
+		p {
+			@include font-size(20px);
+		}
+	}
+}

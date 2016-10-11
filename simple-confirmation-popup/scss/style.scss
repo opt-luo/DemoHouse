@@ -1,0 +1,209 @@
+@import 'bourbon'; // http://bourbon.io/
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*, *:after, *:before {
+	@include box-sizing(border-box);
+}
+
+body {
+	font: {
+		size: 100%;
+		family: $primary-font; // variables inside partials > _variables.scss
+	}
+	color: $main-text;
+	background-color: $background;
+}
+
+a {
+	color: $link;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+
+.img-replace {
+	/* replace text with an image */
+	display: inline-block;
+	overflow: hidden;
+	text-indent: 100%;
+	color: transparent;
+	white-space: nowrap;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+header {
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+	background-color: $color-1;
+	color: #FFF;
+
+	h1 {
+		@include font-size(20px);
+	}
+}
+
+.cd-popup-trigger {
+	display: block;
+	width: 170px;
+	height: 50px;
+	line-height: 50px;
+	margin: 3em auto;
+
+	text-align: center;
+	color: #FFF;
+	@include font-size(14px);
+	font-weight: bold;
+	text-transform: uppercase;
+	border-radius: 50em;
+	background: $link;
+	box-shadow: 0 3px 0 rgba(#000, .07);
+
+	@include MQ(L) {
+		margin: 6em auto;
+	}
+}
+
+/* -------------------------------- 
+
+xpopup 
+
+-------------------------------- */
+
+.cd-popup {
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba($color-1, .9);
+
+	opacity: 0;
+	visibility: hidden;
+	@include transition(opacity .3s 0s, visibility 0s .3s);
+
+	&.is-visible {
+		opacity: 1;
+		visibility: visible;
+		@include transition(opacity .3s 0s, visibility 0s 0s);
+	}
+}
+
+.cd-popup-container {
+	position: relative;
+	width: 90%;
+	max-width: 400px;
+	margin: 4em auto;
+	background: #FFF;
+	border-radius: .25em .25em .4em .4em;
+	text-align: center;
+	box-shadow: 0 0 20px rgba(#000, .2);
+
+	@include transform(translateY(-40px));
+	/* Force Hardware Acceleration in WebKit */
+	-webkit-backface-visibility: hidden;
+
+	@include transition-property (transform);
+	@include transition-duration(.3s);
+
+	p {
+		padding: 3em 1em;
+	}
+
+	.cd-buttons {
+		@include clearfix;
+
+		li {
+			float: left;
+			width: 50%;
+		}
+
+		a {
+			display: block;
+			height: 60px;
+			line-height: 60px;
+			text-transform: uppercase;
+			color: #FFF;
+			@include transition(background-color .2s);
+		}
+
+		li:first-child a {
+			background: $color-2;
+			border-radius: 0 0 0 .25em;
+
+			.no-touch &:hover {
+				background-color: lighten($color-2, 5%);
+			}
+		}
+
+		li:last-child a {
+			background: lighten($color-1, 30%);
+			border-radius: 0 0 .25em 0;
+
+			.no-touch &:hover {
+				background-color: lighten(lighten($color-1, 30%), 5%);
+			}
+		}
+	}
+
+	.cd-popup-close {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		width: 30px;
+		height: 30px;
+
+		&::before, &::after {
+			content: '';
+			position: absolute;
+			top: 12px;
+			width: 14px;
+			height: 3px;
+			background-color: $main-text;
+		}
+
+		&::before {
+			@include transform(rotate(45deg));
+			left: 8px;
+		}
+
+		&::after {
+			@include transform(rotate(-45deg));
+			right: 8px;
+		}
+	}
+
+	.is-visible & {
+		@include transform(translateY(0));
+	}
+
+	@include MQ(L) {
+		margin: 8em auto;
+	}
+}
+
