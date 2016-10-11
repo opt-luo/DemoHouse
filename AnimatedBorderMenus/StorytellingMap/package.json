@@ -1,0 +1,30 @@
+{
+  "name": "codrops-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "opener http://localhost:8080/demo & http-server",
+    "build": "npm run build-js",
+    "build-js": "webpack && uglifyjs dist/app.js --screw-ie8 -c -m -o dist/app.js",
+    "watch-js": "webpack -w",
+    "watch": "npm run watch-js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.1.18",
+    "babel-core": "^6.1.21",
+    "babel-loader": "^6.1.0",
+    "babel-polyfill": "^6.1.19",
+    "babel-preset-es2015": "^6.1.18",
+    "http-server": "^0.8.5",
+    "opener": "^1.4.1",
+    "uglify-js": "^2.6.1",
+    "webpack": "^1.12.6"
+  },
+  "dependencies": {
+    "gsap": "^1.18.0"
+  }
+}
