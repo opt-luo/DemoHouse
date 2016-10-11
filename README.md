@@ -11,7 +11,7 @@ Collection best of Web Demos.If you have seen good and meaningful demos, please 
 - [CodyHouse](http://codyhouse.co/)
 - [CodePen](http://codepen.io/)
 
-Many of the cases are collected from these sites. Also thank other creator！s
+Many of the cases are collected from these sites. Also thank other creators!
 
 ## License
 
