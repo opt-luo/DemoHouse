@@ -1,0 +1,32 @@
+.clip-triangles {
+  width: 90vw;
+  height: 0;
+  padding-bottom: 56.1%;
+  margin: 5vw;
+  -webkit-filter: drop-shadow(0 0 1vw rgba(0, 0, 0, 0.33));
+          filter: drop-shadow(0 0 1vw rgba(0, 0, 0, 0.33));
+  position: relative;
+}
+.clip-triangles-image {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  -webkit-clip-path: url(#triangles01_clip);
+          clip-path: url(#triangles01_clip);
+  background-image: url(https://images.unsplash.com/photo-1467321638755-7246fd0dc1f3?dpr=1&auto=compress,format&crop=entropy&fit=crop&w=1920&h=1080&q=60&cs=tinysrgb);
+  background-size: cover;
+  background-position: top center;
+}
+
+body {
+  background: #424242;
+  font-family: monospace;
+  color: #dedede;
+}
+
+h1 {
+  text-align: center;
+  font-size: 4.2vw;
+  margin: 5vw;
+}

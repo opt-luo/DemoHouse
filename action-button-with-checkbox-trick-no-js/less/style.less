@@ -1,0 +1,625 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:400,900';
+body { font-family: 'Roboto', sans-serif; font-size: 62.5%; }
+
+
+//VARIBLES ----------------------------------------------------------------------
+@col__black:    #160128;
+@col__grey:     #747474;
+@col__white:    #FFF;
+@col__lightblu: #5873fe;
+@col__purple:   #871cde;
+@col__darkblu:  #192541;
+@col__yellow:   #ecc54d;
+
+
+//USEFUL LESS MIXIN -------------------------------------------------------------
+.u-box-sizing (@type: border-box) {
+	-webkit-box-sizing: @type;
+	-moz-box-sizing:    @type;
+	box-sizing:         @type;
+}
+.u-gradient (@startColor: @col__black, @endColor: @col__white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, right bottom, from(@startColor), to(@endColor));
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+}
+.u-border-radius (@radius: 5px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius:    @radius;
+	border-radius:         @radius;
+	-moz-background-clip:    padding;
+	-webkit-background-clip: padding-box;
+	background-clip:         padding-box;
+}
+.u-box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
+.u-inner-shadow (@x: 0, @y: 1px, @blur: 2px, @alpha: 0.25) {
+	-webkit-box-shadow: inset @x @y @blur rgba(255, 255, 255, @alpha);
+	-moz-box-shadow:    inset @x @y @blur rgba(255, 255, 255, @alpha);
+	box-shadow:         inset @x @y @blur rgba(255, 255, 255, @alpha);
+}
+.u-horizontal-center (@mleft) {
+    left       : 50%;
+    margin-left: @mleft;
+}
+.u-transform (@handler) {
+    transform        : @handler;
+    -webkit-transform: @handler;
+}
+.u-border (@border_size: 1px, @border_color: @col__white) {
+  border: solid @border_size @border_color;
+  -moz-border: solid @border_size @border_color;
+  -webkit-border: solid @border_size @border_color;
+}
+
+
+//RESET  ------------------------------------------------------------------------
+body  { background: darken(desaturate(@col__purple, 40%), 30%); }
+input { display: none; } //important for hide the input checkbox
+ul    { padding: 0; }
+li    { list-style-type: none; }
+
+
+//CONTAINER MOBILE VIEW ---------------------------------------------------------
+.c-mobile-view {
+  position:   relative;
+  margin:     120px auto 0;
+  width:      320px;
+  height:     568px;
+  background: url('https://dl.dropboxusercontent.com/u/11581980/__/mobile-codepen.jpg');
+  background-position: bottom;
+  background-size: cover;
+  .u-animation-fadein (@duration: .5s, @delay: .1s,);
+  .u-box-shadow (0 0 60px rgba(0,0,0,.6););
+  .u-border-radius (@radius: 30px);
+  &:before {
+      position: absolute;
+      content:  '';
+      display:  block;
+      top:      0;
+      width:    100%;
+      height:   100%;
+      .u-inner-shadow (@x: 0, @y: -1px, @blur: 3px, @alpha: 0.2);
+      .u-border-radius (@radius: 30px);
+      .u-box-sizing (@type: border-box);
+    }
+}
+.c-mobile-view__inner {
+    overflow: hidden;
+    width:    100%;
+    height:   100%;
+    .u-border-radius (@radius: 30px);
+}
+
+
+//PIN ------------------------------------------------------------------------
+.c-pin {
+  position: absolute;
+  width:   36px;
+  height:  36px;
+  top:     120px;
+  left:    160px;
+  z-index: -1;
+  .u-border-radius (@radius: 50%);
+  .u-border (4px, @col__lightblu);
+  .u-animation-infinite (@duration: 1.5s);
+}
+
+
+//BUTTON ------------------------------------------------------------------------
+.c-button {
+  cursor: pointer;
+  font-size: 1.2em;
+}
+.c-mobile__button {
+  position:    absolute;
+  width:       68px;
+  height:      68px;
+  bottom:      -26px;
+  line-height: 60px;
+  text-align:  center;
+  z-index:     2;
+  color:       @col__white;
+  border:      solid 6px rgba(255,255,255,.2);
+  .u-animation-fadein (@duration: .5s, @delay: .4s,);
+  .u-gradient (@startColor: @col__lightblu, @endColor: @col__purple);
+  .u-box-shadow (0 0 10px darken(@col__white, 75%));
+  .u-horizontal-center (@mleft: -34px);
+  .u-border-radius (@radius: 50%);
+  .u-box-sizing (@type: border-box);
+  .u-trans(@duration: 0.4s);   
+  &:hover {
+    width:       80px;
+    height:      80px;
+    line-height: 77px;
+    bottom:      -26px;
+    border:      solid 4px rgba(255,255,255,.2);
+    .u-horizontal-center (@mleft: -40px);
+    }
+   .c-mobile__button__plus {
+    .u-trans();
+  }
+}
+
+input[name=u-mobile__button]:checked ~ .c-mobile__button .c-mobile__button__plus {
+    .u-transform(@handler: rotate(45deg));
+    .u-trans(@duration:.6s);
+} 
+
+
+//TOPBAR ------------------------------------------------------------------------
+.c-mobile__topbar {
+  position:     relative;
+  overflow:     hidden;
+  width:        100%;
+  height:       10%;
+  .u-trans();
+  .u-border-radius (@radius: 0 0 0 100%);
+  .u-gradient (@startColor: @col__lightblu, @endColor: @col__purple);
+  & a  { 
+    text-decoration: none;   
+    color:           @col__white;
+    letter-spacing:  3px;
+    font-size:       1.4em;  
+    z-index:         1;
+    .u-trans();  
+    &:hover { .u-trans(); color: @col__yellow; }
+  } 
+  & ul { text-align: right; padding-top: 40px; }
+  & li { margin: 30px 30px 40px 0; }
+}
+
+//EXPAND TOPBAR ON MENU CLICK
+input[name=u-topbar__button]:checked ~ .c-mobile-view__inner .c-mobile__topbar  {
+    height: 50%;
+    .u-trans(@duration:.6s);
+}
+
+
+//ANCHOR HOVER EFFCET -------------------------------------------------------------------
+.u-link__effect {
+  position: relative;  
+  &:after {
+    position:   absolute;
+    content:    '';
+    display:    block;
+    right:      0;
+    width:      0;
+    bottom:     -4px;
+    height:     2px;
+    background: @col__yellow;
+    .u-trans(@duration: 0.4s);
+  }
+  &:hover:after { 
+    width: 100%;
+    .u-trans();
+  }
+}
+
+
+//TOPBAR BUTTON ----------------------------------------------------------------
+.c-topbar__button--menu {
+  position: absolute;
+  right:    32px;
+  top:      32px;
+  z-index:  1;
+  color:    @col__white;
+  .u-transform (scale(1));
+  .u-trans();
+}
+
+.c-topbar__button--close {
+  position: absolute;
+  right:    32px;
+  top:      32px;
+  z-index:  1;
+  cursor:   pointer;
+  color:    @col__white;
+  .u-transform (scale(0));
+  .u-trans();
+}
+
+//HIDE/SHOW MENU BUTTON ON CLICK
+input[name=u-topbar__button]:checked ~ .c-mobile-view__inner .c-topbar__button--menu  {
+    .u-transform (scale(0));
+    .u-trans(@duration:.6s);
+}
+
+//SHOW/HIDE CLOSE BUTTON ON CLICK
+input[name=u-topbar__button]:checked ~ .c-mobile-view__inner .c-topbar__button--close  {
+    .u-transform (scale(1));
+    .u-trans(@duration:.6s);
+}
+
+
+//SWITCHER CARDS BUTTON ----------------------------------------------------------------
+.c-switcher__button {
+  position: absolute;
+  left:     20px;
+  bottom:   20px;
+  color:    @col__white;
+}
+
+.c-switcher__button--cards {
+  .u-transform (rotate(0));
+  .u-trans(@duration:.6s);
+}
+
+//ROTATE SWITCHER BUTTON ON CLICK
+input[name=u-cards-switcher__button]:checked ~ .c-switcher__button .c-switcher__button--cards  {
+  .u-transform (rotate(180deg));
+  .u-trans(@duration:.6s);
+}
+
+//SWITCH CARDS ON CLICK
+input[name=u-cards-switcher__button]:checked ~ .c-mobile-view__inner .c-card--back  {
+  z-index: 1;
+  opacity: 1;
+  bottom:  60px;
+  .u-trans(@duration:.6s);
+  .u-transform (scale(1));
+}
+
+input[name=u-cards-switcher__button]:checked ~ .c-mobile-view__inner .c-card--front  {
+  z-index: 0;
+  opacity: .7;
+  bottom:  30px;
+  .u-trans(@duration:.6s);
+  .u-transform (scale(0.9));
+}
+
+//HIDE CARDS ON CLICK 
+.c-hide__button, .c-show__button {
+  position: absolute;
+  right:    20px;
+  bottom:   20px;
+  color:    @col__white;
+}
+
+.c-show__button--cards {
+  .u-transform (scale(1));
+  .u-trans(@duration:.6s);
+}
+.c-hide__button--cards {
+  .u-transform (scale(0));
+  .u-trans(@duration:.6s);
+}
+
+
+//HIDE/SHOW EYE BUTTON ON CLICK 
+input[name=u-cards-hide__button]:checked ~ .c-show__button .c-show__button--cards  {
+    .u-transform (scale(0));
+    .u-trans(@duration:.6s);
+}
+
+//SHOW/HIDE EYE SLASH BUTTON ON CLICK 
+input[name=u-cards-hide__button]:checked ~ .c-hide__button .c-hide__button--cards  {
+    .u-transform (scale(1));
+    .u-trans(@duration:.6s);
+}
+
+//HIDE/SHOW CARDS ON CLICK 
+input[name=u-cards-hide__button]:checked ~ .c-mobile-view__inner .c-card  {
+    opacity: 0;
+    .u-trans(@duration:.6s);
+}
+
+
+// CARDS ------------------------------------------------------------------------
+.cards__inner {
+  position: relative;
+}
+
+.c-card {
+  position:   absolute;
+  bottom:     60px;
+  width:      ~"calc(100% - 40px)"; //for use calc on LESS, close value inside  ~""
+  margin:     0 20px;
+  overflow:   hidden;
+  opacity:    1;
+  .u-trans(@duration:.8s);
+  .u-box-shadow (0 0 10px 0 fade(@col__black, 90));
+  .u-border-radius (@radius: 20px);
+}
+
+.c-card--back {
+  bottom:     30px;
+  opacity:    0.7;
+  .u-transform (scale(0.9));
+  .c-card__details__bottom { background: @col__purple; }
+  .c-card__details__top { 
+    h1 { color: @col__purple; } 
+  }
+}
+
+.c-card__details {
+  position: relative;
+  height:   150px;
+}
+
+.c-card__details__top {
+  .u-box-sizing;
+  position:   absolute;
+  height:     110px;
+  top:        0;
+  width:      100%;
+  padding:    20px;
+  background: @col__black;
+  .u-border-radius (@radius: 20px 20px 0 0);
+  h1 { font-size: 1.6em; color: @col__lightblu; font-size: 1.6em; margin: 0; }
+  p { color: @col__white; font-size: 1.1em; margin: 6px 0; }
+  p:last-child { color: @col__grey;  font-size: 1em; margin: 14px 0; }
+}
+
+.c-card__details__bottom {
+  position:    absolute;
+  height:      40px;
+  width:       100%;
+  bottom:      0;
+  text-align:  center;
+  line-height: 40px;
+  font-size:   1.6em;
+  font-weight: 900;
+  background: fade(@col__lightblu, 80%);
+  .u-border-radius (@radius: 0 0 20px 20px);
+  & span { font-size: 0.7em; padding-left: 6px; }
+}
+
+
+// OVERLAY ----------------------------------------------------------------------
+.c-overlay {
+  position:   absolute;
+  top:        0;
+  width:      100%;
+  height:     100%;
+  background: fade(@col__black, 80%);
+  opacity:    0;
+  .u-border-radius (@radius: 30px);
+  .u-trans(@duration:.4s, @easing: ease-in-out)
+}
+
+//SHOW BLACK OVERLAY ON + CLICK
+input[name=u-mobile__button]:checked ~ .c-overlay {
+   opacity: 1;
+   z-index: 1;
+  .u-trans(@easing: ease-in-out);
+} 
+
+
+//OVERLAY INNER BUTTONS ------------------------------------------------------------------
+.c-overlay__inner {
+  position: relative;
+  width:    100%;
+  height:   100%;
+}
+
+.c-overlay-inner__button {
+  position:    absolute;
+  left:        ~"calc(50% - 30px)";
+  width:       60px;
+  height:      60px;
+  text-align:  center;
+  line-height: 60px;
+  background:  @col__white;
+  color:       @col__purple;
+  .u-border-radius (@radius: 50%);
+  .u-transform (scale(0));
+  &:hover {
+    color: @col__yellow;
+    .u-trans();
+  }
+  &.button__1 {
+    transition-delay:         .1s;
+    -webkit-transition-delay: .1s;
+    -moz-transition-delay:    .1s;
+    bottom:                   80px;
+  }
+  &.button__2 {
+    transition-delay:         .2s;
+    -webkit-transition-delay: .2s;
+    -moz-transition-delay:    .2s;
+    bottom:                   160px;
+  }
+}
+
+//SHOW BUTTONS INSIDE OVERLAY ON CLICK
+input[name=u-mobile__button]:checked ~ .c-overlay .c-overlay-inner__button {
+   z-index: 1;
+  .u-transform (scale(1));
+  .u-trans(@duration: .6s);
+} 
+
+// INSTRUCTION -----------------------------------------------------
+.c-bubble__info {
+  position: absolute;
+  width:      100px;
+  height:     100px;
+  background: @col__white;
+  margin:     20px;
+  .u-border-radius (@radius: 50%);  
+  
+  &.c-bubble--plus   { 
+    left:   ~"calc(50% - 70px)"; 
+    bottom: -160px;
+    .u-transform (scale(0));
+    .u-trans(@duration: .4s, @delay: 0);
+  }
+  &.c-bubble--switch { 
+    left:  -45px;
+    .u-transform (scale(0));
+    .u-trans(@duration: .4s, @delay: 0);
+  }
+  &.c-bubble--hide { 
+    right:   -45px;
+    .u-transform (scale(0));
+    .u-trans(@duration: .4s, @delay: 0);
+  }
+  &.c-bubble--menu { 
+    right: -130px; 
+    top:   -30px;
+    .u-transform (scale(0));
+    .u-trans(@duration: .4s, @delay: 0);
+  }
+}
+
+//SHOW/HIDE INSTRUCTION BUBBLE
+input[name=u-instruction__button]:checked + label ~ .c-mobile-view .c-bubble--menu {
+  .u-transform (scale(1));
+  .u-trans (@duration: .4s, @delay: 0s);
+} 
+input[name=u-instruction__button]:checked + label ~ .c-mobile-view .c-bubble--plus {
+  .u-transform (scale(1));
+  .u-trans (@duration: .4s, @delay: .5s);
+} 
+input[name=u-instruction__button]:checked + label ~ .c-mobile-view .c-bubble--switch {
+  .u-transform (scale(1));
+  .u-trans (@duration: .4, @delay: 1s);
+} 
+input[name=u-instruction__button]:checked + label ~ .c-mobile-view .c-bubble--hide {
+  .u-transform (scale(1));
+  .u-trans (@duration: .4s, @delay: 1.5s);
+} 
+
+// BUBBLE INNER CONTAINER ------------------------------------------------------
+.c-bubble__inner {
+  position:   relative;
+  width:      100px;
+  height:     100px;
+  text-align: center;
+  &:before {
+    content:  '';
+    display:  block;
+    position: absolute;
+    width:    30px;
+    height:   30px;
+    z-index:  -1;
+    background: @col__white;
+    .u-horizontal-center (-15px);
+    .u-transform (rotate(45deg));
+  }  
+  span { 
+    display:     block; 
+    font-size:   2.4em;
+    padding-top: 26px;
+    font-weight: 900;
+  }
+  span:last-child { font-size: 1.2em; padding-top: 0; font-weight: 400;
+  }
+}
+
+.c-bubble__info.c-bubble--menu .c-bubble__inner:before {
+    left:        0px;
+    top:         35px;
+    margin-left: 0; 
+}
+
+// INSTRUCTION BUTTON -----------------------------------------------------------
+.c-instruction__button {
+  position:   fixed;
+  bottom:     20px;
+  left:       20px;
+  width:      80px;
+  height:     40px;
+  background: @col__white;
+  overflow:   hidden;
+  .u-border-radius (@radius: 3px);
+}
+
+.c-button__instruction__toggle {
+  position:   absolute;
+  left:       0;
+  width:      40px;
+  height:     40px;
+  background: @col__purple;
+  .u-box-sizing;
+  .u-trans (@duration: .2s,  @easing: ease-in-out);
+  .u-border-radius (@radius: 4px);
+  .u-border (@border_size: 2px, @border_color: @col__white)
+}
+
+.c-button__off {
+  position: absolute;
+  line-height: 40px;
+  width: 40px;
+  text-align: center;
+  color: @col__grey;
+}
+.c-button__on {
+  .c-button__off;
+  right: 0;
+}
+
+input[name=u-instruction__button]:checked + label .c-button__instruction__toggle {
+    left: 40px;
+    background: @col__lightblu;
+    .u-trans (@duration: .2s, @easing: ease-in-out);
+} 
+
+.c-instruction__text {
+  position:    fixed;
+  bottom:      15px;
+  left:        120px;
+  width:       260px;
+  font-size:   1.4em;
+  line-height: 1.8em;
+  color: @col__lightblu; 
+}
+
+
+// TRANSITIONS + ANIMATIONS -----------------------------------------------------
+.u-trans(@property : all, @duration: 0.3s, @easing :  cubic-bezier(0.68, -0.55, 0.265, 1.55), @delay : 0 ) {
+ transition-property: @property;
+ transition-duration: @duration;
+ transition-timing-function: @easing;
+ transition-delay: @delay;
+ -webkit-transition-property: @property;
+ -webkit-transition-duration: @duration;
+ -webkit-transition-timing-function: @easing;
+ -webkit-transition-delay: @delay;
+}
+@keyframes animation-fadein {
+   from { transform: scale(0); opacity: 0; }
+   to   { transform: scale(1); opacity: 1; }
+}
+@-webkit-keyframes animation-fadein {
+   from { -webkit-transform: scale(0); opacity: 0; }
+   to   { -webkit-transform: scale(1); opacity: 1; }
+}
+
+.u-animation-fadein (@duration: 1s, @delay: 1s,) {
+    opacity                    : 0;
+    animation-name             : animation-fadein;
+    animation-duration         : @duration;
+    animation-delay            : @delay;
+    animation-fill-mode        : forwards;
+    animation-timing-function  : cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    -webkit-animation-name     : animation-fadein;
+    -webkit-animation-duration : @duration;
+    -webkit-animation-delay    : @delay;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-timing-function  : cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes animation-fadein-infinite {
+   from { transform: scale(0); opacity: 1; }
+   to   { transform: scale(1); opacity: 0; }
+}
+@-webkit-keyframes animation-fadein-infinite {
+   from { -webkit-transform: scale(0); opacity: 1; }
+   to   { -webkit-transform: scale(1); opacity: 0; }
+}
+
+.u-animation-infinite (@duration: 1.5s) {
+    opacity                    : 0;
+    animation-name             : animation-fadein-infinite;
+    animation-duration         : @duration;
+    animation-timing-function  : easy-in-out;
+    animation-iteration-count  : infinite;
+    -webkit-animation-name     : animation-fadein-infinite;
+    -webkit-animation-duration : @duration;
+    -webkit-animation-timing-function: easy-in-out;
+    -webkit-animation-iteration-count: infinite;
+}

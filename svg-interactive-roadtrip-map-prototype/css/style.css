@@ -1,0 +1,164 @@
+@font-face {
+  src: url(http://thenewcode.com/assets/fonts/libertad.woff);
+  font-family: Libertad;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #006994;
+  min-height: 100vh;
+  font-family: Libertad, sans-serif;
+}
+
+svg {
+  margin-left: 2rem;
+  width: 33%;
+  height: auto;
+  display: inline-block;
+}
+
+#description {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  width: 50%;
+  margin: 1rem 3rem 0;
+  vertical-align: top;
+  -webkit-transition: 0.8s cubic-bezier(0.14, 0.39, 0.41, 1.29);
+  transition: 0.8s cubic-bezier(0.14, 0.39, 0.41, 1.29);
+}
+
+#description * {
+  opacity: 0;
+}
+
+#description p {
+  margin-bottom: 2rem;
+}
+
+#description.active * {
+  -webkit-animation: fadein 3s forwards;
+          animation: fadein 3s forwards;
+}
+
+#description.active img {
+  -webkit-animation-delay: .4s;
+          animation-delay: .4s;
+}
+
+#description.active h1 {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
+
+#description.active p {
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+
+@-webkit-keyframes fadein {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  to {
+    opacity: 1;
+  }
+}
+#description h1,
+#description p {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+#description img {
+  width: 100%;
+}
+
+@-webkit-keyframes lookit {
+  to {
+    stroke-width: 20px;
+    stroke: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes lookit {
+  to {
+    stroke-width: 20px;
+    stroke: rgba(255, 255, 255, 0.2);
+  }
+}
+text {
+  font-family: Libertad, sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  fill: #fff;
+}
+
+circle {
+  fill: #000;
+}
+
+circle.outline {
+  fill: none;
+  stroke-width: 5px;
+  stroke: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+  -webkit-animation: lookit 1.8s infinite alternate cubic-bezier(0.85, 0, 0.32, 0.83);
+          animation: lookit 1.8s infinite alternate cubic-bezier(0.85, 0, 0.32, 0.83);
+}
+
+a:hover circle:not(.outline),
+a:focus circle {
+  fill: #f00;
+}
+
+.travel {
+  fill: none;
+  stroke: #f00;
+  stroke-width: 12px;
+  -webkit-transition: .4s opacity;
+  transition: .4s opacity;
+}
+
+#ni {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+}
+
+#si {
+  stroke-dasharray: 1250;
+  stroke-dashoffset: 1250;
+}
+
+.hide {
+  opacity: 0;
+}
+
+@media all and (max-width: 790px) {
+  #nzmap {
+    display: none;
+  }
+
+  #description {
+    width: 100%;
+    margin: 0;
+  }
+
+  #description * {
+    opacity: 1;
+  }
+
+  #description > div {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+}

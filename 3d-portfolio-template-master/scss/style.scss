@@ -1,0 +1,662 @@
+// Note: we use Autoprefixer to add vendor prefixes to our CSS -> https://github.com/postcss/autoprefixer
+
+@import '../partials/variables'; // colors, fonts etc...
+
+@import '../partials/mixins'; // custom mixins
+
+@import '../partials/layout'; // responsive grid and media queries
+
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font: {
+		size: 1.6rem;
+	}
+	color: $color-3; // variables inside partials > _variables.scss
+	background-color: $color-1;
+	font-family: sans-serif;
+	@include font-smoothing;
+}
+
+a {
+	color: $color-2;
+	text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Portfolio Navigation 
+
+-------------------------------- */
+
+.cd-3d-portfolio-navigation {
+	width: 100%;
+	height: 25vh;
+	text-align: center;
+	display: table;
+
+	.cd-wrapper {
+		display: table-cell;
+		width: 100%;
+		vertical-align: middle;
+	}
+
+	h1 {
+		font-size: 2rem;
+		margin-bottom: .6em;
+		font-family: $heading;
+		font-weight: bold;
+	}
+
+	li {
+		display: inline-block;
+		margin: 0 .3em;
+
+		a {
+			display: inline-block;
+			color: $color-3;
+			border: 2px solid darken($color-1, 3%);
+			padding: .6em;
+			transition: all .2s;
+
+			&:hover {
+				border-color: $color-2;
+			}
+		}
+
+		.selected {
+			color: $color-3;
+			background: $color-2;
+			border-color: $color-2;
+			cursor: default;
+			box-shadow: 0 4px 20px rgba(#000, .2);
+		}
+	}
+
+	@include MQ(M) {
+		h1 {
+			font-size: 3.2rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Portfolio Projects 
+
+-------------------------------- */
+
+.cd-3d-portfolio {
+	overflow: hidden;
+
+	.close-project {
+		/* this is the 'X' icon - visible when a project has been selected */
+		position: absolute;
+		z-index: 2;
+		top: 24px;
+		right: 5%;
+		/* replace text with image */
+		color: transparent;
+		white-space: nowrap;
+		text-indent: 100%;
+		overflow: hidden;
+		height: 48px;
+		width: 48px;
+		border-radius: 50%;
+		background: rgba(#000, .6);
+		transform: scale(0);
+		transition: transform .3s 0s;
+
+		&:hover {
+			background: rgba(#000, 1);
+		}
+
+		&::after, &::before {
+			/* the 'X' lines */
+			content: '';
+			position: absolute;
+			width: 18px;
+			height: 2px;
+			top: 50%;
+			left: 50%;
+			background: $color-3;
+		}
+
+		&::before {
+			transform: translateX(-50%) translateY(-50%) rotate(45deg);
+		}
+
+		&::after {
+			transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+		}
+	}
+
+	.project-is-open .open .close-project { 
+		/* show the 'X' icon when a project has been selected */
+		transform: scale(1);
+		transition-delay: $open-animation;
+		transition: transform .3s $open-animation, background .3s;
+	}
+}
+
+
+.cd-3d-portfolio .projects {
+	/* used to render its children in a 3D space - add perspective */
+	perspective: 1000px;
+
+	.row {
+		height: 25vh;
+		position: relative;
+		z-index: 1;
+		/* position its children in a 3d space */
+		transform-style: preserve-3d;
+		/* Force hardware acceleration */
+		will-change: transform;
+		transform: translateZ(-$parallelepiped-width/2);
+		transition: transform .6s cubic-bezier(.5,0,.1,1);
+		pointer-events: none;
+
+		&:nth-of-type(2) {
+			transition-delay: .1s;
+		}
+
+		&:nth-of-type(3) {
+			transition-delay: .2s;
+		}
+
+		&::after {
+			/* this is used to create the row bottom face */
+			content: '';
+			position: absolute;
+			z-index: 1;
+			bottom: 0;
+			left: 0;
+			height: 100vw;
+			width: 100%;
+			background: darken($color-1, 15%);
+			transform: translateZ($parallelepiped-width/2) rotateX(90deg);
+			transform-origin: bottom center;
+			transition: visibility 0s $open-animation;
+		}
+
+		&:last-of-type::after {
+			/* use its ::after element as top face (rather than bottom face) */
+			top: 0;
+			bottom: auto;
+			transform: translateZ($parallelepiped-width/2) rotateX(-90deg);
+			transform-origin: top center;
+		}
+	}
+
+	&:not(.project-has-transition) .row:nth-of-type(2) {
+		/* increase z-index of the second row - this way the back faces of the first and thirdv rows won't be visible (only of no project has been selected) */
+		z-index: 2;
+	}
+
+	.no-preserve3d & .row {
+		/* fallback for browsers that don't support the preser3d property */
+		transform: translateZ(0);
+	}
+
+	.row > li {
+		/* this is the single project */
+		position: absolute;
+		z-index: 1;
+		height: 100%;
+		width: 100%;
+		transform: translateZ($parallelepiped-width/2);
+		will-change: transform;
+		overflow: hidden;
+
+		&.selected {
+			/* this the project on the visible face of the parallelepiped */
+			pointer-events: auto;
+		}
+
+		&.front-face {
+			transform: translateZ($parallelepiped-width/2);
+		}
+
+		&.right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2);
+		}
+
+		&.left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2);
+		}
+
+		&.back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2);
+		}
+
+		&.hidden {
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
+
+	.no-preserve3d & .row > li {
+		opacity: 0;
+		transform: translateX(0);
+		transition: opacity .4s;
+
+		&.front-face, &.right-face, &.left-face, &.back-face {
+			transform: translateX(0);
+		}
+
+		&.selected {
+			opacity: 1;
+		}
+	}
+
+	.project-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 100%;
+	}
+
+	.project-image {
+		position: relative;
+		z-index: 2;
+		/* vertically center its content */
+		display: table;
+		width: 100%;
+		height: 25%;
+		cursor: pointer;
+		/* force hardware acceleration */
+		transform: translateZ(0);
+		will-change: transform;
+		backface-visibility: hidden;
+		transition: transform $open-animation;
+
+		&::before, &::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+		}
+
+		&::before {
+			/* this is the project background image */
+			z-index: 1;	
+			height: 240%;
+			background-color: darken($color-1, 10%);
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		&::after {
+			/* this is the project image cover layer - this is visible only during a rotation of the parallelepiped (while the project is disappearing) */
+			z-index: 3;
+			height: 100%;
+			background: darken($color-1, 30%);
+			opacity: 0;
+			transition: opacity .5s;
+		}
+	}
+
+	.row > li:not(.selected) .project-image::after {
+		opacity: 1;
+	}
+
+	.row:nth-of-type(2) > li:not(.selected) .project-image::after {
+		transition-delay: .1s;
+	}
+
+	.row:nth-of-type(3) > li:not(.selected) .project-image::after {
+		transition-delay: .2s;
+	}
+
+	.row > li.project-1 {
+
+		.project-image::before {
+			/* set project background image */
+			background-image: url(../img/photo-1.jpg);
+		}
+	}
+
+	.row > li.project-2 {
+
+		.project-image::before {
+			background-image: url(../img/photo-2.jpg);
+		}
+	}
+
+	.row > li.project-3 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-3.jpg);
+		}
+	}
+
+	.row > li.project-4 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-4.jpg);
+		}
+	}
+
+	.row > li.project-5 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-5.jpg);
+		}
+	}
+
+	.row > li.project-6 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-6.jpg);
+		}
+	}
+
+	.row > li.project-7 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-7.jpg);
+		}
+	}
+
+	.row > li.project-8 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-8.jpg);
+		}
+	}
+
+	.row > li.project-9 {
+		
+		.project-image::before {
+			background-image: url(../img/photo-9.jpg);
+		}
+	}
+
+	.project-title {
+		position: relative;
+		z-index: 2;
+		/* vertically center inside its parent */
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		/* force hardware acceleration */
+		transform: translateZ(0);
+		will-change: transform;
+		transition: transform $open-animation cubic-bezier(.5,0,.1,1);
+	}
+
+	h2 {
+		color: $color-3;
+		font-size: 2.2rem;
+		font-weight: bold;
+		font-family: $heading;
+	}
+
+	.project-content {
+		position: absolute;
+		z-index: 1;
+		/* place the content right below the project image */
+		top: 60%;
+		width: 100%;
+		background: white;
+		box-shadow: 0 -5px 0 white;
+
+		> div {
+			opacity: 0;
+			transform: translateY(25%);
+			transition: all $open-animation cubic-bezier(.5,0,.1,1);
+		}
+
+		p {
+			width: 90%;
+			max-width: 800px;
+			margin: 2em auto;
+			line-height: 1.6;
+			color: tint($color-1, 20%);
+		}
+	}
+
+	&.project-has-transition .row > li {
+		/* the project-has-transition class is used to add a transition to the tranform property of the single projects - it's added when a project is selected (before opening it) and removed when a project is colsed (when the closing animation is finished) */
+		transition: transform $open-animation cubic-bezier(.5,0,.1,1), opacity 0s $open-animation;
+
+		&.selected.open {
+			overflow: visible;
+		}
+
+		&:not(.selected) {
+			opacity: 0;
+		}
+	}
+
+	&.project-has-transition .row::after {
+		/* hide the bottom/top parallelepiped face when a project is selected */
+		visibility: hidden;
+		transition: visibility 0s;
+	}
+
+	&.project-is-open .row > li {
+		/* the project-is-open class is used when a project is selected - it's added when a project is selected (before opening it) and removed when a project is closed (before the closing animation begins) */
+		transition: transform $open-animation cubic-bezier(.5,0,.1,1), opacity 0s;
+
+		&.selected.open .project-wrapper {
+			/* selected project on the visible face of the parallelepiped */
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		&.selected .project-image {
+			/* projects on the visible face of the parallelepiped */
+			transform: translateY(0);
+		}
+
+		&.selected.open .project-image {
+			cursor: auto;
+		}
+
+		&.selected.open .project-title {
+			transform: translateY(70%);
+		}
+
+		&.selected.open .project-content > div {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	&.project-is-open .row:first-of-type {
+
+		.selected.open.front-face {
+			/* if the project selected is inside the first row */
+			transform: translateZ($parallelepiped-width/2) translateY(-100%);
+		}
+
+		.selected.open.right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2) translateY(-100%);
+		}
+
+		.selected.open.left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2) translateY(-100%);
+		}
+
+		.selected.open.back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2) translateY(-100%);
+		}
+
+		.selected:not(.open).front-face {
+			/* if the project selected is not inside the first row */
+			transform: translateZ($parallelepiped-width/2) translateY(300%);
+		}
+
+		.selected:not(.open).right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2) translateY(300%);
+		}
+
+		.selected:not(.open).left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2) translateY(300%);
+		}
+
+		.selected:not(.open).back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2) translateY(300%);
+		}
+	}
+
+	&.project-is-open .row:nth-of-type(2) {
+
+		.selected.open.front-face {
+			/* if the project selected is inside the second row */
+			transform: translateZ($parallelepiped-width/2) translateY(-200%);
+		}
+
+		.selected.open.right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2) translateY(-200%);
+		}
+
+		.selected.open.left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2) translateY(-200%);
+		}
+
+		.selected.open.back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2) translateY(-200%);
+		}
+
+		.selected:not(.open).front-face {
+			/* if the project selected is not inside the second row */
+			transform: translateZ($parallelepiped-width/2) translateY(200%);
+		}
+
+		.selected:not(.open).right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2) translateY(200%);
+		}
+
+		.selected:not(.open).left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2) translateY(200%);
+		}
+
+		.selected:not(.open).back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2) translateY(200%);
+		}
+	}
+
+	&.project-is-open .row:nth-of-type(3) {
+
+		.selected.open.front-face {
+			/* if the project selected is inside the third row */
+			transform: translateZ($parallelepiped-width/2) translateY(-300%);
+		}
+
+		.selected.open.right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2) translateY(-300%);
+		}
+
+		.selected.open.left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2) translateY(-300%);
+		}
+
+		.selected.open.back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2) translateY(-300%);
+		}
+
+		.selected:not(.open).front-face {
+			/* if the project selected is not inside the third row */
+			transform: translateZ($parallelepiped-width/2) translateY(100%);
+		}
+
+		.selected:not(.open).right-face {
+			transform: rotateY(90deg) translateZ($parallelepiped-width/2) translateY(100%);
+		}
+
+		.selected:not(.open).left-face {
+			transform: rotateY(-90deg) translateZ($parallelepiped-width/2) translateY(100%);
+		}
+
+		.selected:not(.open).back-face {
+			transform: rotateY(180deg) translateZ($parallelepiped-width/2) translateY(100%);
+		}
+	}
+
+	.no-preserve3d &.project-is-open .row.row:first-of-type > li.selected {
+		transform: translateY(300%);
+
+		&.open {
+			transform: translateY(-100%);
+		}
+	}
+
+	.no-preserve3d &.project-is-open .row.row:nth-of-type(2) > li.selected {
+		transform: translateY(200%);
+
+		&.open {
+			transform: translateY(-200%);
+		}
+	}
+
+	.no-preserve3d &.project-is-open .row.row:nth-of-type(3) > li.selected {
+		transform: translateY(100%);
+
+		&.open {
+			transform: translateY(-300%);
+		}
+	}
+
+	@include MQ(M) {
+
+		h2 {
+			font-size: 3.5rem;
+		}
+
+		p {
+			font-size: 2rem;
+		}
+	}
+}
+
+/* -------------------------------- 
+
+Back to top 
+
+-------------------------------- */
+
+.cd-top {
+	position: fixed;
+	z-index: 3;
+	bottom: 40px;
+	right: 5%;
+	display: inline-block;
+	height: 48px;
+	width: 48px;
+	/* replace text with image */
+	overflow: hidden; 
+	text-indent: 100%;
+	white-space: nowrap;
+	background: rgba(#000, .6) url(../img/cd-icon-arrow.svg) no-repeat center center;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity .3s, visibility .3s;
+
+	&.is-visible {
+		/* the button becomes visible */
+		visibility: visible;
+		opacity: 1;
+	}
+
+	&:hover {
+		background-color: rgba(#000, 1);
+		opacity: 1;
+	}
+}

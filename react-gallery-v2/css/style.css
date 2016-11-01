@@ -1,0 +1,239 @@
+@import "https://fonts.googleapis.com/css?family=Oswald:300|Slabo+27px";
+body, html, #app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: 'Slabo 27px';
+  font-size: 14px;
+  color: #333333;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  :root {
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  :root {
+    font-size: 23px;
+  }
+}
+.gallery {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 34px;
+}
+
+.gallery-tile {
+  min-width: 200px;
+  max-width: 28vw;
+  margin: 0.25em;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.gallery-tile img {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 300ms ease-in-out, -webkit-filter 300ms ease-in-out;
+  transition: -webkit-transform 300ms ease-in-out, -webkit-filter 300ms ease-in-out;
+  transition: transform 300ms ease-in-out, filter 300ms ease-in-out;
+  transition: transform 300ms ease-in-out, filter 300ms ease-in-out, -webkit-transform 300ms ease-in-out, -webkit-filter 300ms ease-in-out;
+}
+.gallery-tile .picture-info {
+  position: absolute;
+  z-index: 1;
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-in-out,  -webkit-filter 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out,  -webkit-filter 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out,  filter 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out,  filter 300ms ease-in-out,  -webkit-filter 300ms ease-in-out;
+}
+.gallery-tile .picture-info > * {
+  margin: 0.5rem 1.25rem;
+}
+.gallery-tile .picture-info h2 {
+  font-family: 'Oswald';
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.gallery-tile:hover img {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-filter: brightness(80%);
+          filter: brightness(80%);
+}
+.gallery-tile:hover .picture-info {
+  opacity: 1;
+}
+
+.imageview-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.imageview {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.imageview > * {
+  margin: 3em;
+}
+
+.imageview-image {
+  width: 25em;
+  height: 25em;
+  box-shadow: 0 20px 40px -5px rgba(66, 66, 66, 0.7);
+}
+
+.imageview-info {
+  max-width: 260px;
+  text-align: right;
+  position: relative;
+}
+.imageview-info button {
+  font-family: 'Oswald';
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #e74c3c;
+  border: none;
+  background: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: -2em;
+  right: -1em;
+}
+.imageview-info button:hover {
+  -webkit-animation: swell 300ms ease-in-out;
+          animation: swell 300ms ease-in-out;
+}
+.imageview-info h2 {
+  font-family: 'Oswald';
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0;
+}
+.imageview-info h3 {
+  font-family: 'Oswald';
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.imageview-info ul {
+  list-style: none;
+}
+
+.fadeIn {
+  -webkit-animation: fade 300ms ease-in-out forwards;
+          animation: fade 300ms ease-in-out forwards;
+}
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes swell {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.3);
+            transform: scale(1.3);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes swell {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.3);
+            transform: scale(1.3);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}

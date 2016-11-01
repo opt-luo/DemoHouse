@@ -1,0 +1,51 @@
+.center-dial
+	%h1{:class => "center-preview"} HELLO
+	.head
+	.torso
+	.hand-container#minutes
+		.minute-hand
+	.hand-container#hours 
+		.hour-hand
+	.hand-container#seconds
+		.second-hand
+.day-name-dial	
+	.ring-back
+	.ring#r1
+		%h1{:class => "day-name-preview"} DAY NAME
+		%h2{:class => "day-name-text"} MON TUE WED THU FRI SAT SUN
+.month-dial
+	.ring-back
+	.ring#r2
+		%h1{:class => "month-preview"} MONTH
+		%h2{:class => "month-text"} JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
+.day-dial
+	.ring-back
+	.ring#r3
+		%h1{:class => "day-preview"} DAY
+		%h2{:class => "day-text"}  01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
+.side-ring#weather
+	.fa.fa-cloud
+	%p{:class => "temperature"} 14&#176C
+.side-ring#steps
+	.bars
+		.bar
+			.day-letter M
+			.x#x1
+		.bar
+			.day-letter T
+			.x#x2
+		.bar
+			.day-letter W
+			.x#x3
+		.bar
+			.day-letter T
+			.x#x4
+		.bar
+			.day-letter F
+			.x#x5
+		.bar
+			.day-letter S
+			.x#x6
+		.bar
+			.day-letter S
+			.x#x7
